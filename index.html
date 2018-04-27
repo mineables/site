@@ -15,17 +15,30 @@
 
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rivets/0.9.6/rivets.bundled.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
     <style>
+      :root {
+        --main-bg-color: rgb(235, 235, 235);
+        --primary-color: rgb(53, 89, 131);
+        --accent-color: rgb(91, 230, 177);
+      }
       .logo {
         position: absolute;
         right: 18%;
         top: 0px;
         z-index: 999;
       }
+      .mdl-layout__header {
+        background-color: var(--primary-color);
+      }
+      .mdl-layout__content {
+        background-color: var(--main-bg-color);
+      }
       .mdl-layout-title {
+        color: var(--main-bg-color);
         padding-left: 15%;
       }
       .mdl-data-table {
@@ -45,13 +58,13 @@
     </style>
 
     <script>
-      var provider = "https://ropsten.infura.io/";
+      const provider = "https://ropsten.infura.io/";
 
       if (typeof web3 !== 'undefined') {
         web3 = new Web3(web3.currentProvider);
       } else {
         // set the provider you want from Web3.providers
-        web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/"));
+        web3 = new Web3(new Web3.providers.HttpProvider(provider));
       }
 
       web3.eth.defaultAccount = web3.eth.accounts[0];
@@ -64,14 +77,18 @@
 
       $(document).ready(function() {
 
-        // RivetsJS
-        rivets.bind(document.body, {
+        // Vue.js
+        
+        const app = new Vue({
+          el: '#content',
+          data: {
             tokens: [{ name: "0xMithril", supply: "20M", diff: 123123 }]
+          }
         });
 
         // MDL
-        var dialog = document.querySelector('dialog');
-        var dialogButton = document.querySelector('#show-dialog');
+        const dialog = document.querySelector('dialog');
+        const dialogButton = document.querySelector('#show-dialog');
         
         if (! dialog.showModal) {
           dialogPolyfill.registerDialog(dialog);
@@ -80,8 +97,8 @@
         dialogButton.addEventListener('click', function() {
           dialog.showModal();
           dialog.addEventListener('click', function (event) {
-              var rect = dialog.getBoundingClientRect();
-              var isInDialog=(rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+              const rect = dialog.getBoundingClientRect();
+              const isInDialog=(rect.top <= event.clientY && event.clientY <= rect.top + rect.height
                 && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
               if (!isInDialog) {
                   dialog.close();
@@ -159,7 +176,7 @@
       </header>
 
       <!-- Main Conent -->
-      <main class="mdl-layout__content">
+      <main id="content" class="mdl-layout__content">
         <div class="page-content">
           <div class="mdl-grid">
               <div class="mdl-layout-spacer"></div>
@@ -194,10 +211,10 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr rv-each-token="tokens">
-                          <td class="mdl-data-table__cell--non-numeric">{ token.name }</td>
-                          <td>{ token.supply }</td>
-                          <td>{ token.diff }</td>
+                        <tr v-for="token in tokens">
+                          <td class="mdl-data-table__cell--non-numeric">{{ token.name }}</td>
+                          <td>{{ token.supply }}</td>
+                          <td>{{ token.diff }}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -209,7 +226,7 @@
           </div>
         </div>
       </main>
-
+      
       <!-- Footer -->
       <footer class="mdl-mini-footer">
           <div class="mdl-mini-footer__left-section">
