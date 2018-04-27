@@ -19,6 +19,8 @@
     <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+    <script src="scripts/abi.js"></script>
+
     <style>
       :root {
         --main-bg-color: rgb(235, 235, 235);
@@ -30,6 +32,12 @@
         right: 18%;
         top: 0px;
         z-index: 999;
+      }
+      .search-card {
+        min-width: 500px;
+      }
+      .mdl-textfield {
+        width: 100%;
       }
       .mdl-layout__header {
         background-color: var(--primary-color);
@@ -45,6 +53,9 @@
           table-layout:fixed;
           width:100%; 
       }
+      .mdl-cell {
+        margin-right: 10px;
+      }
       .mdl-dialog {
         width: 500px;
       }
@@ -55,10 +66,25 @@
         text-overflow: ellipsis;
         -o-text-overflow: ellipsis;
       }
+      .demo-card-wide.mdl-card {
+        float: left;
+        margin: 0.5rem;
+        position: relative;
+      }
+      
+      .demo-card-wide > .mdl-card__title {
+        color: #fff;
+        background: rgb(140, 162, 187);
+      }
+      
+      .demo-card-square > .mdl-card__accent {
+        background: #ff9800;
+      }
+
     </style>
 
     <script>
-      const provider = "https://ropsten.infura.io/";
+      const provider = "https://mainnet.infura.io/oUCR2SmM4wLiHVimgqSS";
 
       if (typeof web3 !== 'undefined') {
         web3 = new Web3(web3.currentProvider);
@@ -69,20 +95,22 @@
 
       web3.eth.defaultAccount = web3.eth.accounts[0];
 
-      //var mithrilContract = web3.eth.contract("YOUR ABI");
-
-      //var mithril = mithrilContract.at('PASTE CONTRACT ADDRESS HERE');
-
-      //console.log(mithril);
-
       $(document).ready(function() {
 
         // Vue.js
-        
         const app = new Vue({
           el: '#content',
           data: {
-            tokens: [{ name: "0xMithril", supply: "20M", diff: 123123 }]
+            tokens: [{ name: "0xMithril", supply: "20M", diff: 123123 }],
+            addr: '0x0abdace70d3790235af448c88547603b945604ea'
+          },
+          methods: {
+            search: function() {
+              let token = web3.eth.contract(abi).at(this.addr);
+              let name = token.name();
+              console.log(name);
+              alert(name);
+            }
           }
         });
 
@@ -122,6 +150,7 @@
       
     <dialog class="mdl-dialog">
       <div class="mdl-dialog__content">
+        <h3>Create Your Own Mineable Token</h3>
         <p>
           Fill out the following fields to create your own mineable token.
         </p>
@@ -183,22 +212,37 @@
               <div class="mdl-cell mdl-cell--8-col">
 
                 <div class="mdl-grid">
-                  <div class="mdl-cell">
                     <!-- Cards -->
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                       <div class="mdl-card__title">
                         <h2 class="mdl-card__title-text">Create Your Own Mineable Token</h2>
                       </div>
-                      <div class="mdl-card__supporting-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Mauris sagittis pellentesque lacus eleifend lacinia...
+                      <div class="mdl-card__supporting-text" style="height:78px">
+                        <p>By providing a few fields of information you could have your own mineable token.</p>
                       </div>
                       <div class="mdl-card__actions mdl-card--border">
                         <button id="show-dialog" type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect show-modal">Get Started</button>
                       </div>
                     </div>
+
+                    <!-- Cards -->
+                    <div class="demo-card-wide mdl-card mdl-shadow--2dp search-card">
+                      <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Search Token</h2>
+                      </div>
+                      <div class="mdl-card__supporting-text">
+                        <p>Try looking up a contract address from the mainnet.<p>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                          <input class="mdl-textfield__input" type="text" id="tokenAddress" v-model="addr">
+                          <label class="mdl-textfield__label" for="tokenAddress">Token Address</label>
+                        </div>
+                      </div>
+                      <div class="mdl-card__actions mdl-card--border">
+                        <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect show-modal" v-on:click="search()" >Search</button>
+                      </div>
+                    </div>
                   </div>
-                </div>
+
                 <div class="mdl-grid">
                   <div class="mdl-cell mdl-cell--12-col">
                     <!-- Tokens Table -->
@@ -220,7 +264,6 @@
                     </table>
                   </div>
                 </div>
-                
               </div>
               <div class="mdl-layout-spacer"></div>
           </div>
