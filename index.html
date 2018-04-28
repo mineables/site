@@ -29,12 +29,12 @@
       }
       .logo {
         position: absolute;
-        right: 18%;
+        right: 15%;
         top: 0px;
         z-index: 999;
       }
       .search-card {
-        min-width: 500px;
+        min-width: 450px;
       }
       .mdl-textfield {
         width: 100%;
@@ -84,7 +84,9 @@
     </style>
 
     <script>
-      const provider = "https://mainnet.infura.io/oUCR2SmM4wLiHVimgqSS";
+      
+      //const provider = "https://mainnet.infura.io/oUCR2SmM4wLiHVimgqSS";
+      const provider = "https://ropsten.infura.io/oUCR2SmM4wLiHVimgqSS";
 
       if (typeof web3 !== 'undefined') {
         web3 = new Web3(web3.currentProvider);
@@ -94,6 +96,8 @@
       }
 
       web3.eth.defaultAccount = web3.eth.accounts[0];
+      let quarryContract = web3.eth.contract(abi).at('0x9e0744E8a207f6625b37C6F868B66AD3352eF6CF');
+      console.log(quarryContract);
 
       $(document).ready(function() {
 
@@ -101,16 +105,38 @@
         const app = new Vue({
           el: '#content',
           data: {
-            tokens: [{ name: "0xMithril", supply: "20M", diff: 123123 }],
-            addr: '0x0abdace70d3790235af448c88547603b945604ea'
+            quarry: [{ name: "0xMithril", supply: "20M", diff: 123123 }],
+            tokensDef: undefined,
+            addr: '0xb7c8c16704e2d523990809e8de88995c3c88cbe1'
           },
           methods: {
             search: function() {
               let token = web3.eth.contract(abi).at(this.addr);
-              let name = token.name();
-              console.log(name);
-              alert(name);
+              token.name.call((err, tokenName) => {
+                console.log(tokenName);
+              });
+            },
+            init: function(arr) {
+              let tokenDef = [];
+
+              arr.forEach((addr) => {
+                let token = web3.eth.contract(abi).at(addr);
+                token.name.call((err, name) => {
+                  token.decimals.call((err, decimals) => {
+                    token.totalSupply.call((err, supply) => {
+                      tokenDef.push({name, decimals, supply});
+                    });
+                  });
+                });
+                this.$nextTick(function () {
+                  this.tokensDef = tokenDef;
+                });
+              });
             }
+          },
+          created: function() {
+            let tokens = ['0xb7c8c16704e2d523990809e8de88995c3c88cbe1', '0xce95217762d88298d588b4169f0e764a7f7aae6b'];
+            this.init(tokens);
           }
         });
 
@@ -231,7 +257,7 @@
                         <h2 class="mdl-card__title-text">Search Token</h2>
                       </div>
                       <div class="mdl-card__supporting-text">
-                        <p>Try looking up a contract address from the mainnet.<p>
+                        <p>Try looking up a contract address from ropsten.<p>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                           <input class="mdl-textfield__input" type="text" id="tokenAddress" v-model="addr">
                           <label class="mdl-textfield__label" for="tokenAddress">Token Address</label>
@@ -255,7 +281,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="token in tokens">
+                        <tr v-for="token in quarry">
                           <td class="mdl-data-table__cell--non-numeric">{{ token.name }}</td>
                           <td>{{ token.supply }}</td>
                           <td>{{ token.diff }}</td>
@@ -264,22 +290,37 @@
                     </table>
                   </div>
                 </div>
+
+                <div class="mdl-grid">
+                  <!-- Cards -->
+                  <div class="demo-card-wide mdl-card mdl-shadow--2dp" v-if="tokensDef" v-for="token in tokensDef">
+                    <div class="mdl-card__title">
+                      <h2 class="mdl-card__title-text">{{ token.name }}</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text" style="height:78px">
+                      Decimals: {{ token.decimals }}<br/>
+                      Token Supply: {{ token.supply }}
+                    </div>
+                  </div>
+                </div>
+
               </div>
               <div class="mdl-layout-spacer"></div>
           </div>
         </div>
+        <!-- Footer -->
+        <footer class="mdl-mini-footer">
+            <div class="mdl-mini-footer__left-section">
+              <div class="mdl-logo">0xMithril</div>
+              <ul class="mdl-mini-footer__link-list">
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Privacy & Terms</a></li>
+              </ul>
+            </div>
+          </footer>
+        </div>
       </main>
       
-      <!-- Footer -->
-      <footer class="mdl-mini-footer">
-          <div class="mdl-mini-footer__left-section">
-            <div class="mdl-logo">0xMithril</div>
-            <ul class="mdl-mini-footer__link-list">
-              <li><a href="#">Help</a></li>
-              <li><a href="#">Privacy & Terms</a></li>
-            </ul>
-          </div>
-        </footer>
-      </div>
+      
   </body>
 </html>
