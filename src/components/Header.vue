@@ -1,20 +1,16 @@
 <template>
-    <header id="header" class="mdl-layout__header">
-        <router-link class="links" :to="{ name: 'home'}"><img class="logo" src="static/icons/mithril-small.png" /></router-link>
-        <div class="mdl-layout__header-row">
-            <div class="mdl-layout-spacer"></div>
-            <div class="mdl-cell mdl-cell--9-col">
-                <ul>
-                    <li><router-link id="add" class="links" :to="{ name: 'create'}"><i class="fas fa-plus-square material-icons"></i></router-link></li>
-                    <li><a href="https://twitter.com/0xMithril" target="_blank"><i class="fab fa-twitter-square material-icons"></i></a></li>
-                    <!-- <li><a href="" target="_blank"><i class="fab fa-reddit-square material-icons"></i></a></li> -->
-                    <li><a href="https://discord.gg/NNxKz6" target="_blank"><i class="fab fa-discord material-icons"></i></a></li>
+    <header id="header">
+        <nav class="navbar navbar-expand-lg fixed-top"><img class="logo" src="static/icons/mithril-small.png" /><!--<a class="navbar-brand">0xMithril</a>-->
+            <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><span></span><span></span><span></span></button>
+            <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto align-items-start align-items-lg-center">
+                    <li class="nav-item"><router-link class="nav-link" :to="{ name:'home' }" exact>Home</router-link></li>
+                    <li class="nav-item"><router-link class="nav-link" :to="{ name:'create' }">Token</router-link></li>
+                    <li class="nav-item"><router-link class="nav-link" :to="{ name:'quarry' }">Quarry</router-link></li>
+                    <li class="nav-item"><a href="#about-us" class="nav-link">Market</a></li>
                 </ul>
-                <div class="mdl-tooltip" data-mdl-for="add">Create Token</div>
-                <div class="mdl-layout-spacer"></div>
             </div>
-            <div class="mdl-layout-spacer"></div>
-        </div>
+        </nav>
     </header> 
 </template>
 <script>
@@ -30,67 +26,70 @@ export default {
   },
   methods: {
     handleScroll: function (event) {
-      if (event.target.scrollTop > 40 && this.bigLogo) {
+      let offset = window.pageYOffset
+      if (offset > 10 && this.bigLogo) {
         this.bigLogo = false
-        $('img').animate({
+        $('.logo').animate({
           width: 65,
           height: 65,
           top: 0,
-          right: '18%'
+          left: 55
         }, 300)
-      } else if (event.target.scrollTop < 40 && !this.bigLogo) {
+      } else if (offset < 10 && !this.bigLogo) {
         this.bigLogo = true
-        $('img').animate({
+        $('.logo').animate({
           width: 128,
           height: 128,
           top: -1,
-          right: '15%'
+          left: 35
         }, 300)
       }
     }
   },
   mounted () {
-    document.getElementById('content').addEventListener('scroll', this.handleScroll)
+    window.addEventListener('scroll', this.handleScroll)
   },
   destroyed: function () {
-    document.getElementById('content').removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 
 </script>
 
 <style>
-i {
-    color: white;
-}
-.mdl-layout__header {
-    min-height: 56px;
-}
+
 .logo {
     position: absolute;
-    right: 15%;
+    left: 35px;
     top: -1px;
     z-index: 999;
 }
-.material-icons {
-    margin: 10px;
-    font-size: 40px;
+.navbar-brand {
+    margin-left: 140px;
 }
-.fa-discord {
-    padding-top: 2px;
+
+nav.navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    background: #fff;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
 }
-header ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+
+.nav-link {
+    color: #B5B1AE;
+    font-weight: 300;
+    font-size: 15px;
+    text-transform: uppercase;
 }
-header li {
-    float: left;
-    position: relative;
+
+.nav-link:hover,
+.router-link-active,
+.router-link-exact-active {
+    color: #78cbe0;
+    cursor: pointer;
 }
-i:hover {
-    color: rgb(24,255,255);
-}
+
 
 </style>

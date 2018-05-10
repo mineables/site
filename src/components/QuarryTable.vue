@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h3>Tokens</h3>
-    <table id="quarryTable" ref="quarryTable" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp fullwidth">
+    <table id="quarryTable" ref="quarryTable" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
       <thead>
           <tr>
               <th class="mdl-data-table__cell--non-numeric fullwidth">Symbols</th>
@@ -24,8 +22,7 @@
               <td id="loading" colspan="3">No Tokens found in Quarry</td>
           </tr>
       </tbody>
-    </table>
-  </div>
+    </table> 
 </template>
 
 <script>
@@ -80,10 +77,10 @@ export default {
       })
     },
     redraw: function () {
-      this.$nextTick(() => {
-        this.loading = false
-        this.$root.$emit('redraw', this.$refs.quarryTable.clientHeight)
-      })
+      // this.$nextTick(() => {
+      //   this.loading = false
+      //   this.$root.$emit('redraw', this.$refs.quarryTable.clientHeight)
+      // })
     }
   },
   mounted () {

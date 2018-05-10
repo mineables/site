@@ -19,6 +19,11 @@ export default new Router({
       children: []
     },
     {
+      path: '/quarry',
+      name: 'quarry',
+      component: () => import('@/views/Quarry')
+    },
+    {
       path: '/token/:addr',
       name: 'token',
       component: () => import('@/views/Token')

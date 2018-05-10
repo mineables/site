@@ -1,44 +1,55 @@
 <template>
-  <div id="createTokenForm">
-    <h3>Create Your Own Mineable Token</h3>
-    <p>
-      Fill out the following fields to create your own mineable token.
-    </p>
-
-    <form action="#">
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" v-model="form.symbol" type="text" id="symbol">
-        <label class="mdl-textfield__label" for="symbol">Symbol</label>
-      </div>
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" v-model="form.name" type="text" id="name">
-        <label class="mdl-textfield__label" for="name">Name</label>
-      </div>
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" v-model="form.decimal" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="decimal">
-        <label class="mdl-textfield__label" for="decimal">Decimal</label>
-        <span class="mdl-textfield__error">Input is not a number!</span>
-      </div>
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" v-model="form.supply" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="supply">
-        <label class="mdl-textfield__label" for="supply">Supply</label>
-        <span class="mdl-textfield__error">Input is not a number!</span>
-      </div>
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" v-model="form.initReward" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="initReward">
-        <label class="mdl-textfield__label" for="initReward">Initial Reward</label>
-        <span class="mdl-textfield__error">Input is not a number!</span>
-      </div>
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" v-model="form.blockAdjustment" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="diffAdjustment">
-        <label class="mdl-textfield__label" for="diffAdjustment">Blocks per Difficulty Adjustment</label>
-        <span class="mdl-textfield__error">Input is not a number!</span>
-      </div>
-    </form>
-    <div>
-      <button type="button" class="mdl-button" v-on:click="createToken()">Submit</button>
-    </div>
+  <section id="createToken">
+    <div class="container">
+      <div class="row d-flex">
+        <div class="col-lg-10">
+          <h3>Create Your Own Mineable Token</h3>
+          <p>
+            Fill out the following fields to create your own mineable token.
+          </p>
+  <form action="#">
+  <div v-mdl class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" id="sample3">
+    <label class="mdl-textfield__label" for="sample3">Text...</label>
   </div>
+</form>
+          <form>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" v-model="form.symbol" type="text" id="symbol">
+              <label class="mdl-textfield__label" for="symbol">Symbol</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" v-model="form.name" type="text" id="name">
+              <label class="mdl-textfield__label" for="name">Name</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" v-model="form.decimal" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="decimal">
+              <label class="mdl-textfield__label" for="decimal">Decimal</label>
+              <span class="mdl-textfield__error">Input is not a number!</span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" v-model="form.supply" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="supply">
+              <label class="mdl-textfield__label" for="supply">Supply</label>
+              <span class="mdl-textfield__error">Input is not a number!</span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" v-model="form.initReward" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="initReward">
+              <label class="mdl-textfield__label" for="initReward">Initial Reward</label>
+              <span class="mdl-textfield__error">Input is not a number!</span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" v-model="form.blockAdjustment" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="diffAdjustment">
+              <label class="mdl-textfield__label" for="diffAdjustment">Blocks per Difficulty Adjustment</label>
+              <span class="mdl-textfield__error">Input is not a number!</span>
+            </div>
+          </form>
+          <div>
+            <button type="button" class="mdl-button" v-on:click="createToken()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -69,14 +80,12 @@ export default {
         })
       })
     }
-  },
-  mounted () {
-    this.$nextTick(() => {
-      this.$root.$emit('redraw', 600)
-    })
   }
 }
 </script>
 
 <style>
+.container {
+  padding-top: 20px;
+}
 </style>

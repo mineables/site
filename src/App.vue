@@ -1,25 +1,16 @@
 <template>
-  <div id="app" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <x-header></x-header>    
-    <main id="content" class="mdl-layout__content">
-      <div class="page-content">
-        <div class="mdl-grid">
-          <div class="mdl-layout-spacer"></div>
-          <div class="mdl-cell mdl-cell--8-col">
-            <router-view></router-view>
-          </div>
-          <div class="mdl-layout-spacer"></div>
-        </div>
-      </div>
-      <x-footer></x-footer>
-    </main>
+  <div id="app">
+    <x-header></x-header>  
+    <div id="content">
+      <router-view></router-view>
+    </div>  
+    <x-footer></x-footer>
   </div>
 </template>
 
 <script>
 // import RwvHeader from '@/components/TheHeader'
 import xHeader from '@/components/Header'
-import xNav from '@/components/Navigation'
 import xFooter from '@/components/Footer'
 import Web3 from 'web3'
 import $ from 'jquery'
@@ -28,7 +19,6 @@ export default {
   name: 'App',
   components: {
     xHeader,
-    xNav,
     xFooter
   },
   methods: {
@@ -57,4 +47,16 @@ export default {
 </script>
 
 <style>
+:root {
+  --main-bg-color: rgb(235, 235, 235);
+  --primary-color: rgb(53, 89, 131);
+  --accent-color: rgb(91, 230, 177);
+}
+html, body {
+  height: 100%;
+  margin: 0;
+}
+#content {
+  margin-top: 68px;
+}
 </style>

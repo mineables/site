@@ -13,5 +13,8 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  bind (el) {
+    window.componentHandler.upgradeElement(el)
+  }
 })
