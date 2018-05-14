@@ -6,9 +6,10 @@
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
-    "deploy": "git subtree push --prefix public origin gh-pages"
+    "deploy": "npm run build; push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
+    "jquery": "^3.3.1",
     "vue": "^2.5.16",
     "vue-router": "^2.8.1",
     "web3": "0.20.6"
@@ -66,6 +67,8 @@
     "optimize-css-assets-webpack-plugin": "^2.0.0",
     "ora": "^1.2.0",
     "phantomjs-prebuilt": "^2.1.16",
+    "push-dir": "^0.4.1",
+    "resolve-url-loader": "^2.3.0",
     "rimraf": "^2.6.0",
     "selenium-server": "^3.7.1",
     "semver": "^5.3.0",
@@ -80,8 +83,7 @@
     "webpack-bundle-analyzer": "^2.9.1",
     "webpack-dev-middleware": "^1.12.1",
     "webpack-hot-middleware": "^2.20.0",
-    "webpack-merge": "^4.1.1",
-    "resolve-url-loader": "^2.3.0"
+    "webpack-merge": "^4.1.1"
   },
   "engines": {
     "node": ">= 4.0.0",
