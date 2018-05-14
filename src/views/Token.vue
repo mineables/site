@@ -1,10 +1,16 @@
 <template>
-  <div>
-    <h2>{{ token.name }}</h2>
-    <span>Symbol: {{ token.symbol }}</span><br/>
-    <span>Supply: {{ token.supply }}</span><br/>
-    <span>Difficulty: {{ token.diff }}</span>
-  </div>
+  <section id="createToken">
+    <div class="container">
+      <div class="row d-flex">
+        <div class="col-lg-10">
+          <h2>{{ token.name }}</h2>
+          <span>Symbol: {{ token.symbol }}</span><br/>
+          <span>Supply: {{ token.supply }}</span><br/>
+          <span>Difficulty: {{ token.diff }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>

@@ -7,12 +7,6 @@
           <p>
             Fill out the following fields to create your own mineable token.
           </p>
-  <form action="#">
-  <div v-mdl class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" id="sample3">
-    <label class="mdl-textfield__label" for="sample3">Text...</label>
-  </div>
-</form>
           <form>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" v-model="form.symbol" type="text" id="symbol">
@@ -76,7 +70,7 @@ export default {
         token.pop.call((err, addr) => {
           if (err) console.log(err)
           // emit token to be added
-          this.$router.push({ name: 'home' })
+          this.$router.push({ name: 'token', params: { addr } })
         })
       })
     }

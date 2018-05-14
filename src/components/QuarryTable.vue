@@ -49,7 +49,7 @@ export default {
             this.addTokenToQuarry(addr)
           })
         }
-        if (size.toNumber() === 0) this.loading = false
+        this.loading = false
       })
     },
     addTokenToQuarry: function (addr) {
@@ -69,18 +69,11 @@ export default {
                   supply: supply.toNumber(),
                   diff: diff.toNumber()
                 })
-                this.redraw()
               }
             })
           })
         })
       })
-    },
-    redraw: function () {
-      // this.$nextTick(() => {
-      //   this.loading = false
-      //   this.$root.$emit('redraw', this.$refs.quarryTable.clientHeight)
-      // })
     }
   },
   mounted () {
