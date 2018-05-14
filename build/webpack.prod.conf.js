@@ -100,7 +100,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     ]),
     // generate favicons
     new FaviconsWebpackPlugin({
-      logo: path.resolve(__dirname, '../static/logo.png'),
+      logo: path.resolve(__dirname, '../static/icons/mithril-small.png'),
       prefix: 'favicons-[hash]/'
     })
   ]
