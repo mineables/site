@@ -15,7 +15,7 @@
 </template>
 <script>
 
-import $ from 'jquery'
+// import $ from 'jquery'
 
 export default {
   name: 'xHeader',
@@ -25,29 +25,29 @@ export default {
     }
   },
   methods: {
-    handleScroll: function (event) {
-      let offset = window.pageYOffset
-      if (offset > 10 && this.bigLogo) {
-        this.bigLogo = false
-        $('.logo').animate({
-          width: 65,
-          height: 65,
-          top: 0,
-          left: 55
-        }, 300)
-      } else if (offset < 10 && !this.bigLogo) {
-        this.bigLogo = true
-        $('.logo').animate({
-          width: 128,
-          height: 128,
-          top: -1,
-          left: 35
-        }, 300)
-      }
-    }
+    // handleScroll: function (event) {
+    //   let offset = window.pageYOffset
+    //   if (offset > 10 && this.bigLogo) {
+    //     this.bigLogo = false
+    //     $('.logo').animate({
+    //       width: 65,
+    //       height: 65,
+    //       top: 0,
+    //       left: 55
+    //     }, 300)
+    //   } else if (offset < 10 && !this.bigLogo) {
+    //     this.bigLogo = true
+    //     $('.logo').animate({
+    //       width: 128,
+    //       height: 128,
+    //       top: -1,
+    //       left: 35
+    //     }, 300)
+    //   }
+    // }
   },
   mounted () {
-    window.addEventListener('scroll', this.handleScroll)
+    // window.addEventListener('scroll', this.handleScroll)
   },
   destroyed: function () {
     window.removeEventListener('scroll', this.handleScroll)

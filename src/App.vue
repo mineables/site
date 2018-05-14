@@ -13,7 +13,7 @@
 import xHeader from '@/components/Header'
 import xFooter from '@/components/Footer'
 import Web3 from 'web3'
-import $ from 'jquery'
+// import $ from 'jquery'
 
 export default {
   name: 'App',
@@ -36,12 +36,12 @@ export default {
       window.web3 = new Web3(new Web3.providers.HttpProvider(provider))
     }
     window.web3.eth.defaultAccount = window.web3.eth.accounts[0]
-    this.$root.$on('redraw', function (height) {
-      let footer = $('footer')
-      let header = $('header')
-      let newHeight = height + footer.outerHeight() + header.outerHeight()
-      document.querySelector('.page-content').setAttribute('style', 'height:' + newHeight + 'px')
-    })
+    // this.$root.$on('redraw', function (height) {
+    //   let footer = $('footer')
+    //   let header = $('header')
+    //   let newHeight = height + footer.outerHeight() + header.outerHeight()
+    //   document.querySelector('.page-content').setAttribute('style', 'height:' + newHeight + 'px')
+    // })
   }
 }
 </script>
