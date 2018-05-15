@@ -11,9 +11,7 @@
     "bootstrap": "^4.0.0-alpha.6",
     "vue": "^2.5.16",
     "vue-router": "^2.8.1",
-    "web3": "0.20.6"
-  },
-  "devDependencies": {
+    "web3": "0.20.6",
     "@vue/test-utils": "^1.0.0-beta.13",
     "autoprefixer": "^7.1.6",
     "babel-core": "^6.22.1",
