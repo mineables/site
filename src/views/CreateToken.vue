@@ -8,38 +8,40 @@
             Fill out the following fields to create your own mineable token.
           </p>
           <form>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" v-model="form.symbol" type="text" id="symbol">
-              <label class="mdl-textfield__label" for="symbol">Symbol</label>
+            <div class="form-group">
+              <label for="symbol">Symbol:</label>
+              <input type="text" v-model="form.symbol" class="form-control" id="symbol" aria-describedby="symbolHelp" required>
+              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
             </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" v-model="form.name" type="text" id="name">
-              <label class="mdl-textfield__label" for="name">Name</label>
+            <div class="form-group">
+              <label for="name">Name:</label>
+              <input type="text" v-model="form.name" class="form-control" id="name" aria-describedby="namelHelp" required>
+              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
             </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" v-model="form.decimal" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="decimal">
-              <label class="mdl-textfield__label" for="decimal">Decimal</label>
-              <span class="mdl-textfield__error">Input is not a number!</span>
+            <div class="form-group">
+              <label for="decimal">Decimal:</label>
+              <input type="number" v-model="form.decimal" class="form-control" id="decimal" aria-describedby="decimallHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
             </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" v-model="form.supply" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="supply">
-              <label class="mdl-textfield__label" for="supply">Supply</label>
-              <span class="mdl-textfield__error">Input is not a number!</span>
+            <div class="form-group">
+              <label for="supply">Supply:</label>
+              <input type="number" v-model="form.supply" class="form-control" id="supply" aria-describedby="supplylHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
             </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" v-model="form.initReward" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="initReward">
-              <label class="mdl-textfield__label" for="initReward">Initial Reward</label>
-              <span class="mdl-textfield__error">Input is not a number!</span>
+            <div class="form-group">
+              <label for="initReward">Initial Reward:</label>
+              <input type="number" v-model="form.initReward" class="form-control" id="initReward" aria-describedby="initRewardHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
             </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" v-model="form.blockAdjustment" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="diffAdjustment">
-              <label class="mdl-textfield__label" for="diffAdjustment">Blocks per Difficulty Adjustment</label>
-              <span class="mdl-textfield__error">Input is not a number!</span>
+            <div class="form-group">
+              <label for="blockAdjustment">Blocks per Difficulty Adjustment:</label>
+              <input type="number" v-model="form.blockAdjustment" class="form-control" id="blockAdjustment" aria-describedby="blockAdjustmentHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
+            </div>
+            <div>
+              <input class="btn btn-primary" type="submit" value="Submit" v-on:click="createToken()">
             </div>
           </form>
-          <div>
-            <button type="button" class="mdl-button" v-on:click="createToken()">Submit</button>
-          </div>
         </div>
       </div>
     </div>

@@ -16,7 +16,11 @@
               <td v-text="token.diff"></td>
           </tr>
           <tr v-if="loading">
-              <td id="loading" colspan="3"><div class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div></td>
+              <td id="loading" colspan="3">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                </div>
+              </td>
           </tr>
           <tr v-if="!loading && quarry.length == 0">
               <td id="loading" colspan="3">No Tokens found in Quarry</td>
@@ -49,8 +53,8 @@ export default {
             this.addTokenToQuarry(addr)
           })
         }
-        this.loading = false
       })
+      this.loading = false
     },
     addTokenToQuarry: function (addr) {
       let mineable = window.web3.eth.contract(MINEABLE_ABI).at(addr)
