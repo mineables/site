@@ -43,20 +43,19 @@ export default {
   },
   methods: {
     loadQuarry: function () {
-      const quarryAddr = '0x26494cfe750d27c3f3acf34eff45bd9416d8bf9f'
+      const quarryAddr = '0x6714723853f2583f375ebb6cb1cbd832a52ad939'
       let token = window.web3.eth.contract(QUARRY_ABI).at(quarryAddr)
       token.mineableSize.call((err, size) => {
         if (err) console.log(err)
         for (let i = 0; i < size.toNumber(); i++) {
           token.getMineableAt(i, (err, addr) => {
             if (err) console.log(err)
-            this.addTokenToQuarry(addr)
+            this.addTokenToQuarry(addr, i, size.toNumber())
           })
         }
       })
-      this.loading = false
     },
-    addTokenToQuarry: function (addr) {
+    addTokenToQuarry: function (addr, index, size) {
       let mineable = window.web3.eth.contract(MINEABLE_ABI).at(addr)
       mineable.symbol.call((err, symbol) => {
         if (err) console.log(err)
@@ -66,14 +65,13 @@ export default {
             if (err) console.log(err)
             mineable.getMiningDifficulty.call((err, diff) => {
               if (err) console.log(err)
-              for (let i = 0; i < 25; i++) {
-                this.quarry.push({
-                  addr,
-                  symbol,
-                  supply: supply.toNumber(),
-                  diff: diff.toNumber()
-                })
-              }
+              this.quarry.push({
+                addr,
+                symbol,
+                supply: supply / (10 ** decimal),
+                diff: diff.toNumber()
+              })
+              if (index === size - 1) this.loading = false
             })
           })
         })

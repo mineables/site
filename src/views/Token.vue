@@ -5,6 +5,7 @@
         <div class="col-lg-10">
           <h2>{{ token.name }}</h2>
           <span>Symbol: {{ token.symbol }}</span><br/>
+          <span>Decimal: {{ token.decimal }}</span><br/>
           <span>Supply: {{ token.supply }}</span><br/>
           <span>Difficulty: {{ token.diff }}</span>
         </div>
@@ -40,7 +41,8 @@ export default {
                 this.token = {
                   name,
                   symbol,
-                  supply: supply.toNumber(),
+                  decimal,
+                  supply: supply / (10 ** decimal),
                   diff: diff.toNumber()
                 }
               })

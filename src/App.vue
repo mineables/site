@@ -21,27 +21,18 @@ export default {
     xHeader,
     xFooter
   },
-  methods: {
-    handleScroll: function (e) {
-      console.log('test')
-    }
-  },
   mounted () {
-    const provider = 'HTTP://127.0.0.1:7545'
-    if (typeof Web3 !== 'undefined') {
+    const provider = 'https://ropsten.infura.io/oUCR2SmM4wLiHVimgqSS'
+    if (typeof window.web3 !== 'undefined') {
       console.log('Local Wallet Detected')
       window.web3 = new Web3(window.web3.currentProvider)
+      window.wallet = 'local'
     } else {
       console.log('No web3? You should consider trying MetaMask!')
       window.web3 = new Web3(new Web3.providers.HttpProvider(provider))
+      window.wallet = 'infura'
     }
     window.web3.eth.defaultAccount = window.web3.eth.accounts[0]
-    // this.$root.$on('redraw', function (height) {
-    //   let footer = $('footer')
-    //   let header = $('header')
-    //   let newHeight = height + footer.outerHeight() + header.outerHeight()
-    //   document.querySelector('.page-content').setAttribute('style', 'height:' + newHeight + 'px')
-    // })
   }
 }
 </script>

@@ -31,21 +31,21 @@
         </div>
         <div class="card-deck">
           <div class="card">
-            <div class="card-img-top"><img width="125" src="static/icons/downloads-icon.png" alt="Card image cap"/></div>
+            <div class="card-img-top"><a href="https://github.com/0xMithril/COSMiC-v3-0xMTH" target="_blank"><img width="125" src="static/icons/downloads-icon.png" alt="Card image cap"/></a></div>
             <div class="card-body">
               <h5 class="card-title">Download Client</h5>
               <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
             </div>
           </div>
           <div class="card">
-            <div class="card-img-top"><img width="125" src="static/icons/mithril-large-white.png" alt="Card image cap"/></div>
+            <div class="card-img-top"><router-link class="nav-link" :to="{ name:'create' }"><img width="125" src="static/icons/mithril-large-white.png" alt="Card image cap"/></router-link></div>
             <div class="card-body">
               <h5 class="card-title">Create Tokens</h5>
               <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
             </div>
           </div>
           <div class="card">
-            <div class="card-img-top"><img width="125" src="static/icons/storyblocks-pickaxe-icon-on-white-background_HrZu9565Z_SB_PM.jpg" alt="Card image cap"/></div>
+            <div class="card-img-top"><router-link class="nav-link" :to="{ name:'quarry' }"><img width="125" src="static/icons/storyblocks-pickaxe-icon-on-white-background_HrZu9565Z_SB_PM.jpg" alt="Card image cap"/></router-link></div>
             <div class="card-body">
               <h5 class="card-title">Mine Tokens</h5>
               <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
@@ -62,10 +62,10 @@
         </header>
         <div class="row">
           <div class="col-sm-6 social">
-            <img src="static/icons/twitter.png" class="img-responsive" alt="">
+            <a href="https://twitter.com/0xMithril" target="_blank"><img src="static/icons/twitter.png" class="img-responsive" alt=""></a>
           </div>
           <div class="col-sm-6 social">
-            <img src="static/icons/discord.png" class="img-responsive" alt="">
+            <a href="https://discord.gg/NNxKz6" target="_blank"><img src="static/icons/discord.png" class="img-responsive" alt=""></a>
           </div>
         </div>
     </div>
@@ -134,5 +134,9 @@ article, aside, details, figcaption, figure, footer, header, main, nav, section,
 .social img {
     margin: auto;    
     display: block;
+}
+
+a img:hover {
+  transform: scale(1.05); 
 }
 </style>
