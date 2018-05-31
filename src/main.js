@@ -3,7 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from '@/router'
+import BootstrapVue from 'bootstrap-vue'
 
+router.afterEach(() => {
+  window.scrollTo(0, 0)
+})
+
+Vue.use(BootstrapVue)
 Vue.use(router)
 
 Vue.config.productionTip = false

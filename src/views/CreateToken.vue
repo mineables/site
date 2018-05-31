@@ -56,10 +56,33 @@
               <div class="invalid-feedback"></div>
               <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
             </div>
+            <div class="form-group">
+              <label for="blockTimeInMinutes">Block Time in Minutes:</label>
+              <input type="number" v-model="form.blockTimeInMinutes" class="form-control" id="blockTimeInMinutes" aria-describedby="blockTimeInMinutesHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+              <div class="invalid-feedback"></div>
+              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
+            </div>
           </form>
           <div>
-            <input class="btn btn-primary" type="submit" value="Submit" v-on:click="createToken()" :disabled="wallet != 'local'">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" type="submit" v-on:click="createToken()" :disabled="wallet != 'local'">Submit</button>
           </div>
+          <!-- the modal -->
+          <b-modal ref="modal" id="modal-center" size="lg" centered title="Processing..." hide-footer >
+            <div class="form-group">
+              <label for="blockTimeInMinutes">Transaction #</label><br/>
+              <a v-bind:href="txUrl" target="_blank">{{ txId }}</a>
+            </div>
+            <div class="form-group">
+              <label for="blockTimeInMinutes">Token Address</label><br/>
+              {{ addr }}
+            </div>
+            <b-progress :value="100" :max="100" :striped="loading" :animated="loading"></b-progress><br/>
+            <b-alert show variant="warning" v-if="loading">Please don't change page until the transaction is completed.</b-alert>
+            <b-alert show variant="success" v-if="!loading">
+              Congradulation on your new mineable token. Your token is now part of our Quarry. 
+              <router-link :to="{ name:'token', params: { addr } }" exact>Click this link to see your token page.</router-link>
+            </b-alert>
+          </b-modal>
         </div>
       </div>
     </div>
@@ -68,12 +91,18 @@
 
 <script>
 import { FACTORY_ABI } from '../../static/scripts/factory_abi.js'
+import { ADDRESS } from '../../static/scripts/addr.js'
+
 export default {
   name: 'CreateToken',
   data () {
     return {
       form: {},
-      wallet: undefined
+      wallet: undefined,
+      txId: 'Processing...',
+      addr: 'Processing...',
+      loading: true,
+      txUrl: 'https://ropsten.etherscan.io/tx/'
     }
   },
   methods: {
@@ -94,9 +123,16 @@ export default {
             console.log('This is an unknown network.')
         }
       })
-
-      let factoryAddr = '0x5cf65887bad83bfa2e74100af7310d5e2336fa3c'
-      let token = window.web3.eth.contract(FACTORY_ABI).at(factoryAddr)
+      this.$refs.modal.show()
+      let token = window.web3.eth.contract(FACTORY_ABI).at(ADDRESS.FACTORY)
+      console.log(token)
+      let event = token.MineableTokenCreated()
+      event.watch((err, evt) => {
+        if (err) console.log(err)
+        console.log(evt)
+        this.addr = evt.args.tokenAddress
+        this.loading = false
+      })
       token.createMineable(this.form.symbol,
                             this.form.name,
                             this.form.decimal,
@@ -104,10 +140,12 @@ export default {
                             this.form.initReward,
                             this.form.blockAdjustment,
                             this.form.initDiff,
+                            this.form.blockTimeInMinutes,
       (err, txAddr) => {
         if (err) console.log(err)
         console.log(txAddr)
-        // this.$router.push({ name: 'token', params: { addr } })
+        this.txId = txAddr
+        this.txUrl += this.txId
       })
     }
   },

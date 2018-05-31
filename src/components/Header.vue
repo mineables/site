@@ -1,6 +1,6 @@
 <template>
     <header id="header">
-        <nav class="navbar navbar-expand-lg fixed-top"><img class="logo" src="static/icons/mithril-small.png" /><!--<a class="navbar-brand">0xMithril</a>-->
+        <nav class="navbar navbar-expand-lg fixed-top"><img class="logo" src="static/icons/mithril-proto.png" /><!--<a class="navbar-brand">0xMithril</a>-->
             <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><span></span><span></span><span></span></button>
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto align-items-start align-items-lg-center">
@@ -15,42 +15,12 @@
 </template>
 <script>
 
-// import $ from 'jquery'
-
 export default {
   name: 'xHeader',
   data () {
     return {
       bigLogo: true
     }
-  },
-  methods: {
-    // handleScroll: function (event) {
-    //   let offset = window.pageYOffset
-    //   if (offset > 10 && this.bigLogo) {
-    //     this.bigLogo = false
-    //     $('.logo').animate({
-    //       width: 65,
-    //       height: 65,
-    //       top: 0,
-    //       left: 55
-    //     }, 300)
-    //   } else if (offset < 10 && !this.bigLogo) {
-    //     this.bigLogo = true
-    //     $('.logo').animate({
-    //       width: 128,
-    //       height: 128,
-    //       top: -1,
-    //       left: 35
-    //     }, 300)
-    //   }
-    // }
-  },
-  mounted () {
-    // window.addEventListener('scroll', this.handleScroll)
-  },
-  destroyed: function () {
-    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 
@@ -60,6 +30,7 @@ export default {
 
 .logo {
     position: absolute;
+    width: 70px;
     left: 35px;
     top: -1px;
     z-index: 999;
@@ -87,7 +58,7 @@ nav.navbar {
 .nav-link:hover,
 .router-link-active,
 .router-link-exact-active {
-    color: #78cbe0;
+    color: #3DD7B3;
     cursor: pointer;
 }
 

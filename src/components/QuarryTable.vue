@@ -32,6 +32,7 @@
 <script>
 import { QUARRY_ABI } from '../../static/scripts/quarry_abi.js'
 import { MINEABLE_ABI } from '../../static/scripts/mineable_abi.js'
+import { ADDRESS } from '../../static/scripts/addr.js'
 
 export default {
   name: 'xQuarryTable',
@@ -43,8 +44,7 @@ export default {
   },
   methods: {
     loadQuarry: function () {
-      const quarryAddr = '0x6714723853f2583f375ebb6cb1cbd832a52ad939'
-      let token = window.web3.eth.contract(QUARRY_ABI).at(quarryAddr)
+      let token = window.web3.eth.contract(QUARRY_ABI).at(ADDRESS.QUARRY)
       token.mineableSize.call((err, size) => {
         if (err) console.log(err)
         for (let i = 0; i < size.toNumber(); i++) {
