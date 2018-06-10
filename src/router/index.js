@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/',
@@ -27,6 +27,11 @@ export default new Router({
       path: '/token/:addr',
       name: 'token',
       component: () => import('@/views/Token')
+    },
+    {
+      path: '/market',
+      name: 'market',
+      component: () => import('@/views/Marketplace')
     }
   ]
 })

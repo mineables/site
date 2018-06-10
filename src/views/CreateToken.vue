@@ -79,7 +79,7 @@
             <b-progress :value="100" :max="100" :striped="loading" :animated="loading"></b-progress><br/>
             <b-alert show variant="warning" v-if="loading">Please don't change page until the transaction is completed.</b-alert>
             <b-alert show variant="success" v-if="!loading">
-              Congradulation on your new mineable token. Your token is now part of our Quarry. 
+              Congratulations on your new mineable token. Your token is now part of the Mithril Network Quarry. 
               <router-link :to="{ name:'token', params: { addr } }" exact>Click this link to see your token page.</router-link>
             </b-alert>
           </b-modal>

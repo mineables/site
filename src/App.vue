@@ -14,6 +14,7 @@ import xHeader from '@/components/Header'
 import xFooter from '@/components/Footer'
 import Web3 from 'web3'
 // import $ from 'jquery'
+var TruffleContract = require('truffle-contract')
 
 export default {
   name: 'App',
@@ -23,6 +24,14 @@ export default {
   },
   mounted () {
     const provider = 'https://ropsten.infura.io/oUCR2SmM4wLiHVimgqSS'
+
+    if (TruffleContract != null) {
+      console.log('Success!')
+      window.TruffleContract = TruffleContract
+    } else {
+      console.error('Failed to load Truffle Contract')
+    }
+
     if (typeof window.web3 !== 'undefined') {
       console.log('Local Wallet Detected')
       window.web3 = new Web3(window.web3.currentProvider)
