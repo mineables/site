@@ -10,16 +10,19 @@
         <div class="row">
             <div v-for="result in vgpuResults" class="col-sm-4">
               <div class="card market-card">
-                <span class="uid">uid: {{ result.id }} </span>
+                
+                <h3 class="card-title price-wrap"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
                 <img class="card-img-top" src="static/icons/vgpu.png" alt="Card image cap">
                 <div class="card-body">
                   <h4 class="card-title">{{ result.name }} </h4>
-                  <h3 class="card-title"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
+                  
                   <p class="card-text">Remaining cycles: {{ result.life }}</p>
                   <p class="card-text modifier" v-for="modifier in result.modifiers" >{{ modifier }}</p>
                   <b-button class="btn btn-lg btn-outline-info" @click="purchasevGPU(result.id,result.mithrilPrice)">
                     Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
                   </b-button>
+                  <br>
+                  <span class="uid">uid: {{ result.id }} </span>
                 </div>
               </div>
             </div>
@@ -32,11 +35,10 @@
         <div class="row">
             <div v-for="result in vrigResults" class="col-sm-4">
               <div class="card market-card">
-                <span class="uid">uid: {{ result.id }} </span>
+                <h3 class="card-title price-wrap"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
                 <img class="card-img-top" src="static/icons/vrig.png" alt="Card image cap">
                 <div class="card-body">
                   <h4 class="card-title">{{ result.name }} </h4>
-                  <h3 class="card-title"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
                   <p class="card-text">
                     <ul>
                       <li>Experience: {{ result.experience }}</li>
@@ -51,6 +53,8 @@
                   <b-button class="btn btn-lg btn-outline-info" @click="purchasevRig(result.id,result.mithrilPrice)">
                     Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
                   </b-button>
+                  <br>
+                  <span class="uid">uid: {{ result.id }} </span>
                 </div>
               </div>
             </div>
@@ -235,7 +239,6 @@ export default {
 }
 
 .market-card {
-  background-color: #edffff;
   margin-bottom: 2em;
 }
 
@@ -248,9 +251,8 @@ export default {
 }
 
 .uid {
-  padding: 1em;
   color: lightgray;
-  text-align: right;
+  float: right;
 }
 
 .uid:hover {
@@ -268,6 +270,13 @@ export default {
 .price {
   color: #f36236;
   font-weight: bold;
+  font-size: 120%;
+}
+
+.price-wrap {
+  text-align: right;
+  padding: 15px;
+  background-color: #edffff;
 }
 
 .modifier {
