@@ -1,4 +1,4 @@
-export const ARTIFACT_MARKET_ABI = [
+export const VRIG_MARKET_ABI = [
     {
       "constant": true,
       "inputs": [
@@ -20,29 +20,6 @@ export const ARTIFACT_MARKET_ABI = [
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "entityAddress",
-          "type": "uint256"
-        },
-        {
-          "name": "entityData",
-          "type": "uint256"
-        }
-      ],
-      "name": "update",
-      "outputs": [
-        {
-          "name": "success",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -88,45 +65,17 @@ export const ARTIFACT_MARKET_ABI = [
       "type": "function"
     },
     {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "entityAddress",
-          "type": "uint256"
-        }
-      ],
-      "name": "remove",
+      "constant": true,
+      "inputs": [],
+      "name": "vrigArtifactAddress",
       "outputs": [
         {
-          "name": "success",
-          "type": "bool"
+          "name": "",
+          "type": "address"
         }
       ],
       "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "entityAddress",
-          "type": "uint256"
-        },
-        {
-          "name": "entityData",
-          "type": "uint256"
-        }
-      ],
-      "name": "add",
-      "outputs": [
-        {
-          "name": "success",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -184,20 +133,6 @@ export const ARTIFACT_MARKET_ABI = [
     {
       "constant": true,
       "inputs": [],
-      "name": "vgpuArtifactAddress",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
       "name": "erc20TokenAddress",
       "outputs": [
         {
@@ -216,7 +151,7 @@ export const ARTIFACT_MARKET_ABI = [
           "type": "address"
         },
         {
-          "name": "_vgpuArtifactAddress",
+          "name": "_vrigArtifactAddress",
           "type": "address"
         }
       ],
@@ -270,4 +205,4 @@ export const ARTIFACT_MARKET_ABI = [
       "stateMutability": "nonpayable",
       "type": "function"
     }
-  ];
+  ]

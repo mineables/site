@@ -1,75 +1,122 @@
 <template>
-  <section class="container" id="marketPlace">
-    <br>
-    <br>
-    <h2 class="header-text">Virtual Artifact Market</h2>
-    <h5>Purchase ERC721 Virtual Rigs and GPUs with 0xMithril. vRigs and vGPUs can be attached to your mining account to vastly improve mining performance. Virtualizing hash power saves overall mining hardware, maintenance and electricity costs and can additionally be combined with traditional hardware-based mining operations.</h5>
-    <br>
-    <br>
-    <div class="row">
-        <div v-for="result in results" class="col-sm-4">
-          <div class="card market-card">
-            <span class="uid">uid: {{ result.id }} </span>
-            <img class="card-img-top" src="static/icons/vgpu.png" alt="Card image cap">
-            <div class="card-body">
-              <h4 class="card-title">{{ result.name }} </h4>
-              <h3 class="card-title"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
-              <p class="card-text">Remaining cycles: {{ result.life }}</p>
-              <p class="card-text modifier" v-for="modifier in result.modifiers" >{{ modifier }}</p>
-              
-              <b-button class="btn btn-lg btn-outline-info" @click="purchasevGPU(result.id,result.mithrilPrice)">
-                Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
-              </b-button>
-              
+<div class="container wrapped">
+  <h2 class="header-text">Virtual Artifact Market</h2>
+  <p>Purchase ERC721 Virtual Rigs and GPUs with 0xMithril. vRigs and vGPUs can be attached to your mining account to vastly improve mining performance. Virtualizing hash power saves overall mining hardware, maintenance and electricity costs and can additionally be combined with traditional hardware-based mining operations.</p>
+  <b-tabs>
+
+    <b-tab title="VGPU Market" active>
+      <section id="vgpu-market">
+        <div class="row">
+            <div v-for="result in vgpuResults" class="col-sm-4">
+              <div class="card market-card">
+                <span class="uid">uid: {{ result.id }} </span>
+                <img class="card-img-top" src="static/icons/vgpu.png" alt="Card image cap">
+                <div class="card-body">
+                  <h4 class="card-title">{{ result.name }} </h4>
+                  <h3 class="card-title"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
+                  <p class="card-text">Remaining cycles: {{ result.life }}</p>
+                  <p class="card-text modifier" v-for="modifier in result.modifiers" >{{ modifier }}</p>
+                  <b-button class="btn btn-lg btn-outline-info" @click="purchasevGPU(result.id,result.mithrilPrice)">
+                    Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
+                  </b-button>
+                </div>
+              </div>
             </div>
-          </div>
         </div>
-    </div>
-  </section>
+      </section>
+    </b-tab>
+
+    <b-tab title="VRIG Market">
+      <section id="vrig-market">
+        <div class="row">
+            <div v-for="result in vrigResults" class="col-sm-4">
+              <div class="card market-card">
+                <span class="uid">uid: {{ result.id }} </span>
+                <img class="card-img-top" src="static/icons/vrig.png" alt="Card image cap">
+                <div class="card-body">
+                  <h4 class="card-title">{{ result.name }} </h4>
+                  <h3 class="card-title"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
+                  <p class="card-text">
+                    <ul>
+                      <li>Experience: {{ result.experience }}</li>
+                      <li>Life Decrement: {{ result.lifeDecrement }}</li>
+                      <li>Execution Cost: {{ result.executionCost }}</li>
+                      <li>Available Sockets: {{ result.sockets }}</li>
+                      <li>Virtual Hash Rate: {{ result.vHash }} Hashes/second</li>
+                      <li>Accuracy: {{ result.accuracy }}</li>
+                      <li>Level: {{ result.level }}</li>
+                    </ul>
+                  </p>
+                  <b-button class="btn btn-lg btn-outline-info" @click="purchasevRig(result.id,result.mithrilPrice)">
+                    Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
+                  </b-button>
+                </div>
+              </div>
+            </div>
+        </div>
+      </section>
+    </b-tab>
+
+  </b-tabs>
+  </div>
 </template>
 
 <script>
 import { ADDRESS } from '../../static/scripts/addr.js'
 import { MINEABLE_ABI } from '../../static/scripts/mineable_abi.js'
 import { CHILD_ARTIFACT_ABI } from '../../static/scripts/child_artifact_abi.js'
-import { ARTIFACT_MARKET_ABI } from '../../static/scripts/artifact_market_abi.js'
-// import { VIRTUAL_MINING_BOARD_ABI } from '../../static/scripts/virtual_mining_board_abi.js'
+import { VGPU_MARKET_ABI } from '../../static/scripts/vgpu_market_abi.js'
+import { VIRTUAL_MINING_BOARD_ABI } from '../../static/scripts/virtual_mining_board_abi.js'
+import { VRIG_MARKET_ABI } from '../../static/scripts/vrig_market_abi.js'
 
 export default {
   name: 'Marketplace',
   data () {
     return {
-      // addr: this.$route.params.addr,
       token: {},
-      results: []
+      vgpuResults: [],
+      vrigResults: [],
+      marketContract: {},
+      vgpuContract: {},
+      vrigContract: {},
+      mithrilContract: {},
+      vgpuMarketContract: {},
+      vrigMarketContract: {}
     }
   },
   methods: {
     async purchasevGPU (id, price) {
-      console.log('Purchasing vGPU : ' + id)
-      var Mithril = window.TruffleContract({abi: MINEABLE_ABI})
-      Mithril.setProvider(window.web3.currentProvider)
-      let mithril = Mithril.at(ADDRESS.MITHRIL)
-      var Market = window.TruffleContract({abi: ARTIFACT_MARKET_ABI})
-      Market.setProvider(window.web3.currentProvider)
-      let market = await Market.at(ADDRESS.MARKET)
-      await mithril.approve(ADDRESS.MARKET, price)
-      await market.buy(id, {from: window.web3.eth.coinbase})
+      await this.mithrilContract.approve(ADDRESS.MARKET, price)
+      await this.vgpuContract.buy(id, {from: window.web3.eth.coinbase})
     },
-    async loadMarkets () {
-      var Market = window.TruffleContract({abi: ARTIFACT_MARKET_ABI})
+    async purchasevRig (id, price) {
+      await this.mithrilContract.approve(ADDRESS.MARKET, price)
+      await this.vrigContract.buy(id, {from: window.web3.eth.coinbase})
+    },
+    async initContracts () {
+      var Market = window.TruffleContract({abi: VGPU_MARKET_ABI})
       var ChildArtifact = window.TruffleContract({abi: CHILD_ARTIFACT_ABI})
+      var Mithril = window.TruffleContract({abi: MINEABLE_ABI})
+      var VirtualMiningBoard = window.TruffleContract({abi: VIRTUAL_MINING_BOARD_ABI})
+      var vrigMarket = window.TruffleContract({abi: VRIG_MARKET_ABI})
+
       Market.setProvider(window.web3.currentProvider)
       ChildArtifact.setProvider(window.web3.currentProvider)
-      let market = await Market.at(ADDRESS.MARKET)
-      let artifactContract = await ChildArtifact.at(ADDRESS.VGPU)
-      let len = await market.size()
+      Mithril.setProvider(window.web3.currentProvider)
+      VirtualMiningBoard.setProvider(window.web3.currentProvider)
+      vrigMarket.setProvider(window.web3.currentProvider)
+
+      this.vgpuMarketContract = await Market.at(ADDRESS.VGPU_MARKET)
+      this.vgpuContract = await ChildArtifact.at(ADDRESS.VGPU)
+      this.mithrilContract = await Mithril.at(ADDRESS.MITHRIL)
+      this.vrigContract = await VirtualMiningBoard.at(ADDRESS.VRIG)
+      this.vrigMarketContract = await vrigMarket.at(ADDRESS.VRIG_MARKET)
+    },
+    async loadVGPUMarket () {
+      let len = await this.vgpuMarketContract.size()
       for (var i = 0; i < len; i++) {
-        let art = await market.getAt(i)
-        console.log('market artifact[0]: ' + art[0])
-        console.log('market artifact[1]: ' + art[1])
-        let a = await artifactContract.artifactAt(art[0])
-        console.log(a)
+        let art = await this.vgpuMarketContract.getAt(i)
+        let a = await this.vgpuContract.artifactAt(art[0])
         let artifact = {}
         artifact.id = parseInt(art[0])
         artifact.name = a[0]
@@ -81,7 +128,31 @@ export default {
         }
         artifact.mithrilPrice = parseInt(art[1])
         artifact.price = this.readable(artifact.mithrilPrice)
-        this.results.push(artifact)
+        this.vgpuResults.push(artifact)
+      }
+    },
+    async loadVRIGMarket () {
+      let len = await this.vrigMarketContract.size()
+      for (var i = 0; i < len; i++) {
+        let art = await this.vrigMarketContract.getAt(i)
+        console.log(art)
+        let stats = await this.vrigContract.baseStats(art[0])
+        let artifact = {}
+        artifact.mithrilPrice = parseInt(art[1])
+        artifact.price = this.readable(artifact.mithrilPrice)
+        artifact.id = parseInt(art[0])
+        artifact.name = stats[0]
+        let basicStats = stats[1]
+        artifact.experience = basicStats[0].toNumber()
+        artifact.lifeDecrement = basicStats[1].toNumber()
+        artifact.executionCost = basicStats[2].toNumber()
+        artifact.sockets = basicStats[3].toNumber()
+        artifact.vhash = basicStats[4].toNumber()
+        artifact.accuracy = basicStats[5].toNumber()
+        artifact.level = basicStats[6].toNumber()
+        artifact.childArtifacts = stats[2]
+        console.log(artifact)
+        this.vrigResults.push(artifact)
       }
     },
     readable: function (num) {
@@ -122,7 +193,7 @@ export default {
       } else if (position === 3) {
         return 'Socket Count'
       } else if (position === 4) {
-        return 'Virtual Hash Power'
+        return 'Virtual Hash Rate'
       } else if (position === 5) {
         return 'Accuracy'
       } else if (position === 6) {
@@ -138,8 +209,10 @@ export default {
       return Number(multiplier) * Math.pow(10, Number(exp))
     }
   },
-  mounted () {
-    this.loadMarkets()
+  async mounted () {
+    await this.initContracts()
+    this.loadVGPUMarket()
+    this.loadVRIGMarket()
   }
 }
 </script>
@@ -192,6 +265,10 @@ export default {
 .modifier {
   font-style: italic;
   color: #f36236;
+}
+
+.wrapped {
+  padding-top: 2em;
 }
 
 </style>
