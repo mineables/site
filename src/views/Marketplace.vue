@@ -3,7 +3,8 @@
   <h2 class="header-text">Virtual Artifact Market</h2>
   <p>Purchase ERC721 Virtual Rigs and GPUs with 0xMithril. vRigs and vGPUs can be attached to your mining account to vastly improve mining performance. Virtualizing hash power saves overall mining hardware, maintenance and electricity costs and can additionally be combined with traditional hardware-based mining operations.</p>
   <b-tabs>
-
+    <br>
+    <br>
     <b-tab title="VGPU Market" active>
       <section id="vgpu-market">
         <div class="row">
@@ -87,11 +88,14 @@ export default {
   methods: {
     async purchasevGPU (id, price) {
       await this.mithrilContract.approve(ADDRESS.MARKET, price)
-      await this.vgpuContract.buy(id, {from: window.web3.eth.coinbase})
+      await this.vgpuMarketContract.buy(id)
     },
     async purchasevRig (id, price) {
-      await this.mithrilContract.approve(ADDRESS.MARKET, price)
-      await this.vrigContract.buy(id, {from: window.web3.eth.coinbase})
+      console.log(id)
+      console.log(price)
+      console.log(ADDRESS.VRIG_MARKET)
+      await this.mithrilContract.approve(ADDRESS.VRIG_MARKET, price)
+      await this.vrigMarketContract.buy(id)
     },
     async initContracts () {
       var Market = window.TruffleContract({abi: VGPU_MARKET_ABI})
