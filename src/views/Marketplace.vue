@@ -91,7 +91,9 @@ export default {
   },
   methods: {
     async purchasevGPU (id, price) {
-      await this.mithrilContract.approve(ADDRESS.MARKET, price)
+      console.log(id)
+      console.log(price)
+      await this.mithrilContract.approve(ADDRESS.VGPU_MARKET, price)
       await this.vgpuMarketContract.buy(id)
     },
     async purchasevRig (id, price) {
