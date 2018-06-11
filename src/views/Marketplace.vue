@@ -43,7 +43,7 @@
                       <li>Life Decrement: {{ result.lifeDecrement }}</li>
                       <li>Execution Cost: {{ result.executionCost }}</li>
                       <li>Available Sockets: {{ result.sockets }}</li>
-                      <li>Virtual Hash Rate: {{ result.vHash }} Hashes/second</li>
+                      <li>Virtual Hash Rate: {{ result.vhash }} H/s</li>
                       <li>Accuracy: {{ result.accuracy }}</li>
                       <li>Level: {{ result.level }}</li>
                     </ul>
@@ -240,7 +240,11 @@ export default {
 }
 
 .card-img-top {
-  max-width: 300px;
+  max-width: 160px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 .uid {
@@ -254,11 +258,11 @@ export default {
 }
 
 .tengwar {
-    font-family: TengwarAnnatarGlaemscrafu;
-    font-size: 110%;
-    line-height: 1.5;
-    text-decoration: none;
-    font-weight: 400!important;
+  font-family: TengwarAnnatarGlaemscrafu;
+  font-size: 110%;
+  line-height: 1.5;
+  text-decoration: none;
+  font-weight: 400!important;
 }
 
 .price {
