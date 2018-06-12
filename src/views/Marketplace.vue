@@ -72,14 +72,10 @@
       <label for="blockTimeInMinutes">Purchase Transaction</label><br/>
       <a v-bind:href="txUrl + purchaseTx" target="_blank">{{ purchaseTx }}</a>
     </div>
-    <div class="form-group">
-      <label for="blockTimeInMinutes">Address</label><br/>
-      <a v-bind:href="txUrl + purchaseAddr" target="_blank">{{ purchaseAddr }}</a>
-    </div>
     <b-progress :value="100" :max="100" :striped="loading" :animated="loading"></b-progress><br/>
     <b-alert show variant="warning" v-if="loading">Please don't refresh this page until the transactions are completed.</b-alert>
     <b-alert show variant="success" v-if="!loading">
-      Congratulations for your purchase. Please make sure to visit our tutorial page on how to setup your new virtual hardware. 
+      Purchase complete. Please make sure to visit our tutorial page on how to setup your new virtual hardware. 
       <!-- <router-link :to="{ name:'token', params: { addr } }" exact>Click this link to see your token page.</router-link> -->
     </b-alert>
   </b-modal>
@@ -109,8 +105,7 @@ export default {
       vrigMarketContract: {},
       approvalTx: 'Pending...',
       purchaseTx: 'Pending...',
-      purchaseAddr: 'Pending...',
-      txUrl: 'https://ropsten.etherscan.io/tx/',
+      txUrl: 'https://rinkeby.etherscan.io/tx/',
       loading: true
     }
   },
@@ -126,6 +121,8 @@ export default {
       await this.vgpuMarketContract.buy(id).then(response => {
         console.log(response)
         this.purchaseTx = response.tx
+        this.loading = false
+        this.loadVGPUMarket()
       })
     },
     async purchasevRig (id, price) {
@@ -140,6 +137,8 @@ export default {
       await this.vrigMarketContract.buy(id).then(response => {
         console.log(response)
         this.purchaseTx = response.tx
+        this.loading = false
+        this.loadVRIGMarket()
       })
     },
     async initContracts () {
