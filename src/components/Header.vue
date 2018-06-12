@@ -7,7 +7,8 @@
                     <li class="nav-item"><router-link class="nav-link" :to="{ name:'home' }" exact>Home</router-link></li>
                     <li class="nav-item"><router-link class="nav-link" :to="{ name:'create' }">Token</router-link></li>
                     <li class="nav-item"><router-link class="nav-link" :to="{ name:'quarry' }">Quarry</router-link></li>
-                    <li class="nav-item"><router-link class="nav-link" :to="{ name:'market' }">Market</router-link></li>                    
+                    <li class="nav-item"><router-link class="nav-link" :to="{ name:'market' }">Market</router-link></li>
+                    <li class="nav-item"><router-link class="nav-link" :to="{ name:'vrig' }">Configure</router-link></li>                 
                     <!-- <li class="nav-item"><a href="#about-us" class="nav-link">Market</a></li> -->
                 </ul>
             </div>

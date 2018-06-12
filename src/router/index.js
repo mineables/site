@@ -32,6 +32,11 @@ export default new Router({
       path: '/market',
       name: 'market',
       component: () => import('@/views/Marketplace')
+    },
+    {
+      path: '/vrig/:id',
+      name: 'vrig',
+      component: () => import('@/views/Vrig')
     }
   ]
 })
