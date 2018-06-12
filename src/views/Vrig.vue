@@ -3,16 +3,36 @@
    
    <div class="container" id="main">
 
-    <h2>Virtual Rig Configuration</h2>
-      <p>Drag Virtual GPUs into top section to configure Virtual Rig.</p>
+    <h2 class="header-text">Virtual Rig Configuration</h2>
+      <p>Drag Virtual GPUs and other components into top section to configure Virtual Rig.</p>
 
-      <button class="transferFunds">Update Configuration!</button>
+      <br>
+ 
+        <div class="drag">
+            <h4>Virtual Rig</h4>
+            <div class="row vrig">
+              <draggable v-model="list" class="dragArea" :options="{group:'people',animation: 250}">
+                <div class="floatleft" v-for="element in list">
+                  <img id="drag1" src="static/icons/vgpu.png" width="100" height="100"> 
+                  
+                </div>
+              </draggable>
+            </div>
 
-      <h2>Virtual Rig</h2>
-      <div id="vrig" ondrop="drop(event)" ondragover="allowDrop(event)">
-      </div>
+            <br>
+            <h4>Available Components</h4>
+            <div class="row available">
+              <draggable v-model="list2" class="dragArea" :options="{group:'people',animation: 250}">
+                <div class="floatleft" v-for="element in list2">
+                  <img id="drag1" src="static/icons/vgpu.png" width="100" height="100"> 
+                  
+                </div>
+              </draggable>
+            </div>
+        </div>
 
-      <section>
+        <br>
+        <section>
           <table>
             <tr>
               <th>Name</th>
@@ -28,50 +48,22 @@
            <tr>
               <td>{{ vrig.name }}</td>
               <td>{{ vrig.experience }}</td>
+              <td>{{ vrig.lifeDecrement }}</td>
               <td>{{ vrig.executionCost }}</td>
               <td>{{ vrig.sockets }}</td>
-              <td>{{ vrig.vhash }} H/s</td>
-              <td>{{ vrig.accuracy }}</td>
+              <td>{{ vrig.vhash }}</td>
+              <td>{{ vrig.accuracy }}%</td>
               <td>{{ vrig.level }}</td>
-              <td>4, 5, 6</td>
+              <td>{{ vrig.childArtifacts }}</td>
             </tr>
-            
           </table>
+        </section>
 
-      </section>
-
-      <br>
- 
-
-      
-        <h1>Vue Draggable</h1>           
-        <div class="drag">
-            <h2>vRig Configuration</h2>
-            <div class="row vrig">
-              <draggable v-model="list" class="dragArea" :options="{group:'people',animation: 250}">
-                <div class="floatleft" v-for="element in list">
-                  <img id="drag1" src="static/icons/vgpu.png" width="100" height="100"> 
-                  
-                </div>
-              </draggable>
-            </div>
-
-            <br>
-            <h2>Available Components</h2>
-            <div class="row available">
-              <draggable v-model="list2" class="dragArea" :options="{group:'people',animation: 250}">
-                <div class="floatleft" v-for="element in list2">
-                  <img id="drag1" src="static/icons/vgpu.png" width="100" height="100"> 
-                  
-                </div>
-              </draggable>
-            </div>
-        </div>
-        
+        <br>
+        <b-button class="btn btn-lg btn-success" data-toggle="modal" data-target="#myModal" @click="purchasevRig(result.id,result.mithrilPrice)">
+          Update Configuration
+        </b-button>
       </div>
-
-
-
 
   </section>
 </template>
@@ -116,12 +108,21 @@ export default {
       this.vrigContract = await VirtualMiningBoard.at(ADDRESS.VRIG)
     },
     async loadVrig (id) {
-      this.vrig = await this.vrigContract.baseStats(id)
-      console.log(this.vrig)
-    },
-    async mounted () {
-      await this.initContracts()
-      this.loadVrig(this.id)
+      let stats = await this.vrigContract.baseStats(id)
+      let artifact = {}
+      artifact.id = id
+      artifact.name = stats[0]
+      let basicStats = stats[1]
+      artifact.experience = basicStats[0].toNumber()
+      artifact.lifeDecrement = basicStats[1].toNumber()
+      artifact.executionCost = basicStats[2].toNumber()
+      artifact.sockets = basicStats[3].toNumber()
+      artifact.vhash = basicStats[4].toNumber()
+      artifact.accuracy = basicStats[5].toNumber()
+      artifact.level = basicStats[6].toNumber()
+      artifact.childArtifacts = stats[2]
+      console.log(artifact)
+      this.vrig = artifact
     },
     add: function () {
       this.list.push({
@@ -133,18 +134,25 @@ export default {
         name: 'Edgard'
       }]
     }
+  },
+  async mounted () {
+    await this.initContracts()
+    this.loadVrig(this.id)
   }
 }
 </script>
 
 <style>
 .vrig {
-    border: 5px dashed black;
+  padding: 20px;
+  background-color: #d0f0e9;
+  border: 5px dashed black;
 }
 
 .available {
-    background-color: lightgray;
-    border: 5px dashed black;
+  padding: 20px;
+  background-color: lightgray;
+  // border: 5px dashed black;
 }
 
 .socket-artifact {

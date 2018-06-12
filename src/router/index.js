@@ -34,7 +34,7 @@ export default new Router({
       component: () => import('@/views/Marketplace')
     },
     {
-      path: '/vrig/:id',
+      path: '/vrig/configure/:id',
       name: 'vrig',
       component: () => import('@/views/Vrig')
     }
