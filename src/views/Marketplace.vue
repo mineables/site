@@ -18,7 +18,7 @@
                   
                   <p class="card-text">Remaining cycles: {{ result.life }}</p>
                   <p class="card-text modifier" v-for="modifier in result.modifiers" >{{ modifier }}</p>
-                  <b-button class="btn btn-lg btn-outline-info" @click="purchasevGPU(result.id,result.mithrilPrice)">
+                  <b-button class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal" @click="purchasevGPU(result.id,result.mithrilPrice)">
                     Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
                   </b-button>
                   <br>
@@ -50,7 +50,7 @@
                       <li>Level: {{ result.level }}</li>
                     </ul>
                   </p>
-                  <b-button class="btn btn-lg btn-outline-info" @click="purchasevRig(result.id,result.mithrilPrice)">
+                  <b-button class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal" @click="purchasevRig(result.id,result.mithrilPrice)">
                     Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
                   </b-button>
                   <br>
@@ -63,6 +63,26 @@
     </b-tab>
 
   </b-tabs>
+  <b-modal ref="modal" id="modal-center" size="lg" centered title="Processing..." hide-footer >
+    <div class="form-group">
+      <label for="blockTimeInMinutes">Approval Transaction</label><br/>
+      <a v-bind:href="txUrl + approvalTx" target="_blank">{{ approvalTx }}</a>
+    </div>
+    <div class="form-group">
+      <label for="blockTimeInMinutes">Purchase Transaction</label><br/>
+      <a v-bind:href="txUrl + purchaseTx" target="_blank">{{ purchaseTx }}</a>
+    </div>
+    <div class="form-group">
+      <label for="blockTimeInMinutes">Address</label><br/>
+      <a v-bind:href="txUrl + purchaseAddr" target="_blank">{{ purchaseAddr }}</a>
+    </div>
+    <b-progress :value="100" :max="100" :striped="loading" :animated="loading"></b-progress><br/>
+    <b-alert show variant="warning" v-if="loading">Please don't refresh this page until the transactions are completed.</b-alert>
+    <b-alert show variant="success" v-if="!loading">
+      Congratulations for your purchase. Please make sure to visit our tutorial page on how to setup your new virtual hardware. 
+      <!-- <router-link :to="{ name:'token', params: { addr } }" exact>Click this link to see your token page.</router-link> -->
+    </b-alert>
+  </b-modal>
   </div>
 </template>
 
@@ -86,22 +106,41 @@ export default {
       vrigContract: {},
       mithrilContract: {},
       vgpuMarketContract: {},
-      vrigMarketContract: {}
+      vrigMarketContract: {},
+      approvalTx: 'Pending...',
+      purchaseTx: 'Pending...',
+      purchaseAddr: 'Pending...',
+      txUrl: 'https://ropsten.etherscan.io/tx/',
+      loading: true
     }
   },
   methods: {
     async purchasevGPU (id, price) {
       console.log(id)
       console.log(price)
-      await this.mithrilContract.approve(ADDRESS.VGPU_MARKET, price)
-      await this.vgpuMarketContract.buy(id)
+      this.$refs.modal.show()
+      await this.mithrilContract.approve(ADDRESS.VGPU_MARKET, price).then(response => {
+        console.log(response)
+        this.approvalTx = response.tx
+      })
+      await this.vgpuMarketContract.buy(id).then(response => {
+        console.log(response)
+        this.purchaseTx = response.tx
+      })
     },
     async purchasevRig (id, price) {
       console.log(id)
       console.log(price)
       console.log(ADDRESS.VRIG_MARKET)
-      await this.mithrilContract.approve(ADDRESS.VRIG_MARKET, price)
-      await this.vrigMarketContract.buy(id)
+      this.$refs.modal.show()
+      await this.mithrilContract.approve(ADDRESS.VRIG_MARKET, price).then(response => {
+        console.log(response)
+        this.approvalTx = response.tx
+      })
+      await this.vrigMarketContract.buy(id).then(response => {
+        console.log(response)
+        this.purchaseTx = response.tx
+      })
     },
     async initContracts () {
       var Market = window.TruffleContract({abi: VGPU_MARKET_ABI})
