@@ -90,7 +90,7 @@
           </div>
           
           <b-progress :value="100" :max="100" :striped="loading" :animated="loading"></b-progress><br/>
-          <b-alert show variant="warning" v-if="loading">Please don't refresh this page until the transactions are completed.</b-alert>
+          <b-alert show variant="warning" v-if="loading">Please don't refresh this page until the transaction is completed.</b-alert>
           <b-alert show variant="success" v-if="!loading">
             Configuration saved. 
             <!-- <router-link :to="{ name:'token', params: { addr } }" exact>Click this link to see your token page.</router-link> -->
@@ -130,6 +130,7 @@ export default {
     async saveConfig () {
       this.approvalTx = 'Pending...'
       var idArray = []
+      this.loading = true
       this.vrigComponents.forEach(function (element) {
         idArray.push(element.artifactId.toNumber())
       })
@@ -368,10 +369,6 @@ td, th {
 
 .modifier {
   font-style: italic;
-}
-
-table {
-  font-size: 120%;
 }
 
 

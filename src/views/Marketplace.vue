@@ -6,7 +6,7 @@
              dismissible
              :show="showDismissibleAlert"
              @dismissed="showDismissibleAlert=false">
-      Artifact is currently owned by wallet
+      Artifact is owned by current wallet
   </b-alert>
   
   <b-tabs>
