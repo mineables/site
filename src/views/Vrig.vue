@@ -9,11 +9,21 @@
       <br>
  
         <div class="drag">
-            <h4>Virtual Rig</h4>
+            <h4>Virtual Rig - '{{ vrig.name }}'</h4>
             <div class="row vrig">
-              <draggable v-model="list" class="dragArea" :options="{group:'people',animation: 250}">
-                <div class="floatleft" v-for="element in list">
-                  <img id="drag1" src="static/icons/vgpu.png" width="100" height="100"> 
+              <draggable v-model="vrigComponents" class="dragArea" @end="doneDragging" :options="{group:'people',animation: 250}">
+                <div class="floatleft socket-artifact" v-for="element in vrigComponents">
+                  <b-popover :target="'artifact'+element.artifactId" placement="top" triggers="hover focus">
+                     <template slot="title">{{ element.artifactId }} - {{ element.name }}</template>
+                     <ul class="no-bullets">
+                      <li>Life: {{ element.life }}</li>
+                      <li>Parent: {{ element.parent }}</li>
+                      <li class="modifier" v-for="modifier in element.modifiers">
+                        {{modifier}}
+                      </li>
+                    </ul>
+                  </b-popover>                  
+                  <img :id="'artifact'+element.artifactId" src="static/icons/vgpu.png" width="100" height="100">
                   
                 </div>
               </draggable>
@@ -22,10 +32,19 @@
             <br>
             <h4>Available Components</h4>
             <div class="row available">
-              <draggable v-model="list2" class="dragArea" :options="{group:'people',animation: 250}">
-                <div class="floatleft" v-for="element in list2">
-                  <img id="drag1" src="static/icons/vgpu.png" width="100" height="100"> 
-                  
+              <draggable v-model="availableComponents" class="dragArea" @end="doneDragging" :options="{group:'people',animation: 250}">
+                <div class="floatleft socket-artifact" v-for="element in availableComponents">
+                  <b-popover :target="'artifact'+element.artifactId" placement="bottom" triggers="hover focus">
+                     <template slot="title">{{ element.artifactId }} - {{ element.name }}</template>
+                     <ul class="no-bullets">
+                      <li>Life: {{ element.life }}</li>
+                      <li>Parent: {{ element.parent }}</li>
+                      <li class="modifier" v-for="modifier in element.modifiers">
+                        {{modifier}}
+                      </li>
+                    </ul>
+                  </b-popover>                  
+                  <img :id="'artifact'+element.artifactId" src="static/icons/vgpu.png" width="100" height="100"> 
                 </div>
               </draggable>
             </div>
@@ -43,7 +62,7 @@
               <th>vHash Rate (in MH/s)</th>
               <th>Accuracy</th>
               <th>Level</th>
-              <th>Attached Artifacts</th>
+              <th>Children</th>
             </tr>
            <tr>
               <td>{{ vrig.name }}</td>
@@ -60,9 +79,23 @@
         </section>
 
         <br>
-        <b-button class="btn btn-lg btn-success" data-toggle="modal" data-target="#myModal" @click="purchasevRig(result.id,result.mithrilPrice)">
-          Update Configuration
+        <b-button class="btn btn-lg btn-success" :disabled="buttonDisabled" data-toggle="modal" data-target="#myModal" @click="saveConfig()">
+          Commit Configuration
         </b-button>
+
+        <b-modal ref="modal" id="modal-center" size="lg" centered title="Processing..." hide-footer >
+          <div class="form-group">
+            <label for="blockTimeInMinutes">Save Configuration Transaction</label><br/>
+            <a v-bind:href="txUrl + approvalTx" target="_blank">{{ approvalTx }}</a>
+          </div>
+          
+          <b-progress :value="100" :max="100" :striped="loading" :animated="loading"></b-progress><br/>
+          <b-alert show variant="warning" v-if="loading">Please don't refresh this page until the transactions are completed.</b-alert>
+          <b-alert show variant="success" v-if="!loading">
+            Configuration saved. 
+            <!-- <router-link :to="{ name:'token', params: { addr } }" exact>Click this link to see your token page.</router-link> -->
+          </b-alert>
+        </b-modal>
       </div>
 
   </section>
@@ -73,7 +106,7 @@ import draggable from 'vuedraggable'
 
 import { ADDRESS } from '../../static/scripts/addr.js'
 // import { MINEABLE_ABI } from '../../static/scripts/mineable_abi.js'
-// import { CHILD_ARTIFACT_ABI } from '../../static/scripts/child_artifact_abi.js'
+import { CHILD_ARTIFACT_ABI } from '../../static/scripts/child_artifact_abi.js'
 import { VIRTUAL_MINING_BOARD_ABI } from '../../static/scripts/virtual_mining_board_abi.js'
 
 export default {
@@ -85,30 +118,57 @@ export default {
     return {
       id: this.$route.params.id,
       vrig: {},
-      list: [{
-        name: 'John'
-      }, {
-        name: 'Joao'
-      }, {
-        name: 'Jean'
-      }],
-      list2: [{
-        name: 'Juan'
-      }, {
-        name: 'Edgard'
-      }, {
-        name: 'Johnson'
-      }]
+      vrigComponents: [],
+      availableComponents: [],
+      buttonDisabled: true,
+      approvalTx: 'Pending...',
+      txUrl: 'https://rinkeby.etherscan.io/tx/',
+      loading: true
     }
   },
   methods: {
+    async saveConfig () {
+      this.approvalTx = 'Pending...'
+      var idArray = []
+      this.vrigComponents.forEach(function (element) {
+        idArray.push(element.artifactId.toNumber())
+      })
+      this.$refs.modal.show()
+      await this.vrigContract.configureChildren(this.id, idArray).then(response => {
+        console.log(response)
+        this.approvalTx = response.tx
+        this.loading = false
+        this.vrigComponents = []
+        this.availableComponents = []
+        this.loadVrig(this.id)
+      })
+    },
+    async doneDragging (evt) {
+      var idArray = []
+      this.vrigComponents.forEach(function (element) {
+        idArray.push(element.artifactId.toNumber())
+      })
+      this.buttonDisabled = false // idArray.length === 0
+      let basicStats = await this.vrigContract.checkMerged(this.id, idArray)
+      this.vrig.experience = basicStats[0].toNumber()
+      this.vrig.lifeDecrement = basicStats[1].toNumber()
+      this.vrig.executionCost = basicStats[2].toNumber()
+      this.vrig.sockets = basicStats[3].toNumber()
+      this.vrig.vhash = basicStats[4].toNumber() / 1000000
+      this.vrig.accuracy = basicStats[5].toNumber()
+      this.vrig.level = basicStats[6].toNumber()
+    },
     async initContracts () {
       var VirtualMiningBoard = window.TruffleContract({abi: VIRTUAL_MINING_BOARD_ABI})
       VirtualMiningBoard.setProvider(window.web3.currentProvider)
       this.vrigContract = await VirtualMiningBoard.at(ADDRESS.VRIG)
+
+      var ChildArtifact = window.TruffleContract({abi: CHILD_ARTIFACT_ABI})
+      ChildArtifact.setProvider(window.web3.currentProvider)
+      this.vgpuContract = await ChildArtifact.at(ADDRESS.VGPU)
     },
     async loadVrig (id) {
-      let stats = await this.vrigContract.baseStats(id)
+      let stats = await this.vrigContract.mergedStats(id)
       let artifact = {}
       artifact.id = id
       artifact.name = stats[0]
@@ -117,26 +177,91 @@ export default {
       artifact.lifeDecrement = basicStats[1].toNumber()
       artifact.executionCost = basicStats[2].toNumber()
       artifact.sockets = basicStats[3].toNumber()
-      artifact.vhash = basicStats[4].toNumber()
+      artifact.vhash = basicStats[4].toNumber() / 1000000
       artifact.accuracy = basicStats[5].toNumber()
       artifact.level = basicStats[6].toNumber()
       artifact.childArtifacts = stats[2]
-      console.log(artifact)
       this.vrig = artifact
+      this.availableComponents = []
+      let balance = await this.vgpuContract.balanceOf(window.web3.eth.coinbase)
+      for (var i = 0; i < balance; i++) {
+        let artifactId = await this.vgpuContract.tokenOfOwnerByIndex(window.web3.eth.coinbase, i)
+        let a = await this.vgpuContract.artifactAt(artifactId)
+        let vgpu = {}
+        vgpu.artifactId = artifactId
+        vgpu.name = a[0]
+        vgpu.parent = a[1].toNumber()
+        vgpu.life = parseInt(a[2])
+        let mods = a[3]
+        vgpu.modifiers = []
+        for (var j = 0; j < mods.length; j++) {
+          vgpu.modifiers.push(this.parseModifier(mods[j]))
+        }
+        if (vgpu.parent === Number(this.id)) {
+          this.vrigComponents.push(vgpu)
+        } else if (vgpu.parent === 0) {
+          this.availableComponents.push(vgpu)
+        }
+      }
     },
-    add: function () {
-      this.list.push({
-        name: 'Juan'
-      })
+    parseModifier: function (modifier) {
+      var tuple = this.parseCommand(modifier)
+      var position = tuple[0]
+      // var value = tuple[1]
+      var op = tuple[2]
+      var mod = tuple[3]
+
+      if (op === 1) return '[+] Adds ' + mod + ' to ' + this.getPositionName(position)
+      if (op === 2) return '[-] Subtracts ' + mod + ' from ' + this.getPositionName(position)
+      if (op === 3) return '[*] Multiplies ' + this.getPositionName(position) + ' by ' + mod
+      if (op === 4) return '[/] Divides ' + this.getPositionName(position) + ' by ' + mod
+      if (op === 5) return '[+%] Adds ' + mod + '% to ' + this.getPositionName(position)
+      if (op === 6) return '[-%] Subtracts ' + mod + '% from ' + this.getPositionName(position)
+      if (op === 7) return 'Requires ' + this.getPositionName(position) + ' > ' + mod
+      if (op === 8) return 'Requires ' + this.getPositionName(position) + ' < ' + mod
+      if (op === 9) return 'Adds ' + this.parseExponent(mod) + ' to ' + this.getPositionName(position)
     },
-    replace: function () {
-      this.list = [{
-        name: 'Edgard'
-      }]
+    parseCommand: function (command) {
+      var s = String(command)
+      var position = s.substring(1, 3)
+      var value = s.substring(3)
+      var op = value.substring(0, 1)
+      var modValue = value.substring(1, 4)
+      return [Number(position), Number(value), Number(op), Number(modValue)]
+    },
+    getPositionName: function (position) {
+      if (position === 0) {
+        return 'Experience'
+      } else if (position === 1) {
+        return 'Life Decrement'
+      } else if (position === 2) {
+        return 'Execution Cost'
+      } else if (position === 3) {
+        return 'Socket Count'
+      } else if (position === 4) {
+        return 'Virtual Hash Rate'
+      } else if (position === 5) {
+        return 'Accuracy'
+      } else if (position === 6) {
+        return 'Level'
+      } else {
+        return '[' + position + ']'
+      }
+    },
+    parseExponent: function (op) {
+      var s = String(op)
+      var multiplier = s.substring(0, 1)
+      var exp = s.substring(1, 3)
+      return Number(multiplier) * Math.pow(10, Number(exp))
+    },
+    async test () {
+      let stats = await this.vrigContract.checkMerged(this.id, [1, 2], {from: window.web3.eth.coinbase})
+      console.log(stats)
     }
   },
   async mounted () {
     await this.initContracts()
+    await this.test()
     this.loadVrig(this.id)
   }
 }
@@ -229,6 +354,24 @@ td, th {
 .drag-handle:hover {
   cursor: grab;
   cursor: -webkit-grab;
+}
+
+.dragArea {
+  height: 100px;
+  width: 100%;
+  // border: 5px dashed black;
+}
+
+.no-bullets {
+  list-style-type: none;
+}
+
+.modifier {
+  font-style: italic;
+}
+
+table {
+  font-size: 120%;
 }
 
 

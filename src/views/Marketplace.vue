@@ -2,6 +2,13 @@
 <div class="container wrapped">
   <h2 class="header-text">Virtual Artifact Market</h2>
   <p>Purchase ERC721 Virtual Rigs and GPUs with 0xMithril. vRigs and vGPUs can be attached to your mining account to vastly improve mining performance. Virtualizing hash power saves overall mining hardware, maintenance and electricity costs and can additionally be combined with traditional hardware-based mining operations.</p>
+  <b-alert variant="warning"
+             dismissible
+             :show="showDismissibleAlert"
+             @dismissed="showDismissibleAlert=false">
+      Artifact is currently owned by wallet
+  </b-alert>
+  
   <b-tabs>
     <br>
     <br>
@@ -106,40 +113,52 @@ export default {
       approvalTx: 'Pending...',
       purchaseTx: 'Pending...',
       txUrl: 'https://rinkeby.etherscan.io/tx/',
-      loading: true
+      loading: true,
+      showDismissibleAlert: false
     }
   },
   methods: {
     async purchasevGPU (id, price) {
-      console.log(id)
-      console.log(price)
-      this.$refs.modal.show()
-      await this.mithrilContract.approve(ADDRESS.VGPU_MARKET, price).then(response => {
-        console.log(response)
-        this.approvalTx = response.tx
-      })
-      await this.vgpuMarketContract.buy(id).then(response => {
-        console.log(response)
-        this.purchaseTx = response.tx
-        this.loading = false
-        this.loadVGPUMarket()
-      })
+      this.approvalTx = 'Pending...'
+      this.purchaseTx = 'Pending...'
+      let owner = await this.vgpuContract.ownerOf(id)
+      if (owner === window.web3.eth.coinbase) {
+        this.showDismissibleAlert = true
+      } else {
+        this.$refs.modal.show()
+        await this.mithrilContract.approve(ADDRESS.VGPU_MARKET, price).then(response => {
+          console.log(response)
+          this.approvalTx = response.tx
+        })
+        await this.vgpuMarketContract.buy(id).then(response => {
+          console.log(response)
+          this.purchaseTx = response.tx
+          this.loading = false
+          this.vgpuResults = []
+          this.loadVGPUMarket()
+        })
+      }
     },
     async purchasevRig (id, price) {
-      console.log(id)
-      console.log(price)
-      console.log(ADDRESS.VRIG_MARKET)
-      this.$refs.modal.show()
-      await this.mithrilContract.approve(ADDRESS.VRIG_MARKET, price).then(response => {
-        console.log(response)
-        this.approvalTx = response.tx
-      })
-      await this.vrigMarketContract.buy(id).then(response => {
-        console.log(response)
-        this.purchaseTx = response.tx
-        this.loading = false
-        this.loadVRIGMarket()
-      })
+      this.approvalTx = 'Pending...'
+      this.purchaseTx = 'Pending...'
+      let owner = await this.vrigContract.ownerOf(id)
+      if (owner === window.web3.eth.coinbase) {
+        this.showDismissibleAlert = true
+      } else {
+        this.$refs.modal.show()
+        await this.mithrilContract.approve(ADDRESS.VRIG_MARKET, price).then(response => {
+          console.log(response)
+          this.approvalTx = response.tx
+        })
+        await this.vrigMarketContract.buy(id).then(response => {
+          console.log(response)
+          this.purchaseTx = response.tx
+          this.loading = false
+          this.vrigResults = []
+          this.loadVRIGMarket()
+        })
+      }
     },
     async initContracts () {
       var Market = window.TruffleContract({abi: VGPU_MARKET_ABI})
