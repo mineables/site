@@ -8,7 +8,7 @@
                     <li class="nav-item"><router-link class="nav-link" :to="{ name:'create' }">Token</router-link></li>
                     <li class="nav-item"><router-link class="nav-link" :to="{ name:'quarry' }">Quarry</router-link></li>
                     <li class="nav-item"><router-link class="nav-link" :to="{ name:'market' }">Market</router-link></li>
-                    <!-- <li class="nav-item"><router-link class="nav-link" :to="{ name:'vrig' }">Configure</router-link></li> -->             
+                    <li class="nav-item"><router-link class="nav-link" :to="{ name:'configure' }">Configure</router-link></li>          
                 </ul>
             </div>
         </nav>

@@ -24,7 +24,6 @@
                     </ul>
                   </b-popover>                  
                   <img :id="'artifact'+element.artifactId" src="static/icons/vgpu.png" width="100" height="100">
-                  
                 </div>
               </draggable>
             </div>
@@ -92,8 +91,7 @@
           <b-progress :value="100" :max="100" :striped="loading" :animated="loading"></b-progress><br/>
           <b-alert show variant="warning" v-if="loading">Please don't refresh this page until the transaction is completed.</b-alert>
           <b-alert show variant="success" v-if="!loading">
-            Configuration saved. 
-            <!-- <router-link :to="{ name:'token', params: { addr } }" exact>Click this link to see your token page.</router-link> -->
+            Virtual Rig configuration saved
           </b-alert>
         </b-modal>
       </div>

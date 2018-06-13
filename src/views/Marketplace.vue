@@ -22,7 +22,6 @@
                 <img class="card-img-top" src="static/icons/vgpu.png" alt="Card image cap">
                 <div class="card-body">
                   <h4 class="card-title">{{ result.name }} </h4>
-                  
                   <p class="card-text">Remaining cycles: {{ result.life }}</p>
                   <p class="card-text modifier" v-for="modifier in result.modifiers" >{{ modifier }}</p>
                   <b-button class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal" @click="purchasevGPU(result.id,result.mithrilPrice)">
@@ -82,8 +81,8 @@
     <b-progress :value="100" :max="100" :striped="loading" :animated="loading"></b-progress><br/>
     <b-alert show variant="warning" v-if="loading">Please don't refresh this page until the transactions are completed.</b-alert>
     <b-alert show variant="success" v-if="!loading">
-      Purchase complete. Please make sure to visit our tutorial page on how to setup your new virtual hardware. 
-      <!-- <router-link :to="{ name:'token', params: { addr } }" exact>Click this link to see your token page.</router-link> -->
+      Purchase complete.
+      <li class="nav-item"><router-link class="nav-link" :to="{ name:'configure' }">Configure your Virtual Rig</router-link></li>          
     </b-alert>
   </b-modal>
   </div>
@@ -101,7 +100,7 @@ export default {
   name: 'Marketplace',
   data () {
     return {
-      token: {},
+      currentVrigId: 0,
       vgpuResults: [],
       vrigResults: [],
       marketContract: {},
