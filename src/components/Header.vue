@@ -1,6 +1,7 @@
 <template>
     <header id="header">
-        <nav class="navbar navbar-expand-lg fixed-top"><img class="logo" src="static/icons/mithril-proto.png" /><!--<a class="navbar-brand">0xMithril</a>-->
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <img class="logo" src="static/icons/mithril-proto.png" /><span class="navbar-brand">Mineables</span>
             <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><span></span><span></span><span></span></button>
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto align-items-start align-items-lg-center">
@@ -38,7 +39,7 @@ export default {
     z-index: 999;
 }
 .navbar-brand {
-    margin-left: 140px;
+    margin-left: 90px;
 }
 
 nav.navbar {
@@ -64,5 +65,15 @@ nav.navbar {
     cursor: pointer;
 }
 
+.navbar-brand {
+  color: #37427A;
+  font-family: "Arial";
+  letter-spacing: 0.15em;
+  font-size: 1.3em;
+  line-height: 2;
+  font-weight: 500;
+  text-rendering: optimizeLegibility;
+  text-align: center;
+}
 
 </style>
