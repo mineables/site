@@ -1,7 +1,7 @@
 <template>
   <section id="createToken">
     <div class="container">
-      <h2 class="header-text">Your Virtual Rigs</h2>
+      <h2 class="header-text">My Virtual Rigs</h2>
       <ul class="no-bullets">
         <li v-for="element in vrigIds">
           <router-link class="btn btn-link btn-lg" tag="button" :to="{ name: 'vrig', params: { id: element.id }}" > {{ element.name }} </router-link>
