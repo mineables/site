@@ -1,5 +1,9 @@
 <template>
 <div class="container wrapped">
+
+  <br><br>
+  <h4 class="balance"> <b-badge variant="light">Balance:  {{ mithrilBalance }} <span class="tengwar">5Ì#</span></b-badge> </h4>
+
   <h2 class="header-text">Virtual Artifact Market</h2>
   <p>Purchase ERC721 Virtual Rigs and GPUs with 0xMithril. vRigs and vGPUs can be attached to your mining account to vastly improve mining performance. Virtualizing hash power saves overall mining hardware, maintenance and electricity costs and can additionally be combined with traditional hardware-based mining operations.</p>
   <b-alert variant="warning"
@@ -8,35 +12,14 @@
              @dismissed="showDismissibleAlert=false">
       Artifact is owned by current wallet
   </b-alert>
+
   
+
   <b-tabs>
     <br>
     <br>
-    <b-tab title="VGPU Market" active>
-      <section id="vgpu-market">
-        <div class="row">
-            <div v-for="result in vgpuResults" class="col-sm-4">
-              <div class="card market-card">
-                
-                <h3 class="card-title price-wrap"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
-                <img class="card-img-top" src="static/icons/vgpu.png" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">{{ result.name }} </h4>
-                  <p class="card-text">Remaining cycles: {{ result.life }}</p>
-                  <p class="card-text modifier" v-for="modifier in result.modifiers" >{{ modifier }}</p>
-                  <b-button class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal" @click="purchasevGPU(result.id,result.mithrilPrice)">
-                    Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
-                  </b-button>
-                  <br>
-                  <span class="uid">uid: {{ result.id }} </span>
-                </div>
-              </div>
-            </div>
-        </div>
-      </section>
-    </b-tab>
 
-    <b-tab title="VRIG Market">
+    <b-tab title="VRIG Market" active>
       <section id="vrig-market">
         <div class="row">
             <div v-for="result in vrigResults" class="col-sm-4">
@@ -64,6 +47,30 @@
                   	  <p>Owner must remove all vGPUs from vRig before in order to sell</p>
                   </b-alert>
 
+                  <br>
+                  <span class="uid">uid: {{ result.id }} </span>
+                </div>
+              </div>
+            </div>
+        </div>
+      </section>
+    </b-tab>
+
+    <b-tab title="VGPU Market">
+      <section id="vgpu-market">
+        <div class="row">
+            <div v-for="result in vgpuResults" class="col-sm-4">
+              <div class="card market-card">
+                
+                <h3 class="card-title price-wrap"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
+                <img class="card-img-top" src="static/icons/vgpu.png" alt="Card image cap">
+                <div class="card-body">
+                  <h4 class="card-title">{{ result.name }} </h4>
+                  <p class="card-text">Remaining cycles: {{ result.life }}</p>
+                  <p class="card-text modifier" v-for="modifier in result.modifiers" >{{ modifier }}</p>
+                  <b-button class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal" @click="purchasevGPU(result.id,result.mithrilPrice)">
+                    Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
+                  </b-button>
                   <br>
                   <span class="uid">uid: {{ result.id }} </span>
                 </div>
@@ -118,7 +125,8 @@ export default {
       purchaseTx: 'Pending...',
       txUrl: 'https://rinkeby.etherscan.io/tx/',
       loading: true,
-      showDismissibleAlert: false
+      showDismissibleAlert: false,
+      mithrilBalance: 0
     }
   },
   methods: {
@@ -278,10 +286,14 @@ export default {
       var multiplier = s.substring(0, 1)
       var exp = s.substring(1, 3)
       return Number(multiplier) * Math.pow(10, Number(exp))
+    },
+    async loadMithrilBalance () {
+      this.mithrilBalance = this.readable(await this.mithrilContract.balanceOf(window.web3.eth.coinbase))
     }
   },
   async mounted () {
     await this.initContracts()
+    this.loadMithrilBalance()
     this.loadVGPUMarket()
     this.loadVRIGMarket()
   }
@@ -351,4 +363,11 @@ export default {
   padding-top: 2em;
 }
 
+.header-text {
+  clear: both;
+}
+
+.balance {
+  float:right;
+}
 </style>
