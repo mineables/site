@@ -4,7 +4,7 @@
       <h2 class="header-text">Your Virtual Rigs</h2>
       <ul class="no-bullets">
         <li v-for="element in vrigIds">
-          <router-link class="btn btn-outline-success btn-lg" tag="button" :to="{ name: 'vrig', params: { id: element.id }}" > {{ element.name }} </router-link>
+          <router-link class="btn btn-link btn-lg" tag="button" :to="{ name: 'vrig', params: { id: element.id }}" > {{ element.name }} </router-link>
         </li>
       </ul>
     </div>

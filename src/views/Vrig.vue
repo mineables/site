@@ -147,7 +147,7 @@ export default {
       this.vrigComponents.forEach(function (element) {
         idArray.push(element.artifactId.toNumber())
       })
-      this.buttonDisabled = false // idArray.length === 0
+      this.buttonDisabled = false
       let basicStats = await this.vrigContract.checkMerged(this.id, idArray)
       this.vrig.experience = basicStats[0].toNumber()
       this.vrig.lifeDecrement = basicStats[1].toNumber()

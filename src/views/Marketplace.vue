@@ -56,9 +56,14 @@
                       <li>Level: {{ result.level }}</li>
                     </ul>
                   </p>
-                  <b-button class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal" @click="purchasevRig(result.id,result.mithrilPrice)">
+                  <b-button v-if="result.childArtifacts.length < 1" class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal" @click="purchasevRig(result.id,result.mithrilPrice)">
                     Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
                   </b-button>
+                  <b-alert v-if="result.childArtifacts.length > 0" variant="warning" show>
+                  	  <h5 class="alert-heading">Warning</h5>
+                  	  <p>Owner must remove all vGPUs from vRig before in order to sell</p>
+                  </b-alert>
+
                   <br>
                   <span class="uid">uid: {{ result.id }} </span>
                 </div>
