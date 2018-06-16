@@ -3,6 +3,8 @@
    
    <div class="container" id="main">
 
+   <x-check-metamask></x-check-metamask>
+
     <h2 class="header-text">Virtual Rig Configuration</h2>
       <p>Drag Virtual GPUs and other components into top section to configure Virtual Rig.</p>
 
@@ -101,16 +103,17 @@
 
 <script>
 import draggable from 'vuedraggable'
+import xCheckMetamask from '@/components/CheckMetamask'
 
 import { ADDRESS } from '../../static/scripts/addr.js'
-// import { MINEABLE_ABI } from '../../static/scripts/mineable_abi.js'
 import { CHILD_ARTIFACT_ABI } from '../../static/scripts/child_artifact_abi.js'
 import { VIRTUAL_MINING_BOARD_ABI } from '../../static/scripts/virtual_mining_board_abi.js'
 
 export default {
   name: 'Vrig',
   components: {
-    draggable
+    draggable,
+    xCheckMetamask
   },
   data () {
     return {

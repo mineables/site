@@ -1,6 +1,10 @@
 <template>
   <section id="createToken">
     <div class="container">
+      <x-check-metamask></x-check-metamask>
+      <div class="alert alert-danger" role="alert">
+        This will only work against the Ropsten Network. Please make sure your metamask is not pointing to the Mainnet.
+      </div>
       <div class="row d-flex">
         <div class="col-lg-10">
           <h3>Create Your Own Mineable Token</h3>
@@ -8,12 +12,6 @@
             Fill out the following fields to create your own mineable token.
           </p>
           <form class="container" novalidate>
-            <div class="alert alert-danger" role="alert">
-              This will only work against the Ropsten Network. Please make sure your metamask is not pointing to the Mainnet.
-            </div>
-            <div class="alert alert-warning" role="alert" v-if="wallet != 'local'">
-              Token creating will only work if you have metamask installed and you are logged in.
-            </div>
             <div class="form-group">
               <label for="symbol">Symbol:</label>
               <input type="text" v-model="form.symbol" class="form-control" id="symbol" aria-describedby="symbolHelp" required>
@@ -93,8 +91,13 @@
 import { FACTORY_ABI } from '../../static/scripts/factory_abi.js'
 import { ADDRESS } from '../../static/scripts/addr.js'
 
+import xCheckMetamask from '@/components/CheckMetamask'
+
 export default {
   name: 'CreateToken',
+  components: {
+    xCheckMetamask
+  },
   data () {
     return {
       form: {},

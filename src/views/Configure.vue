@@ -1,6 +1,7 @@
 <template>
   <section id="createToken">
     <div class="container">
+      <x-check-metamask></x-check-metamask>
       <h2 class="header-text">My Virtual Rigs</h2>
       <ul class="no-bullets">
         <li v-for="element in vrigIds">
@@ -15,8 +16,13 @@
 import { ADDRESS } from '../../static/scripts/addr.js'
 import { VIRTUAL_MINING_BOARD_ABI } from '../../static/scripts/virtual_mining_board_abi.js'
 
+import xCheckMetamask from '@/components/CheckMetamask'
+
 export default {
   name: 'CreateToken',
+  components: {
+    xCheckMetamask
+  },
   data () {
     return {
       form: {},

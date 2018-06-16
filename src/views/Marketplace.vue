@@ -2,6 +2,8 @@
 <div class="container wrapped">
 
   <br><br>
+  <x-check-metamask></x-check-metamask>
+  
   <h4 class="balance"> <b-badge variant="light">Balance:  {{ mithrilBalance }} <span class="tengwar">5Ì#</span></b-badge> </h4>
 
   <h2 class="header-text">Virtual Artifact Market</h2>
@@ -108,8 +110,13 @@ import { VGPU_MARKET_ABI } from '../../static/scripts/vgpu_market_abi.js'
 import { VIRTUAL_MINING_BOARD_ABI } from '../../static/scripts/virtual_mining_board_abi.js'
 import { VRIG_MARKET_ABI } from '../../static/scripts/vrig_market_abi.js'
 
+import xCheckMetamask from '@/components/CheckMetamask'
+
 export default {
   name: 'Marketplace',
+  components: {
+    xCheckMetamask
+  },
   data () {
     return {
       currentVrigId: 0,

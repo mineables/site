@@ -2,6 +2,7 @@
   <div>
     <section id="quarry">
         <div class="container">
+            <x-check-metamask></x-check-metamask>
             <div class="row d-flex">
                 <x-quarry-table></x-quarry-table>
             </div>
@@ -13,10 +14,13 @@
 <script>
 
 import xQuarryTable from '@/components/QuarryTable'
+import xCheckMetamask from '@/components/CheckMetamask'
+
 export default {
   name: 'Quarry',
   components: {
-    xQuarryTable
+    xQuarryTable,
+    xCheckMetamask
   }
 }
 </script>

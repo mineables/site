@@ -4,8 +4,10 @@
     <div class="container">
       <div class="row d-flex">
         <div class="col-lg-8 text order-2 order-lg-1">
-          <h1 class="home-title">Mineable ERC20 Tokens</h1>
-          <p class="home-text ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <h1 class="home-title">Welcome to the Mineables Network</h1>
+          <p class="home-text ">
+            Create your own ERC20, <a href="https://eips.ethereum.org/EIPS/eip-918" target="_blank">ERC918</a>-compliant Mineable Token with variable parameters such as name, token supply, and various mining options, without ever having to write a line of code. Buy, trade and configure Virtual Rigs and GPUs to increase mining performance with any token on the Mineables network.
+          </p>
         </div>
         <div class="col-lg-4 order-1 order-lg-2 uk-scrollspy-inview icon">
           <img src="static/icons/mining-contract.png" width="200" alt="..." class="img-fluid-home">
@@ -33,22 +35,24 @@
           <div class="card">
             <div class="card-img-top"><a href="https://github.com/0xMithril/COSMiC-v3-0xMTH" target="_blank"><img width="125" src="static/icons/payment-method.png" alt="Card image cap"/></a></div>
             <div class="card-body">
-              <h5 class="card-title">Download Client</h5>
-              <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+              <h5 class="card-title">Download Miner</h5>
+              <p class="card-text"><a href="https://github.com/0xMithril/COSMiC-v3-0xMTH" target="_blank">Download</a> the Mineables Mining client to mine 0xMithril and other tokens in the network. Based on the open source COSMiC community-developed miner, the mining client includes features to list and configure mineable token targets, applicable mining pools, virtual artifact( vRig and vGPU ) configuration, and general wallet management </p>
             </div>
           </div>
           <div class="card">
             <div class="card-img-top"><router-link class="nav-link" :to="{ name:'create' }"><img width="125" src="static/icons/bitcoin.png" alt="Card image cap"/></router-link></div>
             <div class="card-body">
-              <h5 class="card-title">Create Tokens</h5>
-              <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+              <h5 class="card-title">Create and Discover</h5>
+              <p class="card-text"><router-link :to="{ name:'create' }">Create</router-link> a Mineable 0xToken with the click of a button on the Mineable create token page. You can create your own custom mineable token without ever having to write a line of solidity code. As part of the Mineables network, your token will automatically reward miners 0xMithril anti-gas rebates along with every token issuance. Join the exciting new world of mineable tokens now!</p>
+              <p class="card-text">Determine what 0xTokens on the Mineables Network that you want to mine with a comprehensive <router-link :to="{ name:'quarry' }"> Quarry listing</router-link>.</p>
+
             </div>
           </div>
           <div class="card">
-            <div class="card-img-top"><router-link class="nav-link" :to="{ name:'quarry' }"><img width="125" src="static/icons/proof-of-work.png" alt="Card image cap"/></router-link></div>
+            <div class="card-img-top"><router-link class="nav-link" :to="{ name:'market' }"><img width="125" src="static/icons/proof-of-work.png" alt="Card image cap"/></router-link></div>
             <div class="card-body">
-              <h5 class="card-title">Mine Tokens</h5>
-              <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+              <h5 class="card-title">Market</h5>
+              <p class="card-text"><router-link :to="{ name:'market' }">Buy</router-link>, sell, trade and <router-link :to="{ name:'configure' }">configure</router-link> Virtual Rigs and GPUs in the marketplace. These virtual components exist on the Ethereum blockchain and each have their own attributes that effect mining statistics such as difficulty and reward efficiency among others. </p>
             </div>
           </div>
         </div>
@@ -56,29 +60,75 @@
   </section>
 
   <section id="contact" class="contact bg-gray">
+
+    <div class="container">
+      <header class="text-center no-margin-bottom">
+          <h2 class="header-text">0xMithril Token</h2>
+      </header>
+      <div class="row">
+        <p>The Mineables Network runs on 0xMithril. Fully compliant with the Ethereum Mineable Token Specification <a href="https://eips.ethereum.org/EIPS/eip-918" target="_blank">ERC918</a>, 0xMithril is rewarded back as an 'anit-gas' reward with every mint operation within the network. This means that when you mine any token on the network, you receive a rebate in 0xMithril to offset the Ethereum transaction gas cost. Of course, 0xMithril can also be mined with <a href="https://eips.ethereum.org/EIPS/eip-918" target="_blank">ERC918</a>-compliant mining software, providing miners an option to more aggressively accumulate it with Hash power.</p>
+      </div>
+    </div>
+    <br><br>
     <div class="container">
        <header class="text-center no-margin-bottom">
-          <h2 class="header-text">Coming Soon!</h2>
+          <h2 class="header-text">Introducing Virtualized Hash Power</h2>
         </header>
+         <div class="row">
+            <p class="card-text">The Mineables Network team has been working hard developing a true hashpower virtualization layer that exists on the Ethereum blockchain. Realized with <a href="https://eips.ethereum.org/EIPS/eip-721" target="_blank">ERC721</a> compliant Virtual Rigs and Virtual GPUs, miners can purchase and deploy a full or hybrid virtual mining operation saving substantial time and money over traditional mining operations.</p>
+            <h6>How it works</h6>
+            <p class="card-text">If you, as a miner, want to increase your hash power, currently you have to invest capital in specialized hardware, electricity and additional maintenance that comes alone with keeping it all together. The Mineables Network offers an alternative to acquiring physical components to increase hashing power, with the introduction of Virtual Rigs (vRigs) that can be slotted with multiple Virtual GPUs (vGPUs). These virtual components exist on the Ethereum blockchain and each have their own attributes that effect mining statistics like difficulty and reward efficiency among others.</p>
+            <p class="card-text">
+            Instead of investing several hundreds of dollars on a physical GPU, a miner can now purchase virtual Rigs and GPUs at a fraction of the price, with 0xMithril. The Virtual components are then configured and attached by a miner to a Mineable Network Token thereby decreasing the overall difficulty via the virtualized hash device.
+            Miners can mix and match virtual GPU configurations on their Virtual Rigs to maximize mining performance and tailor make rigs for specific categories of tokens. Additionally, virtual and physical topologies are supported, so miners can leverage existing GPU hardware alongside their virtual counterparts. In other words, vRigs and vGPUs can be combined with physical GPUs to produce hybrid mining topologies, addressing mining target scenarios in the most flexible way possible.</p>
+        </div>
         <div class="row">
           <div class="col-sm-3">
             <img src="static/icons/vgpu.png" class="img-responsive" alt="" width="200">
           </div>
           <div class="col-sm-8" style="margin-top:35px;">
             <h4>vGPU's</h4>
-            <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <p class="card-text"> A vGPU or Virtual GPU, is a <a href="https://eips.ethereum.org/EIPS/eip-721" target="_blank">ERC721</a> compliant virtual artifact that can be acquired on the Ethereum network via peer to peer trade or purchase through an integrated marketplace. The vGPU has a list of modifiers that update the base rig's statistics, making mining more profitable and fun. A vGPU must be attached to a vRig in order to work.</p>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-9" style="margin-top:35px;">
             <h4>vRIG's</h4>
-            <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <p class="card-text"> A vRig or Virtual Rig is an <a href="https://eips.ethereum.org/EIPS/eip-721" target="_blank">ERC721</a> compliant artifact that is primarily responsible for housing child virtual artifacts such as vGPUs. vRigs come with a finite number of slots, and facilitate mixing and matching child components to produce millions of possible virtual hashing combinations. </p>
           </div>
           <div class="col-sm-3">
             <img src="static/icons/vrig.png" class="img-responsive" alt="" width="200">
           </div>
         </div>
     </div>
+    <br><br>
+
+    <div class="container">
+      <header class="text-center no-margin-bottom">
+          <h2 class="header-text">Frequently Asked Questions</h2>
+      </header>
+
+      <h4>What is 0xMithril "anti-gas"?</h4>
+      <p>"Anti-gas" is a 0xMithril rebate made to mining accounts as a rebate for the cost of gas used during the token minting transaction.</p>
+
+      <h4>What is Virtualized Hashing (vHashing)?</h4>
+      Virtualized hashing is a way to boost your mining operation with the use of ERC721 block chain components called Virtual Rigs and Virtual GPUs. Once these components are installed onto a wallet account and target token, they have the capability to adjust mining difficulty, rewards and other key mining statistics.</p>
+
+      <h4>What is a Virtual Rig and Virtual GPU?</h4>
+      A Virtual Rig is a vHasing base unit. It contains a finite number of slots that can hold Virtual GPUs. Virtual Rigs and GPUs can be configured and optimized through the command line miner or in the configure section of this site. (Metamask required)</p>
+
+      <h4>Can I use vHashing alongside traditional GPU mining?</h4>
+      Yes, absolutely. Virtual Rigs and GPUs can be used in conjunction with traditional GPU hardware to provide an effective hybrid mining operation.</p>
+
+      <h4>If I use only Virtualized Hashing, do I have to mine? Is this the same as "lazy mining"?</h4>
+      No and no. Virtualized hashing simply adjusts a token's mining statistics - however you still have to use hardware (CPU or GPU) to mine the tokens. For example, if you have configured a Virtual Rig that reduces the mining difficulty of a target 0xToken from 500000000 to 1, you still have to physically mine that token with mining software. It is important to note that virtual mining artifacts only supplement a mining operation - they never replace Proof of Work.</p>
+
+      <h4>Where can I get vRigs, vGPUs and other virtual mining artifacts?</h4>
+      vRigs and vGPUs are available for purchase in the Market. Since they are ERC721 compliant tokens, vRigs and vGPUs can also be traded between accounts directly if desired.</p>
+
+    </div>
+    
+
   </section>
 
   <section id="contact" class="contact bg-gray">
@@ -165,8 +215,22 @@ article, aside, details, figcaption, figure, footer, header, main, nav, section,
 a img:hover {
   transform: scale(1.05); 
 }
+
 .icon {
   display: block;
   margin: 0 auto;
+}
+
+.faq{
+  width: 100%;  
+}
+
+.card-header > a {
+  text-align: left;
+}
+
+.home-text > a {
+  color: white;
+  text-decoration: underline;
 }
 </style>
