@@ -178,16 +178,6 @@ section.home p {
     font-weight: 400;
     color: #fff;
 }
-.header-text {
-    font-family: Raleway;
-    font-weight: 300;
-    text-transform: capitalize;
-    font-size: 35px;
-    color: #B5B1AE;
-    letter-spacing: 2px;
-    margin-bottom: 30px;
-    margin-left: 5px;
-}
 p {
     line-height: 1.7rem;
 }

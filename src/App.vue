@@ -59,4 +59,18 @@ html, body {
 #content {
   margin-top: 68px;
 }
+.header-text {
+    font-family: Raleway;
+    font-weight: 300;
+    text-transform: capitalize;
+    font-size: 35px;
+    color: #B5B1AE;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    margin-left: 5px;
+}
+section {
+  padding: 50px 0;
+  overflow: hidden;
+}
 </style>
