@@ -1,4 +1,6 @@
 var config = require('../config')
+const history = require('connect-history-api-fallback')
+
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 }
@@ -45,7 +47,9 @@ app.use(hotMiddleware)
 
 // serve pure static assets
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
+
 app.use(staticPath, express.static('./static'))
+app.use(history({ verbose: true }))
 
 var _resolve
 var readyPromise = new Promise(resolve => {

@@ -5,9 +5,14 @@ const history = require('connect-history-api-fallback')
 
 // create the express app
 const app = express()
+app.use(history({ verbose: true }))
 // create middleware to handle the serving the app
 app.use('/', serveStatic(path.join(__dirname, '/dist')))
-app.use(history())
+
+app.all('*', function (req, res) {
+  res.sendFile('index.html')
+})
+
 // Create default port to serve the app on
 const port = process.env.PORT || 5000
 app.listen(port)
