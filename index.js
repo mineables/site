@@ -3,6 +3,8 @@ const serveStatic = require('serve-static')
 const path = require('path')
 const history = require('connect-history-api-fallback')
 
+const dist = path.resolve(__dirname, '/dist')
+
 // create the express app
 const app = express()
 app.use(history({ verbose: true }))
@@ -10,7 +12,7 @@ app.use(history({ verbose: true }))
 app.use('/', serveStatic(path.join(__dirname, '/dist')))
 
 app.all('*', function (req, res) {
-  res.sendFile('index.html')
+  res.sendFile('index.html', {root: dist})
 })
 
 // Create default port to serve the app on
