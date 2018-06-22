@@ -7,7 +7,7 @@
       </div>
       <div class="row d-flex">
         <div class="col-lg-10">
-          <h3>Create Your Own Mineable Token</h3>
+          <h2 class="header-text">Create Your Own Mineable Token</h2>
           <p>
             Fill out the following fields to create your own mineable token.
           </p>
