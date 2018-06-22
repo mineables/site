@@ -25,7 +25,7 @@
                       </li>
                     </ul>
                   </b-popover>                  
-                  <img :id="'artifact'+element.artifactId" src="static/icons/vgpu.png" width="100" height="100">
+                  <img :id="'artifact'+element.artifactId" src="/static/icons/vgpu.png" width="100" height="100">
                 </div>
               </draggable>
             </div>
@@ -45,7 +45,7 @@
                       </li>
                     </ul>
                   </b-popover>                  
-                  <img :id="'artifact'+element.artifactId" src="static/icons/vgpu.png" width="100" height="100"> 
+                  <img :id="'artifact'+element.artifactId" src="/static/icons/vgpu.png" width="100" height="100"> 
                 </div>
               </draggable>
             </div>
