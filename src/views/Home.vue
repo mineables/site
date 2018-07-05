@@ -79,8 +79,10 @@
             <h6>How it works</h6>
             <p class="card-text">If you, as a miner, want to increase your hash power, currently you have to invest capital in specialized hardware, electricity and additional maintenance that comes alone with keeping it all together. The Mineables Network offers an alternative to acquiring physical components to increase hashing power, with the introduction of Virtual Rigs (vRigs) that can be slotted with multiple Virtual GPUs (vGPUs). These virtual components exist on the Ethereum blockchain and each have their own attributes that effect mining statistics like difficulty and reward efficiency among others.</p>
             <p class="card-text">
-            Instead of investing several hundreds of dollars on a physical GPU, a miner can now purchase virtual Rigs and GPUs at a fraction of the price, with 0xMithril. The Virtual components are then configured and attached by a miner to a Mineable Network Token thereby decreasing the overall difficulty via the virtualized hash device.
+            <img src="static/icons/vHash.png" class="img-fluid-home float-right">
+            Instead of investing several hundreds or thousands of dollars on physical GPUs, a miner can now purchase virtual Rigs and GPUs at a fraction of the price, with 0xMithril or 0xBitcoin. The Virtual components are then configured and attached by a miner to a Mineable Network Token thereby decreasing the overall difficulty via the virtualized hash device.
             Miners can mix and match virtual GPU configurations on their Virtual Rigs to maximize mining performance and tailor make rigs for specific categories of tokens. Additionally, virtual and physical topologies are supported, so miners can leverage existing GPU hardware alongside their virtual counterparts. In other words, vRigs and vGPUs can be combined with physical GPUs to produce hybrid mining topologies, addressing mining target scenarios in the most flexible way possible.</p>
+            
         </div>
         <div class="row">
           <div class="col-sm-3">
@@ -115,7 +117,7 @@
       Virtualized hashing is a way to boost your mining operation with the use of ERC721 block chain components called Virtual Rigs and Virtual GPUs. Once these components are installed onto a wallet account and target token, they have the capability to adjust mining difficulty, rewards and other key mining statistics.</p>
 
       <h4>What is a Virtual Rig and Virtual GPU?</h4>
-      A Virtual Rig is a vHasing base unit. It contains a finite number of slots that can hold Virtual GPUs. Virtual Rigs and GPUs can be configured and optimized through the command line miner or in the configure section of this site. (Metamask required)</p>
+      A Virtual Rig is a vHashing base unit. It contains a finite number of slots that can hold Virtual GPUs. Virtual Rigs and GPUs can be configured and optimized through the command line miner or in the configure section of this site. (Metamask required)</p>
 
       <h4>Can I use vHashing alongside traditional GPU mining?</h4>
       Yes, absolutely. Virtual Rigs and GPUs can be used in conjunction with traditional GPU hardware to provide an effective hybrid mining operation.</p>
@@ -222,5 +224,18 @@ a img:hover {
 .home-text > a {
   color: white;
   text-decoration: underline;
+}
+
+/* override navbar */
+.navbar-brand {
+    color: #3b9198;
+    font-family: "Futura";
+    font-size: 2em;
+    font-weight: 500;
+    text-rendering: optimizeLegibility;
+    text-align: center;
+    padding: 0px;
+    letter-spacing: 0;
+    line-height: 0;
 }
 </style>
