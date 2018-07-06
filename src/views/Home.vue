@@ -123,7 +123,7 @@
       Yes, absolutely. Virtual Rigs and GPUs can be used in conjunction with traditional GPU hardware to provide an effective hybrid mining operation.</p>
 
       <h4>If I use only Virtualized Hashing, do I have to mine? Is this the same as "lazy mining"?</h4>
-      No and no. Virtualized hashing simply adjusts a token's mining statistics - however you still have to use hardware (CPU or GPU) to mine the tokens. For example, if you have configured a Virtual Rig that reduces the mining difficulty of a target 0xToken from 500000000 to 1, you still have to physically mine that token with mining software. It is important to note that virtual mining artifacts only supplement a mining operation - they never replace Proof of Work.</p>
+      Yes and no. Virtualized hashing simply adjusts a token's mining statistics - however you still have to use hardware (CPU or GPU) to mine the tokens. For example, if you have configured a Virtual Rig that reduces the mining difficulty of a target 0xToken from 500000000 to 1, you still have to physically mine that token with mining software. It is important to note that virtual mining artifacts supplement a mining operation - they never completely replace Proof of Work.</p>
 
       <h4>Where can I get vRigs, vGPUs and other virtual mining artifacts?</h4>
       vRigs and vGPUs are available for purchase in the Market. Since they are ERC721 compliant tokens, vRigs and vGPUs can also be traded between accounts directly if desired.</p>
