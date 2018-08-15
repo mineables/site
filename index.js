@@ -15,6 +15,9 @@ app.all('*', function (req, res) {
   res.sendFile('index.html', {root: dist})
 })
 
+// logging
+console.log('process.env.PORT=' + process.env.PORT)
+
 // Create default port to serve the app on
 const port = process.env.PORT || 5000
 app.listen(port)
