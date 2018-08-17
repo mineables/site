@@ -31,8 +31,8 @@
 
             <b-navbar-nav class="ml-auto">
               <b-nav-item right href="#"><router-link class="nav-link" :to="{ name:'home' }" exact>Home</router-link></b-nav-item>
-              <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'create' }">Token</router-link></b-nav-item>
-              <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'quarry' }">Quarry</router-link></b-nav-item>
+              <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'create' }">Create</router-link></b-nav-item>
+              <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'quarry' }">Tokens</router-link></b-nav-item>
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'market' }">Market</router-link></b-nav-item>
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'configure' }">Configure</router-link></b-nav-item>
             </b-navbar-nav>
