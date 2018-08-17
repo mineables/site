@@ -8,11 +8,11 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: 'home'
+      redirect: '/site/home'
     },
     {
       path: '/site',
-      redirect: 'home'
+      redirect: '/site/home'
     },
     {
       path: '/site/home',
