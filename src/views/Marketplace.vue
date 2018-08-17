@@ -311,13 +311,13 @@ export default {
 
 @font-face {
     font-family: "TengwarAnnatarGlaemscrafu";
-    src: url("/static/font/tnganb.eot");
+    src: url("/site/static/font/tnganb.eot");
 }
 @font-face {
     font-family: "TengwarAnnatarGlaemscrafu";
     src: local("FreeMonoTengwar"),
     local("FreeMonoTengwar-embedding"),
-    url("/static/font/tnganb.ttf") format("TrueType");
+    url("/site/static/font/tnganb.ttf") format("TrueType");
 }
 
 .market-card {
