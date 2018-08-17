@@ -44,5 +44,6 @@ export default new Router({
       component: () => import('@/views/Vrig')
     }
   ],
-  path: '*', redirect: 'home'
+  path: '*', 
+  redirect: 'home'
 })
