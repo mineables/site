@@ -6,7 +6,8 @@
     "dev": "node build/dev-server.js",
     "prestart": "npm run build",
     "start": "node index.js",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "deploy": "npm run build; push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
     "@vue/test-utils": "^1.0.0-beta.13",
@@ -65,7 +66,6 @@
     "ora": "^1.2.0",
     "phantomjs-prebuilt": "^2.1.16",
     "proper": "git+https://github.com/tombenke/proper.git",
-    "push-dir": "^0.4.1",
     "resolve-url-loader": "^2.3.0",
     "rimraf": "^2.6.0",
     "selenium-server": "^3.7.1",
@@ -91,5 +91,8 @@
   "engines": {
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
+  },
+  "devDependencies": {
+    "push-dir": "^0.4.1"
   }
 }
