@@ -93,6 +93,6 @@
     "npm": ">= 3.0.0"
   },
   "devDependencies": {
-    "push-dir": "^0.4.1"
+    "push-dir": "^0.4.1"	
   }
 }
