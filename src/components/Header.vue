@@ -1,5 +1,7 @@
 <template>
     <header id="header">
+
+    <!--
         <nav class="navbar navbar-expand-lg fixed-top">
             <img class="logo" src="static/icons/mithril-proto.png" /><span class="navbar-brand">Mineables</span>
             <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><span></span><span></span><span></span></button>
@@ -13,6 +15,31 @@
                 </ul>
             </div>
         </nav>
+
+      -->
+
+        <b-navbar toggleable="md" type="dark" variant="dark">
+
+          <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+
+          <b-navbar-brand href="#">
+              <img src="static/icons/mithril-icon.png" class="d-inline-block" alt="BV">
+              Mineables
+            </b-navbar-brand>
+
+          <b-collapse is-nav id="nav_collapse">
+
+            <b-navbar-nav class="ml-auto">
+              <b-nav-item right href="#"><router-link class="nav-link" :to="{ name:'home' }" exact>Home</router-link></b-nav-item>
+              <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'create' }">Token</router-link></b-nav-item>
+              <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'quarry' }">Quarry</router-link></b-nav-item>
+              <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'market' }">Market</router-link></b-nav-item>
+              <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'configure' }">Configure</router-link></b-nav-item>
+            </b-navbar-nav>
+
+            </b-collapse>
+          </b-navbar>
+
     </header> 
 </template>
 

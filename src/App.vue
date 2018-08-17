@@ -56,9 +56,6 @@ html, body {
   height: 100%;
   margin: 0;
 }
-#content {
-  margin-top: 68px;
-}
 .header-text {
     font-family: Raleway;
     font-weight: 300;
