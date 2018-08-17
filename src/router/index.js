@@ -8,46 +8,38 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/site/home'
-    },
-    {
-      path: '/site',
-      redirect: '/site/home'
-    },
-    {
-      path: '/site/home',
       name: 'home',
       component: () => import('@/views/Home'),
       children: []
     },
     {
-      path: '/site/create',
+      path: 'create',
       name: 'create',
       component: () => import('@/views/CreateToken'),
       children: []
     },
     {
-      path: '/site/quarry',
+      path: 'quarry',
       name: 'quarry',
       component: () => import('@/views/Quarry')
     },
     {
-      path: '/site/token/:addr',
+      path: 'token/:addr',
       name: 'token',
       component: () => import('@/views/Token')
     },
     {
-      path: '/site/market',
+      path: 'market',
       name: 'market',
       component: () => import('@/views/Marketplace')
     },
     {
-      path: '/site/configure',
+      path: 'configure',
       name: 'configure',
       component: () => import('@/views/Configure')
     },
     {
-      path: '/site/vrig/configure/:id',
+      path: 'vrig/configure/:id',
       name: 'vrig',
       component: () => import('@/views/Vrig')
     }
