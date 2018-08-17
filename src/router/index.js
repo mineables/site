@@ -7,13 +7,13 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: 'site/',
       name: 'home',
       component: () => import('@/views/Home'),
       children: []
     },
     {
-      path: '/create',
+      path: 'create',
       name: 'create',
       component: () => import('@/views/CreateToken'),
       children: []
@@ -24,7 +24,7 @@ export default new Router({
       component: () => import('@/views/Quarry')
     },
     {
-      path: '/token/:addr',
+      path: 'token/:addr',
       name: 'token',
       component: () => import('@/views/Token')
     },
@@ -34,12 +34,12 @@ export default new Router({
       component: () => import('@/views/Marketplace')
     },
     {
-      path: '/configure',
+      path: 'configure',
       name: 'configure',
       component: () => import('@/views/Configure')
     },
     {
-      path: '/vrig/configure/:id',
+      path: 'vrig/configure/:id',
       name: 'vrig',
       component: () => import('@/views/Vrig')
     }
