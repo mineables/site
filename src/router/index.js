@@ -7,7 +7,7 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: 'site/',
+      path: '/',
       name: 'home',
       component: () => import('@/views/Home'),
       children: []
