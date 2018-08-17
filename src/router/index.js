@@ -7,7 +7,7 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: 'index',
+      path: '/',
       name: 'home',
       component: () => import('@/views/Home'),
       children: []
@@ -43,5 +43,6 @@ export default new Router({
       name: 'vrig',
       component: () => import('@/views/Vrig')
     }
-  ]
+  ],
+  path: '*', redirect: '/'
 })
