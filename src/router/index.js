@@ -13,33 +13,33 @@ export default new Router({
       children: []
     },
     {
-      path: 'create',
+      path: '/site/create',
       name: 'create',
       component: () => import('@/views/CreateToken'),
       children: []
     },
     {
-      path: 'quarry',
+      path: '/site/quarry',
       name: 'quarry',
       component: () => import('@/views/Quarry')
     },
     {
-      path: 'token/:addr',
+      path: '/site/token/:addr',
       name: 'token',
       component: () => import('@/views/Token')
     },
     {
-      path: 'market',
+      path: '/site/market',
       name: 'market',
       component: () => import('@/views/Marketplace')
     },
     {
-      path: 'configure',
+      path: '/site/configure',
       name: 'configure',
       component: () => import('@/views/Configure')
     },
     {
-      path: 'vrig/configure/:id',
+      path: '/site/vrig/configure/:id',
       name: 'vrig',
       component: () => import('@/views/Vrig')
     }
