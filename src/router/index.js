@@ -19,7 +19,7 @@ export default new Router({
       children: []
     },
     {
-      path: '/quarry',
+      path: 'quarry',
       name: 'quarry',
       component: () => import('@/views/Quarry')
     },
@@ -29,7 +29,7 @@ export default new Router({
       component: () => import('@/views/Token')
     },
     {
-      path: '/market',
+      path: 'market',
       name: 'market',
       component: () => import('@/views/Marketplace')
     },
