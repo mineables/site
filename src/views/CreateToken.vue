@@ -13,52 +13,52 @@
           </p>
           <form class="container" novalidate>
             <div class="form-group">
-              <label for="symbol">Symbol:</label>
+              <label for="symbol">Symbol</label>
               <input type="text" v-model="form.symbol" class="form-control" id="symbol" aria-describedby="symbolHelp" required>
               <div class="invalid-feedback"></div>
-              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
+              <small id="symbolHelp" class="form-text text-muted">The symbol that will be used to represent your token. eg. 0xBTC</small>
             </div>
-            <div class="form-group">
-              <label for="name">Name:</label>
+            <div class="form-group" >
+              <label for="name">Name</label>
               <input type="text" v-model="form.name" class="form-control" id="name" aria-describedby="namelHelp" required>
               <div class="invalid-feedback"></div>
-              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
+              <small id="symbolHelp" class="form-text text-muted">Long name of the Mineable Token.</small>
             </div>
             <div class="form-group">
-              <label for="decimal">Decimal:</label>
-              <input type="number" v-model="form.decimal" class="form-control" id="decimal" aria-describedby="decimallHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+              <label for="decimal">Decimals</label>
+              <input type="number" placeholder="eg. 10" v-model="form.decimal" class="form-control" id="decimal" aria-describedby="decimallHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
               <div class="invalid-feedback"></div>
-              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
+              <small id="symbolHelp" class="form-text text-muted">Number of decimal places that the token has. (Maximum 18)</small>
             </div>
             <div class="form-group">
               <label for="supply">Supply:</label>
-              <input type="number" v-model="form.supply" class="form-control" id="supply" aria-describedby="supplylHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+              <input type="number" placeholder="eg. 1000000000"  v-model="form.supply" class="form-control" id="supply" aria-describedby="supplylHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
               <div class="invalid-feedback"></div>
-              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
+              <small id="symbolHelp" class="form-text text-muted">The maximum quantity of tokens available for mining.</small>
             </div>
             <div class="form-group">
-              <label for="initReward">Initial Reward:</label>
-              <input type="number" v-model="form.initReward" class="form-control" id="initReward" aria-describedby="initRewardHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+              <label for="initReward">Initial Reward</label>
+              <input type="number" placeholder="eg. 50" v-model="form.initReward" class="form-control" id="initReward" aria-describedby="initRewardHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
               <div class="invalid-feedback"></div>
-              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
+              <small id="symbolHelp" class="form-text text-muted">The initial quantity of tokens received per successful mine submission.</small>
             </div>
             <div class="form-group">
-              <label for="blockAdjustment">Blocks per Difficulty Adjustment:</label>
-              <input type="number" v-model="form.blockAdjustment" class="form-control" id="blockAdjustment" aria-describedby="blockAdjustmentHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+              <label for="blockAdjustment">Blocks per Difficulty Adjustment</label>
+              <input type="number" placeholder="eg. 1024" v-model="form.blockAdjustment" class="form-control" id="blockAdjustment" aria-describedby="blockAdjustmentHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
               <div class="invalid-feedback"></div>
-              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
+              <small id="symbolHelp" class="form-text text-muted">The number of successful mintings before the target difficulty is adjusted.</small>
             </div>
             <div class="form-group">
               <label for="initDiff">Initial Difficulty:</label>
-              <input type="number" v-model="form.initDiff" class="form-control" id="initDiff" aria-describedby="initDiffHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+              <input type="number" v-model="form.initDiff" placeholder="eg. 10000" class="form-control" id="initDiff" aria-describedby="initDiffHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
               <div class="invalid-feedback"></div>
-              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
+              <small id="symbolHelp" class="form-text text-muted">The hashing difficulty seed when the contract is launched. (ie. 0, 1000000, etc)</small>
             </div>
             <div class="form-group">
               <label for="blockTimeInMinutes">Block Time in Minutes:</label>
-              <input type="number" v-model="form.blockTimeInMinutes" class="form-control" id="blockTimeInMinutes" aria-describedby="blockTimeInMinutesHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+              <input type="number" v-model="form.blockTimeInMinutes" placeholder="eg. 10" class="form-control" id="blockTimeInMinutes" aria-describedby="blockTimeInMinutesHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
               <div class="invalid-feedback"></div>
-              <!-- <small id="symbolHelp" class="form-text text-muted">Token Symbol</small> -->
+              <small id="symbolHelp" class="form-text text-muted">The target amount of time between mintings.</small>
             </div>
           </form>
           <div>

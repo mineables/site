@@ -66,7 +66,7 @@
           <h2 class="header-text">0xMithril Token</h2>
       </header>
       <div class="row">
-        <p>The Mineables Network runs on 0xMithril. Fully compliant with the Ethereum Mineable Token Specification <a href="https://eips.ethereum.org/EIPS/eip-918" target="_blank">ERC918</a>, 0xMithril is rewarded back as an 'anit-gas' reward with every mint operation within the network. This means that when you mine any token on the network, you receive a rebate in 0xMithril to offset the Ethereum transaction gas cost. Of course, 0xMithril can also be mined with <a href="https://eips.ethereum.org/EIPS/eip-918" target="_blank">ERC918</a>-compliant mining software, providing miners an option to more aggressively accumulate it with Hash power.</p>
+        <p>The Mineables Network runs on 0xMithril. Fully compliant with the Ethereum Mineable Token Specification <a href="https://eips.ethereum.org/EIPS/eip-918" target="_blank">ERC918</a>, 0xMithril is rewarded back as 'anti-gas' rebate with every mint operation within the network. This means that when you mine any token on the network, you receive a rebate in 0xMithril to offset the Ethereum transaction gas cost. Of course, 0xMithril can also be mined with <a href="https://eips.ethereum.org/EIPS/eip-918" target="_blank">ERC918</a>-compliant mining software, providing miners an option to more aggressively accumulate it with Hash power.</p>
       </div>
     </div>
     <br><br>
@@ -111,7 +111,7 @@
       </header>
 
       <h4>What is 0xMithril "anti-gas"?</h4>
-      <p>"Anti-gas" is a 0xMithril rebate made to mining accounts as a rebate for the cost of gas used during the token minting transaction.</p>
+      <p>"Anti-gas" is a 0xMithril rebate made to miners to account for for the cost of gas used during the token minting transaction.</p>
 
       <h4>What is Virtualized Hashing (vHashing)?</h4>
       Virtualized hashing is a way to boost your mining operation with the use of ERC721 block chain components called Virtual Rigs and Virtual GPUs. Once these components are installed onto a wallet account and target token, they have the capability to adjust mining difficulty, rewards and other key mining statistics.</p>
