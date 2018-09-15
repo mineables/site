@@ -3,14 +3,13 @@
     <table id="quarryTable" ref="quarryTable" class="table">
       <thead class="thead-dark">
           <tr>
-              <th class="mdl-data-table__cell--non-numeric fullwidth">Symbols</th>
-              <th>Address</th>
-              <th>Total Supply</th>
+              <th>Symbol</th>
               <th>Minted</th>
+              <th>Total Supply</th>
               <th>Remaining</th>
               <th>Difficulty</th>
               <th>vRig</th>
-              <th></th>
+              <th>Actions</th>
           </tr>
       </thead>
       <tbody>
@@ -18,9 +17,8 @@
               <td class="mdl-data-table__cell--non-numeric" >
                 <router-link :to="{ name: 'token', params: { addr: token.addr }}" v-text="token.symbol"></router-link>
               </td>
-              <td v-text="token.addr"></td>
-              <td v-text="token.supply"></td>
               <td v-text="token.tokensMinted"></td>
+              <td v-text="token.supply"></td>
               <td v-text="token.remainingSupply"></td>
               <td v-text="token.diff"></td>
               <td v-if="token.installed=='none'" v-text="token.installed"></td>
