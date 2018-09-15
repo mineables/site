@@ -2,9 +2,6 @@
   <section id="createToken">
     <div class="container">
       <x-check-metamask></x-check-metamask>
-      <div class="alert alert-danger" role="alert">
-        This will only work against the Ropsten Network. Please make sure your metamask is not pointing to the Mainnet.
-      </div>
       <div class="row d-flex">
         <div class="col-lg-10">
           <h2 class="header-text">Create Your Own Mineable Token</h2>

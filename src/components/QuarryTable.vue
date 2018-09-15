@@ -1,10 +1,13 @@
 <template>
   <section>
-    <table id="quarryTable" ref="quarryTable" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-      <thead>
+    <table id="quarryTable" ref="quarryTable" class="table">
+      <thead class="thead-dark">
           <tr>
               <th class="mdl-data-table__cell--non-numeric fullwidth">Symbols</th>
-              <th>Supply</th>
+              <th>Address</th>
+              <th>Total Supply</th>
+              <th>Minted</th>
+              <th>Remaining</th>
               <th>Difficulty</th>
               <th>vRig</th>
               <th></th>
@@ -15,7 +18,10 @@
               <td class="mdl-data-table__cell--non-numeric" >
                 <router-link :to="{ name: 'token', params: { addr: token.addr }}" v-text="token.symbol"></router-link>
               </td>
+              <td v-text="token.addr"></td>
               <td v-text="token.supply"></td>
+              <td v-text="token.tokensMinted"></td>
+              <td v-text="token.remainingSupply"></td>
               <td v-text="token.diff"></td>
               <td v-if="token.installed=='none'" v-text="token.installed"></td>
               <td v-if="token.installed!='none'">
@@ -188,10 +194,13 @@ export default {
         let decimal = await mineable.decimals()
         let diff = await mineable.getMiningDifficulty()
         let installed = await mineable.getInstalledBooster()
+        let tokensMinted = await mineable.tokensMinted()
         this.quarry.push({
+          tokensMinted: tokensMinted / (10 ** decimal),
           addr,
           symbol,
           supply: supply / (10 ** decimal),
+          remainingSupply: supply / (10 ** decimal) - tokensMinted / (10 ** decimal),
           diff: diff.toNumber(),
           installed: installed.toNumber() === 0 ? 'none' : installed.toNumber()
         })
