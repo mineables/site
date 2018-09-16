@@ -19,27 +19,27 @@ export default new Router({
       children: []
     },
     {
-      path: 'quarry',
+      path: '/quarry',
       name: 'quarry',
       component: () => import('@/views/Quarry')
     },
     {
-      path: 'token/:addr',
+      path: '/token/:addr',
       name: 'token',
       component: () => import('@/views/Token')
     },
     {
-      path: 'market',
+      path: '/market',
       name: 'market',
       component: () => import('@/views/Marketplace')
     },
     {
-      path: 'configure',
+      path: '/configure',
       name: 'configure',
       component: () => import('@/views/Configure')
     },
     {
-      path: 'vrig/configure/:id',
+      path: '/vrig/configure/:id',
       name: 'vrig',
       component: () => import('@/views/Vrig')
     }
