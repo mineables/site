@@ -13,7 +13,7 @@ export default new Router({
       children: []
     },
     {
-      path: 'create',
+      path: '/create',
       name: 'create',
       component: () => import('@/views/CreateToken'),
       children: []
