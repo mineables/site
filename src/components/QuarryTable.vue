@@ -182,6 +182,25 @@ export default {
       QuarryContract.setProvider(window.web3.currentProvider)
       let MineableContract = window.TruffleContract({abi: MINEABLE_ABI})
       MineableContract.setProvider(window.web3.currentProvider)
+      // load 0xMithril first
+      let addr = ADDRESS.MITHRIL
+      let mineable = await MineableContract.at(addr)
+      let symbol = await mineable.symbol()
+      let supply = await mineable.totalSupply()
+      let decimal = await mineable.decimals()
+      let diff = await mineable.getMiningDifficulty()
+      let installed = await mineable.getInstalledBooster()
+      let tokensMinted = await mineable.tokensMinted()
+      this.quarry.push({
+        tokensMinted: tokensMinted / (10 ** decimal),
+        addr,
+        symbol,
+        supply: supply / (10 ** decimal),
+        remainingSupply: supply / (10 ** decimal) - tokensMinted / (10 ** decimal),
+        diff: diff.toNumber(),
+        installed: installed.toNumber() === 0 ? 'none' : installed.toNumber()
+      })
+
       let token = await QuarryContract.at(ADDRESS.QUARRY)
       let size = await token.mineableSize()
       for (let i = 0; i < size; i++) {
@@ -203,6 +222,7 @@ export default {
           installed: installed.toNumber() === 0 ? 'none' : installed.toNumber()
         })
         if (i === size - 1) this.loading = false
+        if (size === 0) this.loading = false
       }
     }
   },
