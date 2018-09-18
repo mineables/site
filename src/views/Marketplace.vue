@@ -27,7 +27,7 @@
             <div v-for="result in vrigResults" class="col-sm-4">
               <div class="card market-card">
                 <h3 class="card-title price-wrap"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
-                <img class="card-img-top" src="static/icons/vrig.png" alt="Card image cap">
+                <img class="card-img-top" :src="result.metadata.image" alt="Card image cap">
                 <div class="card-body">
                   <h4 class="card-title">{{ result.name }} </h4>
                   <p class="card-text">
@@ -46,7 +46,7 @@
                   </b-button>
                   <b-alert v-if="result.childArtifacts.length > 0" variant="warning" show>
                   	  <h5 class="alert-heading">Warning</h5>
-                  	  <p>Owner must remove all vGPUs from vRig before in order to sell</p>
+                  	  <p>Owner must remove all vGPUs from vRig in order to sell</p>
                   </b-alert>
 
                   <br>
@@ -65,7 +65,7 @@
               <div class="card market-card">
                 
                 <h3 class="card-title price-wrap"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
-                <img class="card-img-top" src="static/icons/vgpu.png" alt="Card image cap">
+                <img class="card-img-top" :src="result.metadata.image" alt="Card image cap">
                 <div class="card-body">
                   <h4 class="card-title">{{ result.name }} </h4>
                   <p class="card-text">Remaining cycles: {{ result.life }}</p>
@@ -96,7 +96,7 @@
     <b-alert show variant="warning" v-if="loading">Please don't refresh this page until the transactions are completed.</b-alert>
     <b-alert show variant="success" v-if="!loading">
       Purchase complete.
-      <li class="nav-item"><router-link class="nav-link" :to="{ name:'configure' }">Configure your Virtual Rig</router-link></li>          
+      <router-link class="nav-link" :to="{ name:'configure' }">Configure your Virtual Rig</router-link>        
     </b-alert>
   </b-modal>
   </div>
@@ -214,6 +214,10 @@ export default {
         }
         artifact.mithrilPrice = parseInt(art[1])
         artifact.price = this.readable(artifact.mithrilPrice)
+        // load metadata
+        artifact.tokenURI = await this.vgpuContract.tokenURI(art[0])
+        artifact.metadata = await (await fetch(artifact.tokenURI)).json()
+        console.log(artifact)
         this.vgpuResults.push(artifact)
       }
     },
@@ -237,6 +241,9 @@ export default {
         artifact.accuracy = basicStats[5].toNumber()
         artifact.level = basicStats[6].toNumber()
         artifact.childArtifacts = stats[2]
+        // load metadata
+        artifact.tokenURI = await this.vrigContract.tokenURI(art[0])
+        artifact.metadata = await (await fetch(artifact.tokenURI)).json()
         console.log(artifact)
         this.vrigResults.push(artifact)
       }

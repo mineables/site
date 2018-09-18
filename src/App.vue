@@ -23,8 +23,6 @@ export default {
     xFooter
   },
   mounted () {
-    const provider = 'https://ropsten.infura.io/oUCR2SmM4wLiHVimgqSS'
-
     if (TruffleContract != null) {
       console.log('Success!')
       window.TruffleContract = TruffleContract
@@ -32,14 +30,13 @@ export default {
       console.error('Failed to load Truffle Contract')
     }
 
-    if (typeof window.web3 !== 'undefined') {
+    if (typeof window.web3 !== 'undefined' && window.web3.eth.defaultAccount !== undefined) {
       console.log('Local Wallet Detected')
       window.web3 = new Web3(window.web3.currentProvider)
       window.wallet = 'local'
     } else {
       console.log('No web3? You should consider trying MetaMask!')
-      window.web3 = new Web3(new Web3.providers.HttpProvider(provider))
-      window.wallet = 'infura'
+      // window.wallet = 'infura'
     }
     window.web3.eth.defaultAccount = window.web3.eth.accounts[0]
   }

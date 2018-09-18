@@ -6,10 +6,51 @@
    <x-check-metamask></x-check-metamask>
 
     <h2 class="header-text">Virtual Rig Configuration</h2>
-      <p>Drag Virtual GPUs and other components into top section to configure Virtual Rig.</p>
+
+    <b-alert show variant="info">
+          <h4 class="alert-heading">Instructions</h4>
+          <p>
+            Drag Virtual GPUs and other components into top 'Virtual Rig' section to configure Virtual Rig.
+            The statistics of the vRig will automatically update as vGPU components are 
+            attached and detached, so you test multiple configurations before attaching rigs to Mineable Tokens.
+          </p>
+          <hr>
+          <p class="mb-0">
+            When complete press the <b>Commit Confuguration</b> button to save your vRig configuration.
+          </p>
+        </b-alert>
+      
+      <br>
+      <h4>Statistics</h4>
+      <section>
+          <table class="table">
+            <tr>
+              <th>Name</th>
+              <th>Experience</th>
+              <th>Life Decrement</th>
+              <th>Execution Cost (in 0xMithril)</th>
+              <th>Total Socket Slots</th>
+              <th>vHash Rate (in MH/s)</th>
+              <th>Accuracy</th>
+              <th>Level</th>
+              <th>Children</th>
+            </tr>
+           <tr>
+              <td>{{ vrig.name }}</td>
+              <td>{{ vrig.experience }}</td>
+              <td>{{ vrig.lifeDecrement }}</td>
+              <td>{{ vrig.executionCost }}</td>
+              <td>{{ vrig.sockets }}</td>
+              <td><b>{{ vrig.vhash }}</b></td>
+              <td><b>{{ vrig.accuracy }}%</b></td>
+              <td>{{ vrig.level }}</td>
+              <td>{{ vrig.childArtifacts }}</td>
+            </tr>
+          </table>
+        </section>
 
       <br>
- 
+        
         <div class="drag">
             <h4>Virtual Rig - '{{ vrig.name }}'</h4>
             <div class="row vrig">
@@ -25,7 +66,7 @@
                       </li>
                     </ul>
                   </b-popover>                  
-                  <img :id="'artifact'+element.artifactId" src="/static/icons/vgpu.png" width="100" height="100">
+                  <img :id="'artifact'+element.artifactId" :src="element.metadata.image" width="100" height="100">
                 </div>
               </draggable>
             </div>
@@ -45,39 +86,11 @@
                       </li>
                     </ul>
                   </b-popover>                  
-                  <img :id="'artifact'+element.artifactId" src="/static/icons/vgpu.png" width="100" height="100"> 
+                  <img :id="'artifact'+element.artifactId" :src="element.metadata.image" width="100" height="100"> 
                 </div>
               </draggable>
             </div>
         </div>
-
-        <br>
-        <section>
-          <table>
-            <tr>
-              <th>Name</th>
-              <th>Experience</th>
-              <th>Life Decrement</th>
-              <th>Execution Cost (in 0xMithril)</th>
-              <th>Total Socket Slots</th>
-              <th>vHash Rate (in MH/s)</th>
-              <th>Accuracy</th>
-              <th>Level</th>
-              <th>Children</th>
-            </tr>
-           <tr>
-              <td>{{ vrig.name }}</td>
-              <td>{{ vrig.experience }}</td>
-              <td>{{ vrig.lifeDecrement }}</td>
-              <td>{{ vrig.executionCost }}</td>
-              <td>{{ vrig.sockets }}</td>
-              <td>{{ vrig.vhash }}</td>
-              <td>{{ vrig.accuracy }}%</td>
-              <td>{{ vrig.level }}</td>
-              <td>{{ vrig.childArtifacts }}</td>
-            </tr>
-          </table>
-        </section>
 
         <br>
         <b-button class="btn btn-lg btn-success" :disabled="buttonDisabled" data-toggle="modal" data-target="#myModal" @click="saveConfig()">
@@ -192,6 +205,9 @@ export default {
         let vgpu = {}
         vgpu.artifactId = artifactId
         vgpu.name = a[0]
+        // load metadata
+        vgpu.tokenURI = await this.vgpuContract.tokenURI(vgpu.artifactId)
+        vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
         vgpu.parent = a[1].toNumber()
         vgpu.life = parseInt(a[2])
         let mods = a[3]
@@ -273,7 +289,7 @@ export default {
 .vrig {
   padding: 20px;
   background-color: #d0f0e9;
-  border: 5px dashed black;
+  border: 2px dashed black;
 }
 
 .available {

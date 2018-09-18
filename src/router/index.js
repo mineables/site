@@ -39,7 +39,7 @@ export default new Router({
       component: () => import('@/views/Configure')
     },
     {
-      path: '/vrig/configure/:id',
+      path: '/vrig/:id/update',
       name: 'vrig',
       component: () => import('@/views/Vrig')
     }
