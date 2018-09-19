@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import { MINEABLE_ABI } from '../../static/scripts/mineable_abi.js'
 
 export default {
   name: 'Token',
@@ -30,9 +29,7 @@ export default {
   },
   methods: {
     async loadToken (addr) {
-      let MineableContract = window.TruffleContract({abi: MINEABLE_ABI})
-      MineableContract.setProvider(window.web3.currentProvider)
-      let mineable = await MineableContract.at(addr)
+      let mineable = await this.MineableContract.at(addr)
       let name = await mineable.name()
       let symbol = await mineable.symbol()
       let supply = await mineable.totalSupply()

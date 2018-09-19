@@ -3,7 +3,12 @@
     <table id="quarryTable" ref="quarryTable" class="table">
       <thead class="thead-dark">
           <tr>
-              <th>Symbol</th>
+              <th v-if="loading">
+                  <span class="loading">    (Loading...)</span> Symbol   
+              </th>
+              <th v-if="!loading">
+                 Symbol
+              </th>
               <th>Minted</th>
               <th>Total Supply</th>
               <th>Remaining</th>
@@ -37,16 +42,6 @@
                   update
                 </button>
               </td>
-          </tr>
-          <tr v-if="loading">
-              <td id="loading" colspan="3">
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                </div>
-              </td>
-          </tr>
-          <tr v-if="!loading && quarry.length == 0">
-              <td id="loading" colspan="3">No Tokens found in Quarry</td>
           </tr>
       </tbody>
     </table> 
@@ -97,10 +92,6 @@
 </template>
 
 <script>
-import { QUARRY_ABI } from '../../static/scripts/quarry_abi.js'
-import { MINEABLE_ABI } from '../../static/scripts/mineable_abi.js'
-import { VIRTUAL_MINING_BOARD_ABI } from '../../static/scripts/virtual_mining_board_abi.js'
-import { ADDRESS } from '../../static/scripts/addr.js'
 
 export default {
   name: 'xQuarryTable',
@@ -131,9 +122,7 @@ export default {
     },
     async removeVrig (addr) {
       this.loading = true
-      let MineableContract = window.TruffleContract({abi: MINEABLE_ABI})
-      MineableContract.setProvider(window.web3.currentProvider)
-      let mineable = await MineableContract.at(addr)
+      let mineable = await this.MineableContract.at(addr)
 
       await mineable.uninstallBooster()
       this.loading = false
@@ -152,9 +141,7 @@ export default {
         return
       }
 
-      let MineableContract = window.TruffleContract({abi: MINEABLE_ABI})
-      MineableContract.setProvider(window.web3.currentProvider)
-      let mineable = await MineableContract.at(this.currentTokenAddress)
+      let mineable = await this.MineableContract.at(this.currentTokenAddress)
       await mineable.installBooster(this.selected)
       this.loading = false
       this.quarry = []
@@ -163,9 +150,6 @@ export default {
       this.completedTxn = true
     },
     async initContracts () {
-      var VirtualMiningBoard = window.TruffleContract({abi: VIRTUAL_MINING_BOARD_ABI})
-      VirtualMiningBoard.setProvider(window.web3.currentProvider)
-      this.vrigContract = await VirtualMiningBoard.at(ADDRESS.VRIG)
       let balance = await this.vrigContract.balanceOf(window.web3.eth.coinbase)
       for (var i = 0; i < balance; i++) {
         let artifactId = await this.vrigContract.tokenOfOwnerByIndex(window.web3.eth.coinbase, i)
@@ -178,13 +162,9 @@ export default {
       }
     },
     async loadQuarry () {
-      let QuarryContract = window.TruffleContract({abi: QUARRY_ABI})
-      QuarryContract.setProvider(window.web3.currentProvider)
-      let MineableContract = window.TruffleContract({abi: MINEABLE_ABI})
-      MineableContract.setProvider(window.web3.currentProvider)
       // load 0xMithril first
-      let addr = ADDRESS.MITHRIL
-      let mineable = await MineableContract.at(addr)
+      let addr = this.mithrilContract.address
+      let mineable = this.mithrilContract
       let symbol = await mineable.symbol()
       let supply = await mineable.totalSupply()
       let decimal = await mineable.decimals()
@@ -201,11 +181,11 @@ export default {
         installed: installed.toNumber() === 0 ? 'none' : installed.toNumber()
       })
 
-      let token = await QuarryContract.at(ADDRESS.QUARRY)
-      let size = await token.mineableSize()
+      let quarry = this.quarryContract
+      let size = await quarry.mineableSize()
       for (let i = 0; i < size; i++) {
-        let addr = await token.getMineableAt(i)
-        let mineable = await MineableContract.at(addr)
+        let addr = await quarry.getMineableAt(i)
+        let mineable = await this.MineableContract.at(addr)
         let symbol = await mineable.symbol()
         let supply = await mineable.totalSupply()
         let decimal = await mineable.decimals()
@@ -251,5 +231,21 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
+}
+.loading {
+  color: #3ee9b5;
+}
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 </style>

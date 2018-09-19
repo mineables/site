@@ -24,28 +24,32 @@
       <h4>Statistics</h4>
       <section>
           <table class="table">
-            <tr>
-              <th>Name</th>
-              <th>Experience</th>
-              <th>Life Decrement</th>
-              <th>Execution Cost (in 0xMithril)</th>
-              <th>Total Socket Slots</th>
-              <th>vHash Rate (in MH/s)</th>
-              <th>Accuracy</th>
-              <th>Level</th>
-              <th>Children</th>
-            </tr>
-           <tr>
-              <td>{{ vrig.name }}</td>
-              <td>{{ vrig.experience }}</td>
-              <td>{{ vrig.lifeDecrement }}</td>
-              <td>{{ vrig.executionCost }}</td>
-              <td>{{ vrig.sockets }}</td>
-              <td><b>{{ vrig.vhash }}</b></td>
-              <td><b>{{ vrig.accuracy }}%</b></td>
-              <td>{{ vrig.level }}</td>
-              <td>{{ vrig.childArtifacts }}</td>
-            </tr>
+            <thead class="thead-dark">
+              <tr>
+                <th>Name</th>
+                <th>Experience</th>
+                <th>Life Decrement</th>
+                <th>Execution Cost (in 0xMithril)</th>
+                <th>Total Socket Slots</th>
+                <th>vHash Rate (in MH/s)</th>
+                <th>Accuracy</th>
+                <th>Level</th>
+                <th>Children</th>
+              </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td>{{ vrig.name }}</td>
+                  <td>{{ vrig.experience }}</td>
+                  <td>{{ vrig.lifeDecrement }}</td>
+                  <td>{{ vrig.executionCost }}</td>
+                  <td>{{ vrig.sockets }}</td>
+                  <td><b>{{ vrig.vhash }}</b></td>
+                  <td><b>{{ vrig.accuracy }}%</b></td>
+                  <td>{{ vrig.level }}</td>
+                  <td>{{ vrig.childArtifacts }}</td>
+                </tr>
+            </tbody>
           </table>
         </section>
 
@@ -118,10 +122,6 @@
 import draggable from 'vuedraggable'
 import xCheckMetamask from '@/components/CheckMetamask'
 
-import { ADDRESS } from '../../static/scripts/addr.js'
-import { CHILD_ARTIFACT_ABI } from '../../static/scripts/child_artifact_abi.js'
-import { VIRTUAL_MINING_BOARD_ABI } from '../../static/scripts/virtual_mining_board_abi.js'
-
 export default {
   name: 'Vrig',
   components: {
@@ -172,15 +172,6 @@ export default {
       this.vrig.vhash = basicStats[4].toNumber() / 1000000
       this.vrig.accuracy = basicStats[5].toNumber()
       this.vrig.level = basicStats[6].toNumber()
-    },
-    async initContracts () {
-      var VirtualMiningBoard = window.TruffleContract({abi: VIRTUAL_MINING_BOARD_ABI})
-      VirtualMiningBoard.setProvider(window.web3.currentProvider)
-      this.vrigContract = await VirtualMiningBoard.at(ADDRESS.VRIG)
-
-      var ChildArtifact = window.TruffleContract({abi: CHILD_ARTIFACT_ABI})
-      ChildArtifact.setProvider(window.web3.currentProvider)
-      this.vgpuContract = await ChildArtifact.at(ADDRESS.VGPU)
     },
     async loadVrig (id) {
       let stats = await this.vrigContract.mergedStats(id)
@@ -271,15 +262,9 @@ export default {
       var multiplier = s.substring(0, 1)
       var exp = s.substring(1, 3)
       return Number(multiplier) * Math.pow(10, Number(exp))
-    },
-    async test () {
-      let stats = await this.vrigContract.checkMerged(this.id, [1, 2], {from: window.web3.eth.coinbase})
-      console.log(stats)
     }
   },
   async mounted () {
-    await this.initContracts()
-    await this.test()
     this.loadVrig(this.id)
   }
 }

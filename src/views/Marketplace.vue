@@ -8,30 +8,26 @@
 
   <h2 class="header-text">Virtual Artifact Market</h2>
   <p>Purchase ERC721 Virtual Rigs and GPUs with 0xMithril. vRigs and vGPUs can be attached to your mining account to vastly improve mining performance. Virtualizing hash power saves overall mining hardware, maintenance and electricity costs and can additionally be combined with traditional hardware-based mining operations.</p>
-  <b-alert variant="warning"
-             dismissible
-             :show="showDismissibleAlert"
-             @dismissed="showDismissibleAlert=false">
-      Artifact is owned by current wallet
-  </b-alert>
-
-  
 
   <b-tabs>
-    <br>
-    <br>
-
     <b-tab title="VRIG Market" active>
       <section id="vrig-market">
         <div class="row">
             <div v-for="result in vrigResults" class="col-sm-4">
+
+              <b-alert class="overlay" v-if="result.childArtifacts.length > 0" variant="danger" show>
+                <strong>Warning:</strong> Owner must remove all vGPUs from vRig in order to list artifact.
+              </b-alert>
+              
               <div class="card market-card">
-                <h3 class="card-title price-wrap"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
-                <img class="card-img-top" :src="result.metadata.image" alt="Card image cap">
+                <h3 class="card-title price-wrap"> 
+                  <h4 class="float-left">{{ result.name }} </h4>
+                  <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> 
+                </h3>
                 <div class="card-body">
-                  <h4 class="card-title">{{ result.name }} </h4>
+                  <img class="card-img-top float-left" :src="result.metadata.image" alt="Card image cap">
                   <p class="card-text">
-                    <ul>
+                    <ul class="statistics">
                       <li>Experience: {{ result.experience }}</li>
                       <li>Life Decrement: {{ result.lifeDecrement }}</li>
                       <li>Execution Cost: {{ result.executionCost }}</li>
@@ -41,13 +37,9 @@
                       <li>Level: {{ result.level }}</li>
                     </ul>
                   </p>
-                  <b-button v-if="result.childArtifacts.length < 1" class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal" @click="purchasevRig(result.id,result.mithrilPrice)">
+                  <b-button v-if="result.childArtifacts.length < 1 && !result.ownedByCoinbase" class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal" @click="purchasevRig(result.id,result.mithrilPrice)">
                     Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
                   </b-button>
-                  <b-alert v-if="result.childArtifacts.length > 0" variant="warning" show>
-                  	  <h5 class="alert-heading">Warning</h5>
-                  	  <p>Owner must remove all vGPUs from vRig in order to sell</p>
-                  </b-alert>
 
                   <br>
                   <span class="uid">uid: {{ result.id }} </span>
@@ -62,15 +54,22 @@
       <section id="vgpu-market">
         <div class="row">
             <div v-for="result in vgpuResults" class="col-sm-4">
+              <b-alert class="overlay" v-if="result.parent > 0" variant="danger" show>
+                <strong>Warning:</strong> Owner must remove all vGPUs from vRig in order to list artifact.
+              </b-alert>
+
               <div class="card market-card">
                 
-                <h3 class="card-title price-wrap"> <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> </h3>
-                <img class="card-img-top" :src="result.metadata.image" alt="Card image cap">
+                <h3 class="card-title price-wrap"> 
+                  <h4 class="float-left">{{ result.name }} </h4>
+                  <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> 
+                </h3>
+                
                 <div class="card-body">
-                  <h4 class="card-title">{{ result.name }} </h4>
+                  <img class="card-img-top float-left" :src="result.metadata.image" alt="Card image cap">
                   <p class="card-text">Remaining cycles: {{ result.life }}</p>
                   <p class="card-text modifier" v-for="modifier in result.modifiers" >{{ modifier }}</p>
-                  <b-button class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal" @click="purchasevGPU(result.id,result.mithrilPrice)">
+                  <b-button v-if="!result.ownedByCoinbase && result.parent === 0" class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal"   @click="purchasevGPU(result.id,result.mithrilPrice)">
                     Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
                   </b-button>
                   <br>
@@ -104,12 +103,6 @@
 
 <script>
 import { ADDRESS } from '../../static/scripts/addr.js'
-import { MINEABLE_ABI } from '../../static/scripts/mineable_abi.js'
-import { CHILD_ARTIFACT_ABI } from '../../static/scripts/child_artifact_abi.js'
-import { VGPU_MARKET_ABI } from '../../static/scripts/vgpu_market_abi.js'
-import { VIRTUAL_MINING_BOARD_ABI } from '../../static/scripts/virtual_mining_board_abi.js'
-import { VRIG_MARKET_ABI } from '../../static/scripts/vrig_market_abi.js'
-
 import xCheckMetamask from '@/components/CheckMetamask'
 
 export default {
@@ -141,9 +134,7 @@ export default {
       this.approvalTx = 'Pending...'
       this.purchaseTx = 'Pending...'
       let owner = await this.vgpuContract.ownerOf(id)
-      if (owner === window.web3.eth.coinbase) {
-        this.showDismissibleAlert = true
-      } else {
+      if (owner !== window.web3.eth.coinbase) {
         this.$refs.modal.show()
         await this.mithrilContract.approve(ADDRESS.VGPU_MARKET, price).then(response => {
           console.log(response)
@@ -162,9 +153,7 @@ export default {
       this.approvalTx = 'Pending...'
       this.purchaseTx = 'Pending...'
       let owner = await this.vrigContract.ownerOf(id)
-      if (owner === window.web3.eth.coinbase) {
-        this.showDismissibleAlert = true
-      } else {
+      if (owner !== window.web3.eth.coinbase) {
         this.$refs.modal.show()
         await this.mithrilContract.approve(ADDRESS.VRIG_MARKET, price).then(response => {
           console.log(response)
@@ -179,25 +168,6 @@ export default {
         })
       }
     },
-    async initContracts () {
-      var Market = window.TruffleContract({abi: VGPU_MARKET_ABI})
-      var ChildArtifact = window.TruffleContract({abi: CHILD_ARTIFACT_ABI})
-      var Mithril = window.TruffleContract({abi: MINEABLE_ABI})
-      var VirtualMiningBoard = window.TruffleContract({abi: VIRTUAL_MINING_BOARD_ABI})
-      var vrigMarket = window.TruffleContract({abi: VRIG_MARKET_ABI})
-
-      Market.setProvider(window.web3.currentProvider)
-      ChildArtifact.setProvider(window.web3.currentProvider)
-      Mithril.setProvider(window.web3.currentProvider)
-      VirtualMiningBoard.setProvider(window.web3.currentProvider)
-      vrigMarket.setProvider(window.web3.currentProvider)
-
-      this.vgpuMarketContract = await Market.at(ADDRESS.VGPU_MARKET)
-      this.vgpuContract = await ChildArtifact.at(ADDRESS.VGPU)
-      this.mithrilContract = await Mithril.at(ADDRESS.MITHRIL)
-      this.vrigContract = await VirtualMiningBoard.at(ADDRESS.VRIG)
-      this.vrigMarketContract = await vrigMarket.at(ADDRESS.VRIG_MARKET)
-    },
     async loadVGPUMarket () {
       let len = await this.vgpuMarketContract.size()
       for (var i = 0; i < len; i++) {
@@ -205,6 +175,13 @@ export default {
         let a = await this.vgpuContract.artifactAt(art[0])
         let artifact = {}
         artifact.id = parseInt(art[0])
+        artifact.parent = a[1].toNumber()
+        let owner = await this.vgpuContract.ownerOf(artifact.id)
+        if (owner === window.web3.eth.coinbase) {
+          artifact.ownedByCoinbase = true
+        } else {
+          artifact.ownedByCoinbase = false
+        }
         artifact.name = a[0]
         artifact.life = parseInt(a[2])
         let mods = a[3]
@@ -231,6 +208,12 @@ export default {
         artifact.mithrilPrice = parseInt(art[1])
         artifact.price = this.readable(artifact.mithrilPrice)
         artifact.id = parseInt(art[0])
+        let owner = await this.vrigContract.ownerOf(artifact.id)
+        if (owner === window.web3.eth.coinbase) {
+          artifact.ownedByCoinbase = true
+        } else {
+          artifact.ownedByCoinbase = false
+        }
         artifact.name = stats[0]
         let basicStats = stats[1]
         artifact.experience = basicStats[0].toNumber()
@@ -306,7 +289,6 @@ export default {
     }
   },
   async mounted () {
-    await this.initContracts()
     this.loadMithrilBalance()
     this.loadVGPUMarket()
     this.loadVRIGMarket()
@@ -337,6 +319,10 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+}
+
+.float-left {
+  float: left;
 }
 
 .uid {
@@ -384,4 +370,17 @@ export default {
 .balance {
   float:right;
 }
+
+.statistics {
+  list-style: none;
+}
+
+.overlay {
+  margin: auto;
+  position: absolute;
+  top: 35%;
+  left: 30px;
+  right: 30px;
+}
+
 </style>

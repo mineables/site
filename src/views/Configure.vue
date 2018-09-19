@@ -2,20 +2,25 @@
   <section id="createToken">
     <div class="container">
       <x-check-metamask></x-check-metamask>
-      <h2 class="header-text">My Virtual Rigs</h2>
+      <h3 class="header-text">My Virtual Rigs</h3>
       <ul class="no-bullets">
         <li v-for="element in vrigIds">
           <router-link class="btn btn-link btn-lg" tag="button" :to="{ name: 'vrig', params: { id: element.id }}" > {{ element.name }} </router-link>
         </li>
       </ul>
+      <br>
+      <h3 class="header-text">My Virtual GPUs</h3>
+      <ul class="no-bullets">
+        <li v-for="element in vgpuIds">
+          <router-link class="btn btn-link btn-lg" tag="button" :to="{ name: 'vrig', params: { id: element.id }}" > {{ element.name }} </router-link>
+        </li>
+      </ul>
+
     </div>
   </section>
 </template>
 
 <script>
-import { ADDRESS } from '../../static/scripts/addr.js'
-import { VIRTUAL_MINING_BOARD_ABI } from '../../static/scripts/virtual_mining_board_abi.js'
-
 import xCheckMetamask from '@/components/CheckMetamask'
 
 export default {
@@ -30,27 +35,25 @@ export default {
       txId: 'Processing...',
       vrigId: 1,
       vrigIds: [],
+      vgpuIds: [],
       txUrl: 'https://rinkeby.etherscan.io/tx/'
     }
   },
   methods: {
-    async initContracts () {
-      var VirtualMiningBoard = window.TruffleContract({abi: VIRTUAL_MINING_BOARD_ABI})
-      VirtualMiningBoard.setProvider(window.web3.currentProvider)
-      this.vrigContract = await VirtualMiningBoard.at(ADDRESS.VRIG)
-      let balance = await this.vrigContract.balanceOf(window.web3.eth.coinbase)
+    async populateERC721 (target, contract) {
+      let balance = await contract.balanceOf(window.web3.eth.coinbase)
       for (var i = 0; i < balance; i++) {
-        let artifactId = await this.vrigContract.tokenOfOwnerByIndex(window.web3.eth.coinbase, i)
-        let stats = await this.vrigContract.mergedStats(artifactId)
+        let artifactId = await contract.tokenOfOwnerByIndex(window.web3.eth.coinbase, i)
         let artifact = {}
         artifact.id = artifactId
-        artifact.name = stats[0]
-        this.vrigIds.push(artifact)
+        artifact.name = await contract.name(artifactId)
+        target.push(artifact)
       }
     }
   },
   async mounted () {
-    await this.initContracts()
+    await this.populateERC721(this.vrigIds, this.vrigContract)
+    await this.populateERC721(this.vgpuIds, this.vgpuContract)
   }
 }
 </script>
