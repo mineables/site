@@ -381,6 +381,7 @@ export default {
   top: 35%;
   left: 30px;
   right: 30px;
+  z-index: 9999;
 }
 
 </style>
