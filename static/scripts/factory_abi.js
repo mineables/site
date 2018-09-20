@@ -34,6 +34,10 @@ export const FACTORY_ABI = [
         {
           "name": "_blockTimeInMinutes",
           "type": "uint256"
+        },
+        {
+          "name": "_metadataURI",
+          "type": "string"
         }
       ],
       "name": "createMineable",
@@ -155,6 +159,11 @@ export const FACTORY_ABI = [
           "indexed": false,
           "name": "_blockTimeInMinutes",
           "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "metadataURI",
+          "type": "string"
         }
       ],
       "name": "MineableTokenCreated",

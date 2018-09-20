@@ -84,15 +84,11 @@
   </b-tabs>
   <b-modal ref="modal" id="modal-center" size="lg" centered title="Processing..." hide-footer >
     <div class="form-group">
-      <label for="blockTimeInMinutes">Approval Transaction</label><br/>
-      <a v-bind:href="txUrl + approvalTx" target="_blank">{{ approvalTx }}</a>
-    </div>
-    <div class="form-group">
       <label for="blockTimeInMinutes">Purchase Transaction</label><br/>
       <a v-bind:href="txUrl + purchaseTx" target="_blank">{{ purchaseTx }}</a>
     </div>
     <b-progress :value="100" :max="100" :striped="loading" :animated="loading"></b-progress><br/>
-    <b-alert show variant="warning" v-if="loading">Please don't refresh this page until the transactions are completed.</b-alert>
+    <b-alert show variant="warning" v-if="loading">Please don't refresh this page until the transaction is completed.</b-alert>
     <b-alert show variant="success" v-if="!loading">
       Purchase complete.
       <router-link class="nav-link" :to="{ name:'configure' }">Configure your Virtual Rig</router-link>        
@@ -121,7 +117,6 @@ export default {
       mithrilContract: {},
       vgpuMarketContract: {},
       vrigMarketContract: {},
-      approvalTx: 'Pending...',
       purchaseTx: 'Pending...',
       txUrl: 'https://rinkeby.etherscan.io/tx/',
       loading: true,
@@ -136,6 +131,14 @@ export default {
       let owner = await this.vgpuContract.ownerOf(id)
       if (owner !== window.web3.eth.coinbase) {
         this.$refs.modal.show()
+        await this.mithrilContract.approveAndCall(ADDRESS.VGPU_MARKET, price, this.toHex(id)).then(response => {
+          console.log(response)
+          this.purchaseTx = response.tx
+          this.loading = false
+          this.vgpuResults = []
+          this.loadVGPUMarket()
+        })
+        /*
         await this.mithrilContract.approve(ADDRESS.VGPU_MARKET, price).then(response => {
           console.log(response)
           this.approvalTx = response.tx
@@ -147,7 +150,11 @@ export default {
           this.vgpuResults = []
           this.loadVGPUMarket()
         })
+        */
       }
+    },
+    toHex: function (n) {
+      return '0x' + n.toString(16).padStart(8, '0')
     },
     async purchasevRig (id, price) {
       this.approvalTx = 'Pending...'
@@ -155,6 +162,14 @@ export default {
       let owner = await this.vrigContract.ownerOf(id)
       if (owner !== window.web3.eth.coinbase) {
         this.$refs.modal.show()
+        await this.mithrilContract.approveAndCall(ADDRESS.VRIG_MARKET, price, this.toHex(id)).then(response => {
+          console.log(response)
+          this.purchaseTx = response.tx
+          this.loading = false
+          this.vrigResults = []
+          this.loadVRIGMarket()
+        })
+        /*
         await this.mithrilContract.approve(ADDRESS.VRIG_MARKET, price).then(response => {
           console.log(response)
           this.approvalTx = response.tx
@@ -166,6 +181,7 @@ export default {
           this.vrigResults = []
           this.loadVRIGMarket()
         })
+        */
       }
     },
     async loadVGPUMarket () {
