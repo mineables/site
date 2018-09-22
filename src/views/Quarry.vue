@@ -5,9 +5,7 @@
             <x-check-metamask></x-check-metamask>
 
             <h2 class="header-text">Mineable Tokens</h2>
-            <div class="row d-flex">
-                <x-quarry-table></x-quarry-table>
-            </div>
+            <x-quarry-table></x-quarry-table>
         </div>
     </section>
   </div>

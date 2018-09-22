@@ -19,7 +19,7 @@
       </thead>
       <tbody>
           <tr :key='idx' v-for="(token, idx) in quarry">
-              <td class="mdl-data-table__cell--non-numeric" >
+              <td>
                 <router-link :to="{ name: 'token', params: { addr: token.addr }}" v-text="token.symbol"></router-link>
               </td>
               <td v-text="token.tokensMinted"></td>
