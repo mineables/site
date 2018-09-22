@@ -42,6 +42,11 @@ export default new Router({
       path: '/vrig/:id/update',
       name: 'vrig',
       component: () => import('@/views/Vrig')
+    },
+    {
+      path: '/vgpu/:id',
+      name: 'vgpu',
+      component: () => import('@/views/Vgpu')
     }
   ]
 })

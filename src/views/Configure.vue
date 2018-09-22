@@ -12,7 +12,9 @@
       <h3 class="header-text">My Virtual GPUs</h3>
       <ul class="no-bullets">
         <li v-for="element in vgpuIds">
-          {{ element.name }}
+          <router-link class="btn btn-link btn-lg" tag="button" :to="{ name: 'vgpu', params: { id: element.id }}" > 
+            {{ element.name }}
+          </router-link>
         </li>
       </ul>
 

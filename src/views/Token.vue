@@ -87,7 +87,7 @@ export default {
     }
   },
   async mounted () {
-    this.loadToken(this.addr)
+    await this.loadToken(this.addr)
   }
 }
 </script>
