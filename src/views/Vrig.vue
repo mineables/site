@@ -279,8 +279,6 @@ export default {
 
 .available {
   padding: 20px;
-  background-color: lightgray;
-  // border: 5px dashed black;
 }
 
 .socket-artifact {
