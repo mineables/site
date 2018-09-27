@@ -39,25 +39,6 @@
               <div class="invalid-feedback"></div>
               <small id="symbolHelp" class="form-text text-muted">The initial quantity of tokens received per successful mine submission.</small>
             </div>
-            <div class="form-group">
-              <label for="blockAdjustment">Blocks per Difficulty Adjustment</label>
-              <input type="number" placeholder="ie. 1024" v-model="form.blockAdjustment" class="form-control" id="blockAdjustment" aria-describedby="blockAdjustmentHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
-              <div class="invalid-feedback"></div>
-              <small id="symbolHelp" class="form-text text-muted">The number of successful mintings before the target difficulty is adjusted.</small>
-            </div>
-            <div class="form-group">
-              <label for="initDiff">Initial Difficulty</label>
-              <input type="number" v-model="form.initDiff" placeholder="ie. 0" class="form-control" id="initDiff" aria-describedby="initDiffHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
-              <div class="invalid-feedback"></div>
-              <small id="symbolHelp" class="form-text text-muted">The hashing difficulty seed when the contract is launched. (ie. 0, 1000000, etc)</small>
-            </div>
-            <div class="form-group">
-              <label for="blockTimeInMinutes">Block Time in Minutes</label>
-              <input type="number" v-model="form.blockTimeInMinutes" placeholder="ie. 10" class="form-control" id="blockTimeInMinutes" aria-describedby="blockTimeInMinutesHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
-              <div class="invalid-feedback"></div>
-              <small id="symbolHelp" class="form-text text-muted">The target amount of time between mintings.</small>
-            </div>
-
             <!-- Metadata -->
             <div class="form-group">
               <label for="description">Description</label>
@@ -80,6 +61,34 @@
                 <img class="token-icon-preview" :src="previewImageData">
               </div>
             </div>
+
+           <div>
+            <b-btn v-b-toggle.collapse1 variant="link">Advanced</b-btn>
+              <b-collapse id="collapse1" class="mt-2">
+                <b-alert show variant="danger">Warning: These are advanced features that can drastically change the overall behavior of your mined token, proceed with caution</b-alert>
+                <div class="form-group">
+                  <label for="blockAdjustment">Blocks per Difficulty Adjustment</label>
+                  <input type="number" placeholder="ie. 1024" v-model="form.blockAdjustment" class="form-control" id="blockAdjustment" aria-describedby="blockAdjustmentHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+
+                  <div class="invalid-feedback"></div>
+                  <small id="symbolHelp" class="form-text text-muted">The number of successful mintings before the target difficulty is adjusted.</small>
+                </div>
+                <div class="form-group">
+                  <label for="initDiff">Initial Difficulty</label>
+                  <input type="number" v-model="form.initDiff" placeholder="ie. 0" class="form-control" id="initDiff" aria-describedby="initDiffHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+                  <div class="invalid-feedback"></div>
+                  <small id="symbolHelp" class="form-text text-muted">The hashing difficulty seed when the contract is launched. (ie. 0, 1000000, etc)</small>
+                </div>
+                <div class="form-group">
+                  <label for="blockTimeInMinutes">Block Time in Minutes</label>
+                  <input type="number" v-model="form.blockTimeInMinutes" placeholder="ie. 10" class="form-control" id="blockTimeInMinutes" aria-describedby="blockTimeInMinutesHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+                  <div class="invalid-feedback"></div>
+                  <small id="symbolHelp" class="form-text text-muted">The target amount of time between mintings.</small>
+                </div>
+
+              </b-collapse>
+          </div>
+          <br>       
             
           </form>
 
@@ -124,7 +133,11 @@ export default {
   },
   data () {
     return {
-      form: {},
+      form: {
+        blockAdjustment: 1024,
+        initDiff: 0,
+        blockTimeInMinutes: 10
+      },
       wallet: undefined,
       txId: 'Processing...',
       addr: 'Processing...',
