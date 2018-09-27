@@ -63,7 +63,7 @@
             </div>
 
            <div>
-            <b-btn v-b-toggle.collapse1 variant="link">Advanced</b-btn>
+            <b-btn v-b-toggle.collapse1 variant="link">+Advanced</b-btn>
               <b-collapse id="collapse1" class="mt-2">
                 <b-alert show variant="danger">Warning: These are advanced features that can drastically change the overall behavior of your mined token, proceed with caution</b-alert>
                 <div class="form-group">
