@@ -2,13 +2,13 @@
 
 // Rinkeby
 export const ADDRESS = {
-	VGPU: '0xbd2b7ef8fab1e8c7310b0ff5fe64f9b52f5c7d60',
-    VRIG: '0xb722d50e736870fb865edf9793c8e82287febac3',
-    MITHRIL: '0x6d15043c6347b316c00610937c58b6bc58f61436',
-    QUARRY: '0x00f7fb72e7c77d5132b5b3f1dc17d6b5f544ef8a',    
-    FACTORY: '0xeae6a4569482471507e1ca605a21c9e6c13a243c',
-    VGPU_MARKET: '0xf1e73d0bd9e0a8519e6537f110e6228855828a4e',
-    VRIG_MARKET: '0x52114c3a4b66e2c6f07f0e08e675a1d70b08f29e',
+	VGPU: '0xcae7b3a1e3727147511b3018ee02a5d55ad3a204',
+    VRIG: '0xa49b80a225a9b8ecf073bb5fe13f68d0dbd79f48',
+    MITHRIL: '0x1c912fc3c5bd8c615d3181fc89bbb572b805c6d3',
+    QUARRY: '0xc93b58bceaff1e03ecf82abdd11fa9400f468a43',    
+    FACTORY: '0x46d1758a0cea5ecdea2eeabde229dd53c9fb413b',
+    VGPU_MARKET: '0xfdc80bc2bfd9a56db9dc74c55c088873faa5e22a',
+    VRIG_MARKET: '0x4192bbea27801aef08db77dc0af722cdf605f585',
 }
 
 // Kaleido test net

@@ -44,7 +44,7 @@
             <div class="card-body">
               <h5 class="card-title">Create and Discover</h5>
               <p class="card-text"><router-link :to="{ name:'create' }">Create</router-link> a Mineable 0xToken with the click of a button on the Mineable create token page. You can create your own custom mineable token without ever having to write a line of solidity code. As part of the Mineables network, your token will automatically reward miners 0xMithril anti-gas rebates along with every token issuance. Join the exciting new world of mineable tokens now!</p>
-              <p class="card-text">Determine what 0xTokens on the Mineables Network that you want to mine with a comprehensive <router-link :to="{ name:'quarry' }"> Quarry listing</router-link>.</p>
+              <p class="card-text">Determine what 0xTokens on the Mineables Network that you want to mine with a comprehensive <router-link :to="{ name:'tokens' }"> Quarry listing</router-link>.</p>
 
             </div>
           </div>
