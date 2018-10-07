@@ -70,7 +70,7 @@
                       </li>
                     </ul>
                   </b-popover>                  
-                  <img :id="'artifact'+element.artifactId" :src="element.metadata.image" width="100" height="100">
+                  <img v-if="element.metadata" :id="'artifact'+element.artifactId" :src="element.metadata.image" width="100" height="100">
                 </div>
               </draggable>
             </div>
@@ -90,7 +90,7 @@
                       </li>
                     </ul>
                   </b-popover>                  
-                  <img :id="'artifact'+element.artifactId" :src="element.metadata.image" width="100" height="100"> 
+                  <img v-if="element.metadata" :id="'artifact'+element.artifactId" :src="element.metadata.image" width="100" height="100"> 
                 </div>
               </draggable>
             </div>
@@ -198,7 +198,12 @@ export default {
         vgpu.name = a[0]
         // load metadata
         vgpu.tokenURI = await this.vgpuContract.tokenURI(vgpu.artifactId)
-        vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
+        try {
+          vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
+        } catch (e) {
+          console.log(e)
+        }
+
         vgpu.parent = a[1].toNumber()
         vgpu.life = parseInt(a[2])
         let mods = a[3]
