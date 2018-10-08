@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { ADDRESS } from '../../static/scripts/addr.js'
+import { ADDRESS, BLOCK_EXPLORER_URL } from '../../static/scripts/addr.js'
 import xCheckMetamask from '@/components/CheckMetamask'
 
 export default {
@@ -118,7 +118,7 @@ export default {
       vgpuMarketContract: {},
       vrigMarketContract: {},
       purchaseTx: 'Pending...',
-      txUrl: 'https://rinkeby.etherscan.io/tx/',
+      txUrl: BLOCK_EXPLORER_URL,
       loading: true,
       showDismissibleAlert: false,
       mithrilBalance: 0

@@ -92,6 +92,7 @@
 </template>
 
 <script>
+import { BLOCK_EXPLORER_URL } from '../../static/scripts/addr.js'
 
 export default {
   name: 'xQuarryTable',
@@ -100,7 +101,7 @@ export default {
       quarry: [],
       loading: true,
       completedTxn: false,
-      txUrl: 'https://rinkeby.etherscan.io/tx/',
+      txUrl: BLOCK_EXPLORER_URL,
       approvalTx: 'Pending...',
       selected: null,
       currentTokenAddress: null,

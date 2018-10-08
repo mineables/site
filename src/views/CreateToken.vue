@@ -122,7 +122,7 @@
 
 <script>
 import { FACTORY_ABI } from '../../static/scripts/factory_abi.js'
-import { ADDRESS } from '../../static/scripts/addr.js'
+import { ADDRESS, BLOCK_EXPLORER_URL } from '../../static/scripts/addr.js'
 
 import xCheckMetamask from '@/components/CheckMetamask'
 
@@ -142,7 +142,7 @@ export default {
       txId: 'Processing...',
       addr: 'Processing...',
       loading: true,
-      txUrl: 'https://ropsten.etherscan.io/tx/',
+      txUrl: BLOCK_EXPLORER_URL,
       ipfsImageLink: '',
       previewImageData: '',
       previewImageFile: ''

@@ -2,14 +2,16 @@
 
 // Rinkeby
 export const ADDRESS = {
-	VGPU: '0xcae7b3a1e3727147511b3018ee02a5d55ad3a204',
-    VRIG: '0xa49b80a225a9b8ecf073bb5fe13f68d0dbd79f48',
-    MITHRIL: '0x1c912fc3c5bd8c615d3181fc89bbb572b805c6d3',
-    QUARRY: '0xc93b58bceaff1e03ecf82abdd11fa9400f468a43',    
-    FACTORY: '0x46d1758a0cea5ecdea2eeabde229dd53c9fb413b',
-    VGPU_MARKET: '0xfdc80bc2bfd9a56db9dc74c55c088873faa5e22a',
-    VRIG_MARKET: '0x4192bbea27801aef08db77dc0af722cdf605f585',
+    "VGPU":"0x1d5d49d92b92a783c26047a86b74087c85cc9df8",
+    "VRIG":"0x1d72334aafab25fa3fef742ba65265127963ad23",
+    "MITHRIL":"0xc83428ee60467cc3e39770f8ea1cb443c7ee3249",
+    "QUARRY":"0x1b18df13adef8cb86f0e639c1833aaf0d8209b99",
+    "FACTORY":"0x0a04301bd75680c4018366f3fe1d1ee1ba9ed312",
+    "VGPU_MARKET":"0x1195049ccbef93dbb38d046dcc1200d99c795ab5",
+    "VRIG_MARKET":"0x0a0bf66771eac60b0edff26af92302cb15834f91"
 }
+
+export const BLOCK_EXPLORER_URL = 'https://blockscout.com/poa/sokol/tx/'
 
 // Kaleido test net
 /*

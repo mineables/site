@@ -6,7 +6,9 @@
           <b-navbar-brand href="#">
               <img src="static/icons/mithril-icon.png" class="d-inline-block" alt="BV">
               Mineables
-            </b-navbar-brand>
+          </b-navbar-brand>
+
+          <h5><b-badge variant="light">{{network}}</b-badge></h5>
 
           <b-collapse is-nav id="nav_collapse">
             <b-navbar-nav class="ml-auto">
@@ -15,6 +17,8 @@
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'tokens' }">Tokens</router-link></b-nav-item>
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'market' }">Market</router-link></b-nav-item>
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'configure' }">Configure</router-link></b-nav-item>
+
+              
             </b-navbar-nav>
 
           </b-collapse>
@@ -29,8 +33,41 @@ export default {
   name: 'xHeader',
   data () {
     return {
-      bigLogo: true
+      bigLogo: true,
+      network: ''
     }
+  },
+  mounted () {
+    window.web3.version.getNetwork((err, netId) => {
+      if (err) {
+        console.log(err)
+      }
+      switch (netId) {
+        case '1':
+          this.network = 'Mainnet'
+          break
+        case '2':
+          this.network = 'Morden'
+          break
+        case '3':
+          this.network = 'Ropsten'
+          break
+        case '4':
+          this.network = 'Rinkeby'
+          break
+        case '42':
+          this.network = 'Kovan'
+          break
+        case '77':
+          this.network = 'Sokol'
+          break
+        case '99':
+          this.network = 'POA Mainnet'
+          break
+        default:
+          this.network = 'Unknowen'
+      }
+    })
   }
 }
 

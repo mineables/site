@@ -121,6 +121,7 @@
 <script>
 import draggable from 'vuedraggable'
 import xCheckMetamask from '@/components/CheckMetamask'
+import { BLOCK_EXPLORER_URL } from '../../static/scripts/addr.js'
 
 export default {
   name: 'Vrig',
@@ -136,7 +137,7 @@ export default {
       availableComponents: [],
       buttonDisabled: true,
       approvalTx: 'Pending...',
-      txUrl: 'https://rinkeby.etherscan.io/tx/',
+      txUrl: BLOCK_EXPLORER_URL,
       loading: true
     }
   },
@@ -203,7 +204,6 @@ export default {
         } catch (e) {
           console.log(e)
         }
-
         vgpu.parent = a[1].toNumber()
         vgpu.life = parseInt(a[2])
         let mods = a[3]
@@ -211,9 +211,12 @@ export default {
         for (var j = 0; j < mods.length; j++) {
           vgpu.modifiers.push(this.parseModifier(mods[j]))
         }
+        console.log('parent: ' + vgpu.parent)
         if (vgpu.parent === Number(this.id)) {
+          console.log('Adding to Vrig: ' + vgpu.artifactId)
           this.vrigComponents.push(vgpu)
         } else if (vgpu.parent === 0) {
+          console.log('Adding to Available: ' + vgpu.artifactId)
           this.availableComponents.push(vgpu)
         }
       }
