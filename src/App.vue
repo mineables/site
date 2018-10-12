@@ -22,21 +22,29 @@ export default {
     xHeader,
     xFooter
   },
-  mounted () {
+  async mounted () {
     if (TruffleContract != null) {
-      console.log('Success!')
+      console.log('Loaded TruffleContract')
       window.TruffleContract = TruffleContract
     } else {
       console.error('Failed to load Truffle Contract')
     }
-
-    if (typeof window.web3 !== 'undefined' && window.web3.eth.defaultAccount !== undefined) {
-      console.log('Local Wallet Detected')
+    // Modern dapp browsers...
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+      try {
+        // Request account access if needed
+        await window.ethereum.enable()
+        console.log('Loaded window.ethereum')
+      } catch (error) {
+        // User denied account access
+        console.log(error)
+      }
+    } else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider)
-      window.wallet = 'local'
+      console.log('loaded legacy web3')
     } else {
-      console.log('No web3? You should consider trying MetaMask!')
-      // window.wallet = 'infura'
+      console.log('Non-Ethereum browser detected. You should consider trying MetaMask!')
     }
     window.web3.eth.defaultAccount = window.web3.eth.accounts[0]
   }
