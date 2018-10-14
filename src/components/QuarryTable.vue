@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import { BLOCK_EXPLORER_URL } from '../../static/scripts/addr.js'
+const BLOCK_EXPLORER_URL = require('../../static/scripts/config.js').explorer_url
 
 export default {
   name: 'xQuarryTable',

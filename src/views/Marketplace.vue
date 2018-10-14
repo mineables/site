@@ -98,7 +98,9 @@
 </template>
 
 <script>
-import { ADDRESS, BLOCK_EXPLORER_URL } from '../../static/scripts/addr.js'
+const BLOCK_EXPLORER_URL = require('../../static/scripts/config.js').explorer_url
+const ADDRESS = require('../../static/scripts/config.js').addresses
+
 import xCheckMetamask from '@/components/CheckMetamask'
 
 export default {

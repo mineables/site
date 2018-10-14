@@ -6,6 +6,8 @@ import router from '@/router'
 import BootstrapVue from 'bootstrap-vue'
 import VueResource from 'vue-resource'
 
+// const fetch = require('node-fetch')
+
 router.afterEach(() => {
   window.scrollTo(0, 0)
 })
@@ -24,7 +26,7 @@ new Vue({
   components: { App }
 })
 
-import { ADDRESS } from '../static/scripts/addr.js'
+const ADDRESS = require('../static/scripts/config.js').addresses
 import { CHILD_ARTIFACT_ABI } from '../static/scripts/child_artifact_abi.js'
 import { VIRTUAL_MINING_BOARD_ABI } from '../static/scripts/virtual_mining_board_abi.js'
 import { MINEABLE_ABI } from '../static/scripts/mineable_abi.js'
