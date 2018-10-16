@@ -18,7 +18,7 @@ Description:
 	When I did this thing, the universe divided by zero.
 
 Steps to Reproduce:
-	1. Obtain trilitium from Klingon secret society.
+	1. Obtain trilithium from Klingon secret society.
 	2. Pop that shit in a blender on high.
 	3. ???
 	4. Profit.
