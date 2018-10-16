@@ -78,11 +78,11 @@
             <p class="card-text">The Mineables Network team has been working hard developing a true hashpower virtualization layer that exists on the Ethereum blockchain. Realized with <a href="https://eips.ethereum.org/EIPS/eip-721" target="_blank">ERC721</a> compliant Virtual Rigs and Virtual GPUs, miners can purchase and deploy a full or hybrid virtual mining operation saving substantial time and money over traditional mining operations.</p>
             <h6>How it works</h6>
             <p class="card-text">If you, as a miner, want to increase your hash power, currently you have to invest capital in specialized hardware, electricity and additional maintenance that comes alone with keeping it all together. The Mineables Network offers an alternative to acquiring physical components to increase hashing power, with the introduction of Virtual Rigs (vRigs) that can be slotted with multiple Virtual GPUs (vGPUs). These virtual components exist on the Ethereum blockchain and each have their own attributes that effect mining statistics like difficulty and reward efficiency among others.</p>
+             <img src="static/icons/overview.png" class="img-fluid-home float-right">
             <p class="card-text">
-            <img src="static/icons/vHash.png" class="img-fluid-home float-right">
             Instead of investing several hundreds or thousands of dollars on physical GPUs, a miner can now purchase virtual Rigs and GPUs at a fraction of the price, with 0xMithril or 0xBitcoin. The Virtual components are then configured and attached by a miner to a Mineable Network Token thereby decreasing the overall difficulty via the virtualized hash device.
             Miners can mix and match virtual GPU configurations on their Virtual Rigs to maximize mining performance and tailor make rigs for specific categories of tokens. Additionally, virtual and physical topologies are supported, so miners can leverage existing GPU hardware alongside their virtual counterparts. In other words, vRigs and vGPUs can be combined with physical GPUs to produce hybrid mining topologies, addressing mining target scenarios in the most flexible way possible.</p>
-            
+           
         </div>
         <div class="row">
           <div class="col-sm-3">
