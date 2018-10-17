@@ -1,7 +1,7 @@
 Mineables Network Test cases
 ---
 
-Here are a few test cases that need to be certified by testers for the Mineables Token Network. There are three different modules that need to be tested during this process: the site/Dapp, the miner, and, to a lesser extent, the pool. Currently, we do not have a fully functional miner build, however, if you are comfortable building and running it yourself, the instructions are fairly straightforward. If not, we should have a full build soon.
+Here are a few test cases that need to be certified by testers for the Mineables Token Network. There are three different modules that need to be tested during this process: the site/Dapp, the miner, and, to a lesser extent, the pool.
 
 If you see any significant errors, bugs, or just have a commentary on useability flow please raise them as verbosely as possible as issues in their appropriate githubs:
 
@@ -34,13 +34,11 @@ Results / side effects:
 Setup
 ---
 1. Install Metamask - https://metamask.io/
+
 2. We are currently deployed on the 'Sokol' test network. As such, you will have to update your Metamask to point to this network:
 https://sokol.poa.network ( Under networks.. 'Custom RPC' )
-3. Download and configure the miner from github: https://github.com/0xMithril/COSMiC-v3-0xMTH. To build and run yourself:
-		
-    npm install
-		
-    node index.js
+
+3. Download and install the miner from github: https://github.com/0xMithril/COSMiC-v3-0xMTH/releases/tag/v1.0. 
 
 4. Set up a new account in metamask, or in the miner ( ```account new``` ). Take note of public / private keys. Note: do not use your regular accounts in metamask, make sure you set up these test accounts.
 5. Once you have created your account ping @lodge with your address on the test channel of our discord server ( https://discord.gg/m73tdwt ) and I'll send you some test 0xMithril that you will need to test purchasing virtual artifacts.
