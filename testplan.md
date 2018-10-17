@@ -35,7 +35,7 @@ Setup
 ---
 1. Install Metamask - https://metamask.io/
 2. We are currently deployed on the 'Sokol' test network. As such, you will have to update your Metamask to point to this network:
-https://sokol.poa.network
+https://sokol.poa.network ( Under networks.. 'Custom RPC' )
 3. Download and configure the miner from github: https://github.com/0xMithril/COSMiC-v3-0xMTH. To build and run yourself:
 		
     npm install
