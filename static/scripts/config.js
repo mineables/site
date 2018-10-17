@@ -1,13 +1,13 @@
 module.exports = {
 	"addresses":{
-	    "VGPU":"0x1d5d49d92b92a783c26047a86b74087c85cc9df8",
-	    "VRIG":"0x1d72334aafab25fa3fef742ba65265127963ad23",
-	    "MITHRIL":"0xc83428ee60467cc3e39770f8ea1cb443c7ee3249",
-	    "QUARRY":"0x1b18df13adef8cb86f0e639c1833aaf0d8209b99",
-	    "FACTORY":"0x0a04301bd75680c4018366f3fe1d1ee1ba9ed312",
-	    "VGPU_MARKET":"0x1195049ccbef93dbb38d046dcc1200d99c795ab5",
-	    "VRIG_MARKET":"0x0a0bf66771eac60b0edff26af92302cb15834f91"
-    },
+	  "VGPU": "0x89ccc15d3409bb34defdb40bfcdf3b222f2fe23c",
+	  "VRIG": "0xf0a0c3563ea9237ceb582197711e68dbb7a5c60f",
+	  "MITHRIL": "0x26340cc8229ca059cd38a5a7c094d5061568d0a3",
+	  "QUARRY": "0x1fb2abe9bc999f9f0086f8dd02ed9cea3b1492a7",
+	  "FACTORY": "0x6b3f2801c4c06545405e4ba5c5b3c82075cedca1",
+	  "VGPU_MARKET": "0x33af6603b51871be8393e5fa512c3ee0c92949ce",
+	  "VRIG_MARKET": "0x43af73cec355b18b767a274e9064a73435cb7353"
+	},
 
     "explorer_url": "https://blockscout.com/poa/sokol/tx/"
 }
