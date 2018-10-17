@@ -42,6 +42,9 @@ https://sokol.poa.network
 		
     node index.js
 
+4. Set up a new account in metamask, or in the miner ( ```account new``` ). Take note of public / private keys. Note: do not use your regular accounts in metamask, make sure you set up these test accounts.
+5. Once you have created your account ping @lodge with your address on the test channel of our discord server ( https://discord.gg/m73tdwt ) and I'll send you some test 0xMithril that you will need to test purchasing virtual artifacts.
+
 Test Case 1: Create a New Mineable Token - simple
 ---
 
