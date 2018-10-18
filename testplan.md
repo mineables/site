@@ -44,7 +44,10 @@ https://sokol.poa.network ( Under networks.. 'Custom RPC' )
 3. Download and install the miner from github: https://github.com/0xMithril/COSMiC-v3-0xMTH/releases/tag/v1.0. 
 
 4. Set up a new account in metamask, or in the miner ( ```account new``` ). Take note of public / private keys. Note: do not use your regular accounts in metamask, make sure you set up these test accounts.
-5. Once you have created your account ping @lodge with your address on the test channel of our discord server ( https://discord.gg/m73tdwt ) and I'll send you some test 0xMithril that you will need to test purchasing virtual artifacts.
+
+5. Go to the Sokol Faucet and grab some testnet Ether. ( 0.5 should be plenty )  https://faucet-sokol.herokuapp.com/
+
+6. Once you have created your account ping @lodge with your address on the test channel of our discord server ( https://discord.gg/m73tdwt ) and I'll send you some test 0xMithril that you will need to test purchasing virtual artifacts.
 
 Test Case 1: Create a New Mineable Token - simple
 ---
