@@ -146,7 +146,7 @@ Test Case 7: Mining 0xMithril Individual
 		account new
 	And point to the testnet:
 		config web3provider https://sokol.poa.network
-	Verify the contract address of 0xMithril is '0xc83428ee60467cc3e39770f8ea1cb443c7ee3249'
+	Verify the contract address of 0xMithril is '0x26340cc8229ca059cd38a5a7c094d5061568d0a3'
 		contract list
 	Start mining 
 		mine cuda
