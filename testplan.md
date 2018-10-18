@@ -5,10 +5,13 @@ Here are a few test cases that need to be certified by testers for the Mineables
 
 If you see any significant errors, bugs, or just have a commentary on useability flow please raise them as verbosely as possible as issues in their appropriate githubs:
 
+For the Mineables site/Dapp:
 https://github.com/0xMithril/site/issues
 
+For the Miner:
 https://github.com/0xMithril/COSMiC-v3-0xMTH/issues
 
+For the Pool:
 https://github.com/0xMithril/ERC918Pool/issues
 
 At a minimum, for bugs, I would prefer to have the following format
