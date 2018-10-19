@@ -35,6 +35,14 @@
               <td>{{ token.diff }}</td>
             </tr>
             <tr>
+              <td><b>Block Target</b></td>
+              <td>{{ token.adjustmentInterval }} minutes</td>
+            </tr>
+            <tr>
+              <td><b>Blocks / Epoch</b></td>
+              <td>{{ token.blocksPerReadjustment }}</td>
+            </tr>
+            <tr>
               <td><b>Hash Algorithm</b></td>
               <td>{{ token.metadata.type }}</td>
             </tr>
@@ -66,6 +74,8 @@ export default {
       let diff = await mineable.getMiningDifficulty()
       let installedBoosterId = await mineable.getInstalledBooster()
       let tokensMinted = await mineable.tokensMinted()
+      let adjustmentInterval = await mineable.adjustmentInterval()
+      let blocksPerReadjustment = await mineable.blocksPerReadjustment()
       // metadata
       let metadataURI = await mineable.metadataURI()
       console.log(metadataURI)
@@ -82,7 +92,9 @@ export default {
         remainingSupply: supply / (10 ** decimal) - tokensMinted / (10 ** decimal),
         diff: diff.toNumber(),
         tokensMinted: tokensMinted / (10 ** decimal),
-        metadata: metadata
+        metadata: metadata,
+        adjustmentInterval: adjustmentInterval.toNumber() / 60,
+        blocksPerReadjustment: blocksPerReadjustment.toNumber()
       }
     }
   },
@@ -109,7 +121,7 @@ export default {
   height: 7em;
   float: left;
   margin: 1em;
-  padding: 1em;
+  padding: 0.25em;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
