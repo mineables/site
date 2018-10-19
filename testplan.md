@@ -1,14 +1,17 @@
 Mineables Network Test cases
 ---
 
-Here are a few test cases that need to be certified by testers for the Mineables Token Network. There are three different modules that need to be tested during this process: the site/Dapp, the miner, and, to a lesser extent, the pool. Currently, we do not have a fully functional miner build, however, if you are comfortable building and running it yourself, the instructions are fairly straightforward. If not, we should have a full build soon.
+Here are a few test cases that need to be certified by testers for the Mineables Token Network. There are three different modules that need to be tested during this process: the site/Dapp, the miner, and, to a lesser extent, the pool.
 
 If you see any significant errors, bugs, or just have a commentary on useability flow please raise them as verbosely as possible as issues in their appropriate githubs:
 
+For the Mineables site/Dapp:
 https://github.com/0xMithril/site/issues
 
+For the Miner:
 https://github.com/0xMithril/COSMiC-v3-0xMTH/issues
 
+For the Pool:
 https://github.com/0xMithril/ERC918Pool/issues
 
 At a minimum, for bugs, I would prefer to have the following format
@@ -34,16 +37,17 @@ Results / side effects:
 Setup
 ---
 1. Install Metamask - https://metamask.io/
+
 2. We are currently deployed on the 'Sokol' test network. As such, you will have to update your Metamask to point to this network:
-https://sokol.poa.network
-3. Download and configure the miner from github: https://github.com/0xMithril/COSMiC-v3-0xMTH. To build and run yourself:
-		
-    npm install
-		
-    node index.js
+https://sokol.poa.network ( Under networks.. 'Custom RPC' )
+
+3. Download and install the miner from github: https://github.com/0xMithril/COSMiC-v3-0xMTH/releases/tag/v1.0. 
 
 4. Set up a new account in metamask, or in the miner ( ```account new``` ). Take note of public / private keys. Note: do not use your regular accounts in metamask, make sure you set up these test accounts.
-5. Once you have created your account ping @lodge with your address on the test channel of our discord server ( https://discord.gg/m73tdwt ) and I'll send you some test 0xMithril that you will need to test purchasing virtual artifacts.
+
+5. Go to the Sokol Faucet and grab some testnet Ether. ( 0.5 should be plenty )  https://faucet-sokol.herokuapp.com/
+
+6. Once you have created your account ping @lodge with your address on the test channel of our discord server ( https://discord.gg/m73tdwt ) and I'll send you some test 0xMithril that you will need to test purchasing virtual artifacts.
 
 Test Case 1: Create a New Mineable Token - simple
 ---
@@ -142,7 +146,7 @@ Test Case 7: Mining 0xMithril Individual
 		account new
 	And point to the testnet:
 		config web3provider https://sokol.poa.network
-	Verify the contract address of 0xMithril is '0xc83428ee60467cc3e39770f8ea1cb443c7ee3249'
+	Verify the contract address of 0xMithril is '0x26340cc8229ca059cd38a5a7c094d5061568d0a3'
 		contract list
 	Start mining 
 		mine cuda
