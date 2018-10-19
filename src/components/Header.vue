@@ -4,7 +4,7 @@
         <b-navbar toggleable="md" type="dark" variant="dark">
           <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
           <b-navbar-brand href="#">
-              <img src="static/icons/mithril-icon.png" class="d-inline-block" alt="BV">
+              <img src="/static/icons/mithril-icon.png" class="d-inline-block" alt="BV">
               Mineables
           </b-navbar-brand>
 
