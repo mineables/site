@@ -111,7 +111,7 @@ nav.navbar {
 
 .navbar-brand {
   color: #37427A;
-  font-family: "Arial";
+  font-family: "Trebuchet MS";
   letter-spacing: 0.15em;
   font-size: 1.3em;
   line-height: 2;
