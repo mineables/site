@@ -4,7 +4,7 @@
         <b-navbar toggleable="md" type="dark" variant="dark">
           <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
           <b-navbar-brand href="#">
-              <img src="/static/icons/mithril-icon.png" class="d-inline-block" alt="BV">
+              <img src="/static/icons/mithril-icon.png" class="d-inline-block" alt="Mineables">
               Mineables
           </b-navbar-brand>
 
@@ -17,11 +17,14 @@
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'tokens' }">Tokens</router-link></b-nav-item>
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'market' }">Market</router-link></b-nav-item>
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'configure' }">Configure</router-link></b-nav-item>
-
-              
+              <b-nav-item class="nav-link miner" target="_blank" href="https://github.com/0xMithril/COSMiC-v3-0xMTH/releases/tag/v1.1">
+                  Miner
+              </b-nav-item>
             </b-navbar-nav>
 
           </b-collapse>
+           
+
         </b-navbar>
 
     </header> 
@@ -42,6 +45,8 @@ export default {
       if (err) {
         console.log(err)
       }
+      console.log('netId: ', netId)
+      window.netId = parseInt(netId)
       switch (netId) {
         case '1':
           this.network = 'Mainnet'
@@ -64,8 +69,14 @@ export default {
         case '99':
           this.network = 'POA Mainnet'
           break
+        case '918':
+          this.network = '0xBitchain'
+          break
+        case '100':
+          this.network = 'xDai Chain'
+          break
         default:
-          this.network = 'Unknowen'
+          this.network = 'Unknown'
       }
     })
   }
@@ -74,6 +85,10 @@ export default {
 </script>
 
 <style>
+
+.miner {
+  color: rgb(60, 181, 166);
+}
 
 .logo {
     position: absolute;

@@ -102,6 +102,7 @@ const BLOCK_EXPLORER_URL = require('../../static/scripts/config.js').explorer_ur
 const ADDRESS = require('../../static/scripts/config.js').addresses
 
 import xCheckMetamask from '@/components/CheckMetamask'
+// import fetch from '@/common/fetchWithTimeout'
 
 export default {
   name: 'Marketplace',
@@ -209,9 +210,13 @@ export default {
         }
         artifact.mithrilPrice = parseInt(art[1])
         artifact.price = this.readable(artifact.mithrilPrice)
+        artifact.metadata = {image: '/static/assets/gem1.png'}
         // load metadata
         artifact.tokenURI = await this.vgpuContract.tokenURI(art[0])
-        artifact.metadata = await (await fetch(artifact.tokenURI)).json()
+        let tok = await fetch(artifact.tokenURI)
+        if (tok) {
+          artifact.metadata = await tok.json()
+        }
         console.log(artifact)
         this.vgpuResults.push(artifact)
       }
