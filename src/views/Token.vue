@@ -74,7 +74,7 @@ export default {
       let diff = await mineable.getMiningDifficulty()
       let installedBoosterId = await mineable.getInstalledBooster()
       let tokensMinted = await mineable.tokensMinted()
-      let adjustmentInterval = await mineable.adjustmentInterval()
+      let adjustmentInterval = await mineable.blockTimeInMinutes()
       let blocksPerReadjustment = await mineable.blocksPerReadjustment()
       // metadata
       let metadataURI = await mineable.metadataURI()
@@ -93,7 +93,7 @@ export default {
         diff: diff.toNumber(),
         tokensMinted: tokensMinted / (10 ** decimal),
         metadata: metadata,
-        adjustmentInterval: adjustmentInterval.toNumber() / 60,
+        adjustmentInterval: adjustmentInterval.toNumber(),
         blocksPerReadjustment: blocksPerReadjustment.toNumber()
       }
     }
