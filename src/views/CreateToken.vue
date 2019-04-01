@@ -81,7 +81,7 @@
                 </div>
                 <div class="form-group">
                   <label for="blockTimeInMinutes">Block Time in Minutes</label>
-                  <input type="number" v-model="form.blockTimeInMinutes" placeholder="ie. 10" class="form-control" id="blockTimeInMinutes" aria-describedby="blockTimeInMinutesHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
+                  <input readonly type="number" v-model="form.blockTimeInMinutes" placeholder="ie. 10" class="form-control" id="blockTimeInMinutes" aria-describedby="blockTimeInMinutesHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
                   <div class="invalid-feedback"></div>
                   <small id="symbolHelp" class="form-text text-muted">The target amount of time between mintings.</small>
                 </div>
