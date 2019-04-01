@@ -17,7 +17,7 @@
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'tokens' }">Tokens</router-link></b-nav-item>
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'market' }">Market</router-link></b-nav-item>
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'configure' }">Configure</router-link></b-nav-item>
-              <b-nav-item class="nav-link miner" target="_blank" href="https://github.com/0xMithril/COSMiC-v3-0xMTH/releases/tag/v1.1">
+              <b-nav-item class="nav-link miner" target="_blank" href="https://github.com/0xMithril/COSMiC-v3-0xMTH/releases/tag/v1.0">
                   Miner
               </b-nav-item>
             </b-navbar-nav>
