@@ -40,13 +40,17 @@ export default {
         // User denied account access
         console.log(error)
       }
+      window.web3.eth.defaultAccount = window.web3.eth.accounts[0]
     } else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider)
       console.log('loaded legacy web3')
+      window.web3.eth.defaultAccount = window.web3.eth.accounts[0]
     } else {
       console.log('Non-Ethereum browser detected. You should consider trying MetaMask!')
+      console.log('Loading provider https://dai.poa.network')
+      window.web3 = new Web3(new Web3.providers.HttpProvider('https://dai.poa.network'))
+      console.log(window.web3.currentProvider)
     }
-    window.web3.eth.defaultAccount = window.web3.eth.accounts[0]
   }
 }
 </script>

@@ -3,10 +3,7 @@
     <table id="quarryTable" ref="quarryTable" class="table">
       <thead class="thead-dark">
           <tr>
-              <th v-if="loading">
-                  <span class="loading">    (Loading...)</span> Symbol   
-              </th>
-              <th v-if="!loading">
+              <th>
                  Symbol
               </th>
               <th>Minted</th>
@@ -208,7 +205,9 @@ export default {
     }
   },
   async mounted () {
-    await this.initContracts()
+    if (window.web3.eth.defaultAccount) {
+      await this.initContracts()
+    }
     await this.loadQuarry()
   }
 }
