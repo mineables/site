@@ -79,12 +79,6 @@
                   <div class="invalid-feedback"></div>
                   <small id="symbolHelp" class="form-text text-muted">The hashing difficulty seed when the contract is launched. (ie. 0, 1000000, etc)</small>
                 </div>
-                <div class="form-group">
-                  <label for="blockTimeInMinutes">Block Time in Minutes</label>
-                  <input readonly type="number" v-model="form.blockTimeInMinutes" placeholder="ie. 10" class="form-control" id="blockTimeInMinutes" aria-describedby="blockTimeInMinutesHelp"  pattern="-?[0-9]*(\.[0-9]+)?" required>
-                  <div class="invalid-feedback"></div>
-                  <small id="symbolHelp" class="form-text text-muted">The target amount of time between mintings.</small>
-                </div>
 
               </b-collapse>
           </div>
@@ -100,11 +94,11 @@
           <!-- the modal -->
           <b-modal ref="modal" id="modal-center" size="lg" centered title="Processing..." hide-footer >
             <div class="form-group">
-              <label for="blockTimeInMinutes">Transaction #</label><br/>
+              <label for="initDiff">Transaction #</label><br/>
               <a v-bind:href="txUrl" target="_blank">{{ txId }}</a>
             </div>
             <div class="form-group">
-              <label for="blockTimeInMinutes">Token Address</label><br/>
+              <label for="initDiff">Token Address</label><br/>
               {{ addr }}
             </div>
             <b-progress :value="100" :max="100" :striped="loading" :animated="loading"></b-progress><br/>
@@ -237,7 +231,7 @@ export default {
                             this.form.initReward,
                             this.form.blockAdjustment,
                             this.form.initDiff,
-                            this.form.blockTimeInMinutes,
+                            10,
                             metadataURI,
       (err, txAddr) => {
         if (err) console.log(err)
