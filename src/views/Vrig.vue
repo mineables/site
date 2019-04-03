@@ -6,11 +6,56 @@
    <x-check-metamask></x-check-metamask>
 
     <h2 class="header-text">Virtual Rig Configuration</h2>
+      
+      <h4>{{ vrig.name }}</h4>
 
-    <b-alert show variant="info">
+      <div class="row d-flex">
+        <div class="col-lg-6">
+          <img class='vrigImage' :src='vrig.metadata.image'/>
+        </div>
+
+        <div class="col-lg-6">
+          <h4>Statistics</h4>
+          <table class="table token-table">
+            <tr>
+              <td>Experience</td>
+              <td><b>{{ vrig.experience }}</b></td>
+            </tr>
+            <tr>
+              <td>Life Decrement</td>
+              <td><b>{{ vrig.lifeDecrement }}</b></td>
+            </tr>
+            <tr>
+              <td>Execution Cost (in 0xMithril)</td>
+              <td><b>{{ vrig.executionCost }}</b></td>
+            </tr>
+            <tr>
+              <td>Total Socket Slots</td>
+              <td><b>{{ vrig.sockets }}</b></td>
+            </tr>
+            <tr>
+              <td>vHash Rate (in MH/s)</td>
+              <td><b>{{ vrig.vhash }}</b></td>
+            </tr>
+            <tr>
+              <td>Accuracy</td>
+              <td><b>{{ vrig.accuracy }}%</b></td>
+            </tr>
+            <tr>
+              <td>Level</td>
+              <td><b>{{ vrig.level }}</b></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <br>
+        
+         <b-alert show variant="info">
           <h4 class="alert-heading">Instructions</h4>
           <p>
-            Drag Virtual GPUs and other components into top 'Virtual Rig' section to configure Virtual Rig.
+            Drag Virtual GPUs and other components from 'Available Components' up into 'Installed Components' to configure 
+            the Virtual Rig.
             The statistics of the vRig will automatically update as vGPU components are 
             attached and detached, so you test multiple configurations before attaching rigs to Mineable Tokens.
           </p>
@@ -18,45 +63,10 @@
           <p class="mb-0">
             When complete press the <b>Commit Confuguration</b> button to save your vRig configuration.
           </p>
-        </b-alert>
-      
-      <br>
-      <h4>Statistics</h4>
-      <section>
-          <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th>Name</th>
-                <th>Experience</th>
-                <th>Life Decrement</th>
-                <th>Execution Cost (in 0xMithril)</th>
-                <th>Total Socket Slots</th>
-                <th>vHash Rate (in MH/s)</th>
-                <th>Accuracy</th>
-                <th>Level</th>
-                <th>Children</th>
-              </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td>{{ vrig.name }}</td>
-                  <td>{{ vrig.experience }}</td>
-                  <td>{{ vrig.lifeDecrement }}</td>
-                  <td>{{ vrig.executionCost }}</td>
-                  <td>{{ vrig.sockets }}</td>
-                  <td><b>{{ vrig.vhash }}</b></td>
-                  <td><b>{{ vrig.accuracy }}%</b></td>
-                  <td>{{ vrig.level }}</td>
-                  <td>{{ vrig.childArtifacts }}</td>
-                </tr>
-            </tbody>
-          </table>
-        </section>
+      </b-alert>
 
-      <br>
-        
         <div class="drag">
-            <h4>Virtual Rig - '{{ vrig.name }}'</h4>
+            <h4>Installed Components</h4>
             <div class="row vrig">
               <draggable v-model="vrigComponents" class="dragArea" @end="doneDragging" :options="{group:'people',animation: 250}">
                 <div class="floatleft socket-artifact" v-for="element in vrigComponents">
@@ -188,6 +198,12 @@ export default {
       artifact.accuracy = basicStats[5].toNumber()
       artifact.level = basicStats[6].toNumber()
       artifact.childArtifacts = stats[2]
+      artifact.tokenURI = await this.vrigContract.tokenURI(id)
+      try {
+        artifact.metadata = await (await fetch(artifact.tokenURI)).json()
+      } catch (e) {
+        console.log(e)
+      }
       this.vrig = artifact
       this.availableComponents = []
       let balance = await this.vgpuContract.balanceOf(window.web3.eth.coinbase)
@@ -279,6 +295,11 @@ export default {
 </script>
 
 <style>
+
+.vrigImage {
+  width: 30em;
+}
+
 .vrig {
   padding: 20px;
   background-color: #d0f0e9;
@@ -287,6 +308,7 @@ export default {
 
 .available {
   padding: 20px;
+  border: 2px dashed black;
 }
 
 .socket-artifact {
