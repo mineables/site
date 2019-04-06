@@ -4,7 +4,7 @@
         <div class="container">
           <div class="row">
             <div class="col-md-7">
-              <p>© 2019 Mineables All rights reserved.</p>
+              <p>© 2019 Mineables</p>
             </div>
             <div class="col-md-5 text-right">
             </div>

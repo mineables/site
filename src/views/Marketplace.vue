@@ -15,7 +15,7 @@
         <div class="row">
             <div v-for="result in vrigResults" class="col-sm-4">
 
-              <b-alert class="overlay" v-if="result.childArtifacts.length > 0" variant="danger" show>
+              <b-alert class="overlay" v-if="result.childArtifacts.length > 0" variant="secondary" show>
                 <strong>Warning:</strong> Owner must remove all vGPUs from vRig in order to list artifact.
               </b-alert>
               
@@ -25,7 +25,11 @@
                   <span class="price">{{ result.price }}</span> <span class="tengwar">5Ì#</span> 
                 </h3>
                 <div class="card-body">
-                  <img class="card-img-top float-left" :src="result.metadata.image" alt="Card image cap">
+
+                  <div class="float-left" style="width: 10em; height: 10em;">
+                    <x-vrig-component :rigComponents='result.metadata.component'></x-vrig-component>
+                  </div>
+
                   <p class="card-text">
                     <ul class="statistics">
                       <li>Experience: {{ result.experience }}</li>
@@ -54,7 +58,7 @@
       <section id="vgpu-market">
         <div class="row">
             <div v-for="result in vgpuResults" class="col-sm-4">
-              <b-alert class="overlay" v-if="result.parent > 0" variant="danger" show>
+              <b-alert class="overlay" v-if="result.parent > 0" variant="secondary" show>
                 <strong>Warning:</strong> Owner must remove all vGPUs from vRig in order to list artifact.
               </b-alert>
 
@@ -69,7 +73,7 @@
                   <img class="card-img-top float-left" :src="result.metadata.image" alt="Card image cap">
                   <p class="card-text">Remaining cycles: {{ result.life }}</p>
                   <p class="card-text modifier" v-for="modifier in result.modifiers" >{{ modifier }}</p>
-                  <b-button v-if="!result.ownedByCoinbase && result.parent === 0" class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal"   @click="purchasevGPU(result.id,result.mithrilPrice)">
+                  <b-button v-if="!result.ownedByCoinbase && result.parent === 0" class="btn btn-lg btn-outline-info" data-toggle="modal" data-target="#myModal" @click="purchasevGPU(result.id,result.mithrilPrice)">
                     Purchase for {{ result.price }} <span class="tengwar">5Ì#</span> 
                   </b-button>
                   <br>
@@ -101,13 +105,16 @@
 const BLOCK_EXPLORER_URL = require('../../static/scripts/config.js').explorer_url
 const ADDRESS = require('../../static/scripts/config.js').addresses
 
+import util from '../common/util.js'
 import xCheckMetamask from '@/components/CheckMetamask'
-// import fetch from '@/common/fetchWithTimeout'
+import xVrigComponent from '@/components/VrigComponent'
+import parts from '../../static/scripts/parts.js'
 
 export default {
   name: 'Marketplace',
   components: {
-    xCheckMetamask
+    xCheckMetamask,
+    xVrigComponent
   },
   data () {
     return {
@@ -124,7 +131,8 @@ export default {
       txUrl: BLOCK_EXPLORER_URL,
       loading: true,
       showDismissibleAlert: false,
-      mithrilBalance: 0
+      mithrilBalance: 0,
+      vrigKey: 0
     }
   },
   methods: {
@@ -206,17 +214,22 @@ export default {
         let mods = a[3]
         artifact.modifiers = []
         for (var j = 0; j < mods.length; j++) {
-          artifact.modifiers.push(this.parseModifier(mods[j]))
+          artifact.modifiers.push(util.parseModifier(mods[j]))
         }
         artifact.mithrilPrice = parseInt(art[1])
-        artifact.price = this.readable(artifact.mithrilPrice)
-        artifact.metadata = {image: '/static/assets/gem1.png'}
+        artifact.price = util.readable(artifact.mithrilPrice)
         // load metadata
-        artifact.tokenURI = await this.vgpuContract.tokenURI(art[0])
-        let tok = await fetch(artifact.tokenURI)
-        if (tok) {
-          artifact.metadata = await tok.json()
+        artifact.tokenURI = await this.vgpuContract.tokenURI(artifact.id)
+        // hack
+        if (artifact.tokenURI === 'https://ipfs.io/ipfs/QmPi1hMtExAxk4pFrUncmbYcskrax2K4nDH7bKG5m8MWYC') {
+          artifact.metadata = { 'image': '/static/images/gpu/market/baseGPU.png' }
+        } else {
+          let tok = await fetch(artifact.tokenURI)
+          if (tok) {
+            artifact.metadata = await tok.json()
+          }
         }
+        artifact.metadata.image = util.findPartImage(parts, artifact.metadata.component)
         console.log(artifact)
         this.vgpuResults.push(artifact)
       }
@@ -229,7 +242,7 @@ export default {
         let stats = await this.vrigContract.baseStats(art[0])
         let artifact = {}
         artifact.mithrilPrice = parseInt(art[1])
-        artifact.price = this.readable(artifact.mithrilPrice)
+        artifact.price = util.readable(artifact.mithrilPrice)
         artifact.id = parseInt(art[0])
         let owner = await this.vrigContract.ownerOf(artifact.id)
         if (owner === window.web3.eth.coinbase) {
@@ -250,65 +263,14 @@ export default {
         // load metadata
         artifact.tokenURI = await this.vrigContract.tokenURI(art[0])
         artifact.metadata = await (await fetch(artifact.tokenURI)).json()
+        console.log(artifact.metadata)
+        artifact.metadata.image = util.findPartImage(parts, artifact.metadata.component[0])
         console.log(artifact)
         this.vrigResults.push(artifact)
       }
     },
-    readable: function (num) {
-      return num / Math.pow(10, 18)
-    },
-    parseModifier: function (modifier) {
-      var tuple = this.parseCommand(modifier)
-      var position = tuple[0]
-      // var value = tuple[1]
-      var op = tuple[2]
-      var mod = tuple[3]
-
-      if (op === 1) return '[+] Adds ' + mod + ' to ' + this.getPositionName(position)
-      if (op === 2) return '[-] Subtracts ' + mod + ' from ' + this.getPositionName(position)
-      if (op === 3) return '[*] Multiplies ' + this.getPositionName(position) + ' by ' + mod
-      if (op === 4) return '[/] Divides ' + this.getPositionName(position) + ' by ' + mod
-      if (op === 5) return '[+%] Adds ' + mod + '% to ' + this.getPositionName(position)
-      if (op === 6) return '[-%] Subtracts ' + mod + '% from ' + this.getPositionName(position)
-      if (op === 7) return 'Requires ' + this.getPositionName(position) + ' > ' + mod
-      if (op === 8) return 'Requires ' + this.getPositionName(position) + ' < ' + mod
-      if (op === 9) return 'Adds ' + this.parseExponent(mod) + ' to ' + this.getPositionName(position)
-    },
-    parseCommand: function (command) {
-      var s = String(command)
-      var position = s.substring(1, 3)
-      var value = s.substring(3)
-      var op = value.substring(0, 1)
-      var modValue = value.substring(1, 4)
-      return [Number(position), Number(value), Number(op), Number(modValue)]
-    },
-    getPositionName: function (position) {
-      if (position === 0) {
-        return 'Experience'
-      } else if (position === 1) {
-        return 'Life Decrement'
-      } else if (position === 2) {
-        return 'Execution Cost'
-      } else if (position === 3) {
-        return 'Socket Count'
-      } else if (position === 4) {
-        return 'Virtual Hash Rate'
-      } else if (position === 5) {
-        return 'Accuracy'
-      } else if (position === 6) {
-        return 'Level'
-      } else {
-        return '[' + position + ']'
-      }
-    },
-    parseExponent: function (op) {
-      var s = String(op)
-      var multiplier = s.substring(0, 1)
-      var exp = s.substring(1, 3)
-      return Number(multiplier) * Math.pow(10, Number(exp))
-    },
     async loadMithrilBalance () {
-      this.mithrilBalance = this.readable(await this.mithrilContract.balanceOf(window.web3.eth.coinbase))
+      this.mithrilBalance = util.readable(await this.mithrilContract.balanceOf(window.web3.eth.coinbase))
     }
   },
   async mounted () {
@@ -366,7 +328,7 @@ export default {
 }
 
 .price {
-  color: #f36236;
+  color: #827d7d;
   font-weight: bold;
   font-size: 120%;
 }
@@ -374,12 +336,12 @@ export default {
 .price-wrap {
   text-align: right;
   padding: 15px;
-  background-color: #edffff;
+  background-color: #ececec;
 }
 
 .modifier {
   font-style: italic;
-  color: #f36236;
+  color: #827d7d;
 }
 
 .wrapped {

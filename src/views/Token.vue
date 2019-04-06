@@ -110,6 +110,7 @@
 </template>
 
 <script>
+import util from '../common/util.js'
 /* time calculated using 5-second eth blocks */
 const SECONDS_PER_ETH_BLOCK = 5
 
@@ -178,14 +179,14 @@ export default {
           var ethBlocksSinceLastDifficultyPeriod = currentEthBlock - lastDifficultyStartBlock
           var secondsSinceReadjustment = ethBlocksSinceLastDifficultyPeriod * SECONDS_PER_ETH_BLOCK
           var secondsPerReward = secondsSinceReadjustment / rewardsSinceReadjustment
-          let currentAverageRewardTime = parent.secondsToReadableTime(secondsPerReward) // (secondsPerReward / 60).toFixed(2)
+          let currentAverageRewardTime = util.secondsToReadableTime(secondsPerReward) // (secondsPerReward / 60).toFixed(2)
           let hashrate = diff * 2 ** 22 / adjustmentInterval
           hashrate *= (adjustmentInterval / secondsPerReward)
           let rewardsLeft = blocksPerReadjustment - (epochCount % blocksPerReadjustment)
-          let nextEraEstimatedTime = parent.secondsToReadableTime(rewardsLeft * secondsPerReward)
+          let nextEraEstimatedTime = util.secondsToReadableTime(rewardsLeft * secondsPerReward)
           parent.statistics = {
             diff: diff.toNumber(),
-            hashRate: parent.toReadableHashrate(hashrate),
+            hashRate: util.toReadableHashrate(hashrate),
             rewardsUntilReadjustment: rewardsLeft,
             nextEraEstimatedTime: nextEraEstimatedTime,
             averageRewardTime: currentAverageRewardTime,
@@ -199,42 +200,6 @@ export default {
           parent.reloadVisible = true
         }
       })
-    },
-    /* convert number to a readable hashrate string ("244.32 Gh/s", "3.05 Th/s") */
-    toReadableHashrate (hashrate) {
-      let units = ['H/s', 'Kh/s', 'Mh/s', 'Gh/s', 'Th/s', 'Ph/s']
-      let finalUnit = 'Eh/s'
-      for (var idx in units) {
-        var unit = units[idx]
-        if (hashrate < 1000) {
-          finalUnit = unit
-          break
-        } else {
-          hashrate /= 1000
-        }
-      }
-      var hashrateString = hashrate.toFixed(2)
-      if (hashrateString.endsWith('.00')) {
-        hashrateString = hashrate.toFixed(0)
-      }
-      return hashrateString + ' ' + finalUnit
-    },
-    /* convert seconds to a short readable string ("1.2 hours", "5.9 months") */
-    secondsToReadableTime (seconds) {
-      if (seconds <= 0) {
-        return '0 seconds'
-      }
-
-      let units = ['years', 'months', 'days', 'hours', 'minutes', 'seconds']
-      let divisors = [365.25 * 24 * 60 * 60, 30.4 * 24 * 60 * 60, 24 * 60 * 60, 60 * 60, 60, 1]
-      for (var idx in units) {
-        var unit = units[idx]
-        var divisor = divisors[idx]
-        if (seconds > divisor) {
-          return (seconds / divisor).toFixed(1) + ' ' + unit
-        }
-      }
-      return seconds.toFixed(1) + ' ' + 'seconds'
     }
   },
   async mounted () {

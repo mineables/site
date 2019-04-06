@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="rig_container" style="width:30em; height:30em;">
+    <div id="rig_container">
       <img id="random_rig" :src='dataURL' class="img-responsive">
     </div>
   </div>
@@ -30,7 +30,6 @@ export default {
     },
     generateImage () {
       this.dataURL = this.canvas.toDataURL('image/png', 0.5)
-      // $('#random_rig').attr('src', dataURL)
     },
     async drawImg (canvas, src, x, y, render = 0) {
       await this.animationFrame()
@@ -42,7 +41,6 @@ export default {
       }
     },
     drawRig (partsArray) {
-      console.log('partsArray: ', partsArray)
       this.rigdrawCanvas.fillStyle = 'white'
       this.rigdrawCanvas.fillRect(0, 0, this.canvas.width, this.canvas.height)
 
@@ -51,7 +49,6 @@ export default {
         if (index === 0 || index === 4 || index === 14) {
           for (let i = 0; i < parts.length; i++) {
             if (parts[i]['id'] === partsArray[0]) {
-              console.log('Drawing part: ', parts[i]['id'], index)
               if (index === 0) {
                 this.addPart(index, parts[i]['img0'])
               } else if (index === 4) {

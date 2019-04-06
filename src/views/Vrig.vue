@@ -6,7 +6,7 @@
    <x-check-metamask></x-check-metamask>
 
     <h2 class="header-text">Virtual Rig Configuration
-    </h2>
+    
     <b-button v-b-toggle.collapse-1 variant="primary btn-link">Instructions</b-button>
         <b-collapse id="collapse-1" class="mt-2">
           <b-alert show variant="info">
@@ -19,17 +19,18 @@
             </p>
             <hr>
             <p class="mb-0">
-              When complete press the <b>Commit Confuguration</b> button to save your vRig configuration.
+              When complete press the <b>Commit Configuration</b> button to save your vRig configuration.
             </p>
           </b-alert>
         </b-collapse>
-      
-      <h4>{{ vrig.name }}</h4>
+      </h2>
+
+      <h4>{{ vrig.name }} <small>(uid: {{ vrig.id }})</small> </h4>
 
       <div class="row d-flex">
         <div class="col-lg-6">
 
-         <x-vrig-component :key="vrigKey" :rigComponents='rigComponents'></x-vrig-component>
+         <x-vrig-component style="width: 30em; height: 30em;" :key="vrigKey" :rigComponents='rigComponents'></x-vrig-component>
          <!--
           <img class='vrigImage' :src='vrig.metadata.image'/>
          -->
@@ -51,11 +52,11 @@
               <td><b>{{ vrig.executionCost }}</b></td>
             </tr>
             <tr>
-              <td>Total Socket Slots</td>
+              <td>Socket Slots</td>
               <td><b>{{ vrig.sockets }}</b></td>
             </tr>
             <tr>
-              <td>vHash Rate (in MH/s)</td>
+              <td>Total Hash Rate</td>
               <td><b>{{ vrig.vhash }}</b></td>
             </tr>
             <tr>
@@ -71,25 +72,19 @@
           <b-button class="btn btn-lg btn-success" :disabled="buttonDisabled" data-toggle="modal" data-target="#myModal" @click="saveConfig()">
             Commit Configuration
           </b-button>
-
         </div>
-
-        
-
       </div>
-
       <br>
-        
         <div class="drag">
             <h4>Installed Components <small>Note the maximum number of allowed socketed items is {{ vrig.sockets }}</small></h4>
+            <h5 class="error" v-if="errorMessage">{{errorMessage}}</h5>
             <div class="row vrig">
               <draggable v-model="vrigComponents" class="dragArea" @end="doneDragging" :options="{group:'people',animation: 250}">
                 <div class="floatleft socket-artifact" v-for="element in vrigComponents">
                   <b-popover :target="'artifact'+element.artifactId" placement="top" triggers="hover focus">
-                     <template slot="title">{{ element.artifactId }} - {{ element.name }}</template>
+                     <template slot="title">{{ element.name }}</template>
                      <ul class="no-bullets">
                       <li>Life: {{ element.life }}</li>
-                      <li>Parent: {{ element.parent }}</li>
                       <li class="modifier" v-for="modifier in element.modifiers">
                         {{modifier}}
                       </li>
@@ -105,11 +100,10 @@
             <div class="row available">
               <draggable v-model="availableComponents" class="dragArea" @end="doneDragging" :options="{group:'people',animation: 250}">
                 <div class="floatleft socket-artifact" v-for="element in availableComponents">
-                  <b-popover :target="'artifact'+element.artifactId" placement="bottom" triggers="hover focus">
-                     <template slot="title">{{ element.artifactId }} - {{ element.name }}</template>
+                  <b-popover :target="'artifact'+element.artifactId" placement="bottomright" triggers="hover focus">
+                     <template slot="title">{{ element.name }}</template>
                      <ul class="no-bullets">
                       <li>Life: {{ element.life }}</li>
-                      <li>Parent: {{ element.parent }}</li>
                       <li class="modifier" v-for="modifier in element.modifiers">
                         {{modifier}}
                       </li>
@@ -121,8 +115,14 @@
             </div>
         </div>
 
-        <br>
-        
+        <br><br><br><br>
+        <br><br><br><br>
+        <br><br><br><br>
+        <br><br><br><br>
+        <br><br><br><br>
+        <br><br><br><br>
+        <br><br><br><br>
+        <br><br><br><br>
 
         <b-modal ref="modal" id="modal-center" size="lg" centered title="Processing..." hide-footer >
           <div class="form-group">
@@ -147,7 +147,7 @@ import xCheckMetamask from '@/components/CheckMetamask'
 import xVrigComponent from '@/components/VrigComponent'
 
 const BLOCK_EXPLORER_URL = require('../../static/scripts/config.js').explorer_url
-
+import util from '../common/util.js'
 import parts from '../../static/scripts/parts.js'
 
 export default {
@@ -168,7 +168,8 @@ export default {
       txUrl: BLOCK_EXPLORER_URL,
       loading: true,
       vrigKey: 0,
-      rigComponents: []
+      rigComponents: [],
+      errorMessage: undefined
     }
   },
   methods: {
@@ -189,9 +190,16 @@ export default {
         this.loadVrig(this.id)
       })
     },
+    raiseError (msg) {
+      this.buttonDisabled = true
+      this.errorMessage = msg
+    },
     async doneDragging (evt) {
       if (this.vrigComponents.length > this.vrig.sockets) {
+        this.raiseError('There are not enough sockets (' + this.vrig.sockets + ') to commit this configuration.')
         return
+      } else {
+        this.errorMessage = undefined
       }
       var idArray = []
       var uiGPUComponents = []
@@ -205,7 +213,7 @@ export default {
       this.vrig.lifeDecrement = basicStats[1].toNumber()
       this.vrig.executionCost = basicStats[2].toNumber()
       this.vrig.sockets = basicStats[3].toNumber()
-      this.vrig.vhash = basicStats[4].toNumber() / 1000000
+      this.vrig.vhash = util.toReadableHashrate(basicStats[4].toNumber())
       this.vrig.accuracy = basicStats[5].toNumber()
       this.vrig.level = basicStats[6].toNumber()
       // ui components
@@ -220,28 +228,20 @@ export default {
     async loadVrig (id) {
       let stats = await this.vrigContract.mergedStats(id)
       let artifact = {}
-      artifact.id = id
+      artifact.id = id.toNumber()
       artifact.name = stats[0]
       let basicStats = stats[1]
       artifact.experience = basicStats[0].toNumber()
       artifact.lifeDecrement = basicStats[1].toNumber()
       artifact.executionCost = basicStats[2].toNumber()
       artifact.sockets = basicStats[3].toNumber()
-      artifact.vhash = basicStats[4].toNumber() / 1000000
+      artifact.vhash = util.toReadableHashrate(basicStats[4].toNumber())
       artifact.accuracy = basicStats[5].toNumber()
       artifact.level = basicStats[6].toNumber()
       artifact.childArtifacts = stats[2]
       artifact.tokenURI = await this.vrigContract.tokenURI(id)
       try {
         artifact.metadata = await (await fetch(artifact.tokenURI)).json()
-        /*
-        artifact.metadata = {
-          'name': 'Hellfire Virtual Mining Rig',
-          'description': 'Legendary Item - 6 slot Virtual Mining Rig',
-          'image': 'https://mineables.io/static/metadata/vrigs/legendary-diablo/image.png',
-          'component': [35, 18, 28]
-        }
-        */
       } catch (e) {
         console.log(e)
       }
@@ -259,24 +259,16 @@ export default {
         vgpu.tokenURI = await this.vgpuContract.tokenURI(vgpu.artifactId)
         try {
           vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
-          /*
-          vgpu.metadata = {
-            'name': 'Hellfire 1 GH/s Virtual GPU',
-            'description': 'Legendary Item - 1 GH/s Virtual GPU',
-            'image': '/static/images/gpu/market/baseGPU.png',
-            'component': 14
-          }
-          */
         } catch (e) {
           console.log(e)
         }
-        vgpu.metadata.image = this.findPartImage(vgpu.metadata.component)
+        vgpu.metadata.image = util.findPartImage(parts, vgpu.metadata.component)
         vgpu.parent = a[1].toNumber()
         vgpu.life = parseInt(a[2])
         let mods = a[3]
         vgpu.modifiers = []
         for (var j = 0; j < mods.length; j++) {
-          vgpu.modifiers.push(this.parseModifier(mods[j]))
+          vgpu.modifiers.push(util.parseModifier(mods[j]))
         }
         console.log('parent: ' + vgpu.parent)
         if (vgpu.parent === Number(this.id)) {
@@ -315,13 +307,13 @@ export default {
         } catch (e) {
           console.log(e)
         }
-        vgpu.metadata.image = this.findPartImage(vgpu.metadata.component)
+        vgpu.metadata.image = util.findPartImage(parts, vgpu.metadata.component)
         vgpu.parent = a[1].toNumber()
         vgpu.life = parseInt(a[2])
         let mods = a[3]
         vgpu.modifiers = []
         for (var m = 0; m < mods.length; m++) {
-          vgpu.modifiers.push(this.parseModifier(mods[m]))
+          vgpu.modifiers.push(util.parseModifier(mods[m]))
         }
         console.log('parent: ' + vgpu.parent)
         if (vgpu.parent === 0) {
@@ -329,67 +321,6 @@ export default {
           this.availableComponents.push(vgpu)
         }
       }
-    },
-    findPartImage (id) {
-      for (var i = 0; i < parts.length; i++) {
-        if (parts[i].id === id) {
-          if (parts[i].market) {
-            return parts[i].market
-          } else {
-            return parts[i].img0
-          }
-        }
-      }
-    },
-    parseModifier: function (modifier) {
-      var tuple = this.parseCommand(modifier)
-      var position = tuple[0]
-      // var value = tuple[1]
-      var op = tuple[2]
-      var mod = tuple[3]
-
-      if (op === 1) return '[+] Adds ' + mod + ' to ' + this.getPositionName(position)
-      if (op === 2) return '[-] Subtracts ' + mod + ' from ' + this.getPositionName(position)
-      if (op === 3) return '[*] Multiplies ' + this.getPositionName(position) + ' by ' + mod
-      if (op === 4) return '[/] Divides ' + this.getPositionName(position) + ' by ' + mod
-      if (op === 5) return '[+%] Adds ' + mod + '% to ' + this.getPositionName(position)
-      if (op === 6) return '[-%] Subtracts ' + mod + '% from ' + this.getPositionName(position)
-      if (op === 7) return 'Requires ' + this.getPositionName(position) + ' > ' + mod
-      if (op === 8) return 'Requires ' + this.getPositionName(position) + ' < ' + mod
-      if (op === 9) return 'Adds ' + this.parseExponent(mod) + ' to ' + this.getPositionName(position)
-    },
-    parseCommand: function (command) {
-      var s = String(command)
-      var position = s.substring(1, 3)
-      var value = s.substring(3)
-      var op = value.substring(0, 1)
-      var modValue = value.substring(1, 4)
-      return [Number(position), Number(value), Number(op), Number(modValue)]
-    },
-    getPositionName: function (position) {
-      if (position === 0) {
-        return 'Experience'
-      } else if (position === 1) {
-        return 'Life Decrement'
-      } else if (position === 2) {
-        return 'Execution Cost'
-      } else if (position === 3) {
-        return 'Socket Count'
-      } else if (position === 4) {
-        return 'Virtual Hash Rate'
-      } else if (position === 5) {
-        return 'Accuracy'
-      } else if (position === 6) {
-        return 'Level'
-      } else {
-        return '[' + position + ']'
-      }
-    },
-    parseExponent: function (op) {
-      var s = String(op)
-      var multiplier = s.substring(0, 1)
-      var exp = s.substring(1, 3)
-      return Number(multiplier) * Math.pow(10, Number(exp))
     }
   },
   async mounted () {
@@ -504,6 +435,8 @@ td, th {
 .modifier {
   font-style: italic;
 }
-
+.error {
+  color: red;
+}
 
 </style>
