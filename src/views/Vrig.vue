@@ -5,13 +5,34 @@
 
    <x-check-metamask></x-check-metamask>
 
-    <h2 class="header-text">Virtual Rig Configuration</h2>
+    <h2 class="header-text">Virtual Rig Configuration
+    </h2>
+    <b-button v-b-toggle.collapse-1 variant="primary btn-link">Instructions</b-button>
+        <b-collapse id="collapse-1" class="mt-2">
+          <b-alert show variant="info">
+            <h4 class="alert-heading">Configuration Instructions</h4>
+            <p>
+              Drag Virtual GPUs and other components from 'Available Components' up into 'Installed Components' to configure 
+              the Virtual Rig.
+              The statistics of the vRig will automatically update as vGPU components are 
+              attached and detached, so you test multiple configurations before attaching rigs to Mineable Tokens.
+            </p>
+            <hr>
+            <p class="mb-0">
+              When complete press the <b>Commit Confuguration</b> button to save your vRig configuration.
+            </p>
+          </b-alert>
+        </b-collapse>
       
       <h4>{{ vrig.name }}</h4>
 
       <div class="row d-flex">
         <div class="col-lg-6">
+
+         <x-vrig-component :key="vrigKey" :rigComponents='rigComponents'></x-vrig-component>
+         <!--
           <img class='vrigImage' :src='vrig.metadata.image'/>
+         -->
         </div>
 
         <div class="col-lg-6">
@@ -46,27 +67,21 @@
               <td><b>{{ vrig.level }}</b></td>
             </tr>
           </table>
+          
+          <b-button class="btn btn-lg btn-success" :disabled="buttonDisabled" data-toggle="modal" data-target="#myModal" @click="saveConfig()">
+            Commit Configuration
+          </b-button>
+
         </div>
+
+        
+
       </div>
 
       <br>
         
-         <b-alert show variant="info">
-          <h4 class="alert-heading">Instructions</h4>
-          <p>
-            Drag Virtual GPUs and other components from 'Available Components' up into 'Installed Components' to configure 
-            the Virtual Rig.
-            The statistics of the vRig will automatically update as vGPU components are 
-            attached and detached, so you test multiple configurations before attaching rigs to Mineable Tokens.
-          </p>
-          <hr>
-          <p class="mb-0">
-            When complete press the <b>Commit Confuguration</b> button to save your vRig configuration.
-          </p>
-      </b-alert>
-
         <div class="drag">
-            <h4>Installed Components</h4>
+            <h4>Installed Components <small>Note the maximum number of allowed socketed items is {{ vrig.sockets }}</small></h4>
             <div class="row vrig">
               <draggable v-model="vrigComponents" class="dragArea" @end="doneDragging" :options="{group:'people',animation: 250}">
                 <div class="floatleft socket-artifact" v-for="element in vrigComponents">
@@ -107,9 +122,7 @@
         </div>
 
         <br>
-        <b-button class="btn btn-lg btn-success" :disabled="buttonDisabled" data-toggle="modal" data-target="#myModal" @click="saveConfig()">
-          Commit Configuration
-        </b-button>
+        
 
         <b-modal ref="modal" id="modal-center" size="lg" centered title="Processing..." hide-footer >
           <div class="form-group">
@@ -131,13 +144,16 @@
 <script>
 import draggable from 'vuedraggable'
 import xCheckMetamask from '@/components/CheckMetamask'
+import xVrigComponent from '@/components/VrigComponent'
+
 const BLOCK_EXPLORER_URL = require('../../static/scripts/config.js').explorer_url
 
 export default {
   name: 'Vrig',
   components: {
     draggable,
-    xCheckMetamask
+    xCheckMetamask,
+    xVrigComponent
   },
   data () {
     return {
@@ -148,7 +164,9 @@ export default {
       buttonDisabled: true,
       approvalTx: 'Pending...',
       txUrl: BLOCK_EXPLORER_URL,
-      loading: true
+      loading: true,
+      vrigKey: 0,
+      rigComponents: []
     }
   },
   methods: {
@@ -170,9 +188,14 @@ export default {
       })
     },
     async doneDragging (evt) {
+      if (this.vrigComponents.length > this.vrig.sockets) {
+        return
+      }
       var idArray = []
+      var uiGPUComponents = []
       this.vrigComponents.forEach(function (element) {
         idArray.push(element.artifactId.toNumber())
+        uiGPUComponents.push(element.metadata.component)
       })
       this.buttonDisabled = false
       let basicStats = await this.vrigContract.checkMerged(this.id, idArray)
@@ -183,6 +206,14 @@ export default {
       this.vrig.vhash = basicStats[4].toNumber() / 1000000
       this.vrig.accuracy = basicStats[5].toNumber()
       this.vrig.level = basicStats[6].toNumber()
+      // ui components
+      let uiComponents = this.vrig.metadata.component.slice(0, 3).concat(uiGPUComponents)
+      while (uiComponents.length < 11) {
+        uiComponents.push(0)
+      }
+      this.rigComponents = uiComponents
+      this.vrigKey++
+      console.log('RIG COMPONENTS: ', this.rigComponents)
     },
     async loadVrig (id) {
       let stats = await this.vrigContract.mergedStats(id)
@@ -200,23 +231,36 @@ export default {
       artifact.childArtifacts = stats[2]
       artifact.tokenURI = await this.vrigContract.tokenURI(id)
       try {
-        artifact.metadata = await (await fetch(artifact.tokenURI)).json()
+        // artifact.metadata = await (await fetch(artifact.tokenURI)).json()
+        artifact.metadata = {
+          'name': 'Hellfire Virtual Mining Rig',
+          'description': 'Legendary Item - 6 slot Virtual Mining Rig',
+          'image': 'https://mineables.io/static/metadata/vrigs/legendary-diablo/image.png',
+          'component': [35, 18, 28]
+        }
       } catch (e) {
         console.log(e)
       }
       this.vrig = artifact
-      this.availableComponents = []
-      let balance = await this.vgpuContract.balanceOf(window.web3.eth.coinbase)
-      for (var i = 0; i < balance; i++) {
-        let artifactId = await this.vgpuContract.tokenOfOwnerByIndex(window.web3.eth.coinbase, i)
+      // load the ui component
+      let uiComponents = artifact.metadata.component
+      // load the attached components
+      for (var i = 0; i < artifact.childArtifacts.length; i++) {
+        let artifactId = artifact.childArtifacts[i]
         let a = await this.vgpuContract.artifactAt(artifactId)
         let vgpu = {}
         vgpu.artifactId = artifactId
         vgpu.name = a[0]
         // load metadata
-        vgpu.tokenURI = await this.vgpuContract.tokenURI(vgpu.artifactId)
+        // vgpu.tokenURI = await this.vgpuContract.tokenURI(vgpu.artifactId)
         try {
-          vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
+          // vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
+          vgpu.metadata = {
+            'name': 'Hellfire 1 GH/s Virtual GPU',
+            'description': 'Legendary Item - 1 GH/s Virtual GPU',
+            'image': '/static/images/gpu/market/baseGPU.png',
+            'component': 14
+          }
         } catch (e) {
           console.log(e)
         }
@@ -231,7 +275,46 @@ export default {
         if (vgpu.parent === Number(this.id)) {
           console.log('Adding to Vrig: ' + vgpu.artifactId)
           this.vrigComponents.push(vgpu)
-        } else if (vgpu.parent === 0) {
+          uiComponents.push(vgpu.metadata.component)
+        }
+      }
+      // ui component
+      while (uiComponents.length < 11) {
+        uiComponents.push(0)
+      }
+      this.rigComponents = uiComponents
+      this.vrigKey++
+      console.log('RIG COMPONENTS: ', this.rigComponents)
+      this.availableComponents = []
+      let balance = await this.vgpuContract.balanceOf(window.web3.eth.coinbase)
+      for (var k = 0; k < balance; k++) {
+        let artifactId = await this.vgpuContract.tokenOfOwnerByIndex(window.web3.eth.coinbase, k)
+        let a = await this.vgpuContract.artifactAt(artifactId)
+        let vgpu = {}
+        vgpu.artifactId = artifactId
+        vgpu.name = a[0]
+        // load metadata
+        // vgpu.tokenURI = await this.vgpuContract.tokenURI(vgpu.artifactId)
+        try {
+          // vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
+          vgpu.metadata = {
+            'name': 'Hellfire 1 GH/s Virtual GPU',
+            'description': 'Legendary Item - 1 GH/s Virtual GPU',
+            'image': '/static/images/gpu/market/baseGPU.png',
+            'component': 14
+          }
+        } catch (e) {
+          console.log(e)
+        }
+        vgpu.parent = a[1].toNumber()
+        vgpu.life = parseInt(a[2])
+        let mods = a[3]
+        vgpu.modifiers = []
+        for (var m = 0; m < mods.length; m++) {
+          vgpu.modifiers.push(this.parseModifier(mods[m]))
+        }
+        console.log('parent: ' + vgpu.parent)
+        if (vgpu.parent === 0) {
           console.log('Adding to Available: ' + vgpu.artifactId)
           this.availableComponents.push(vgpu)
         }
@@ -308,7 +391,7 @@ export default {
 
 .available {
   padding: 20px;
-  border: 2px dashed black;
+  // border: 2px dashed black;
 }
 
 .socket-artifact {

@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="alert alert-danger" role="alert" v-if="typeof web3 === 'undefined' || web3.eth.defaultAccount === undefined">
-      <a class="metamask" href="https://metamask.io" target="_blank"><img src="static/icons/metamask.png"></a>
+      <a class="metamask" href="https://metamask.io" target="_blank"><img src="/static/icons/metamask.png"></a>
       This Dapp will only work if you have metamask installed are logged in.
     </div>
     <div class="alert alert-danger" role="alert" v-else-if="netId !== 100">
-      <a class="metamask" href="https://metamask.io" target="_blank"><img src="static/icons/metamask.png"></a>
+      <a class="metamask" href="https://metamask.io" target="_blank"><img src="/static/icons/metamask.png"></a>
          Mineables uses the xDai Network to keep all token mining transactions ultra-cheap! To configure Metamask to point to the xDai Chain network. ( Under 'Networks > Custom RPC', create a new network definition called <strong>'xDai Chain'</strong> using RPC <strong>https://dai.poa.network</strong> ).<br/><br/>
          In order to fund your account with xDai, please do the following:<br>
          <strong>Option A</strong> <br/>

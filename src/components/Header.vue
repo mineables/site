@@ -20,6 +20,12 @@
               <b-nav-item class="nav-link miner" target="_blank" href="https://github.com/0xMithril/COSMiC-v3-0xMTH/releases/tag/v1.0">
                   Miner
               </b-nav-item>
+
+              <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'vrig', params: { id: 1 } }">
+                TEST
+              </router-link></b-nav-item>
+
+             
             </b-navbar-nav>
 
           </b-collapse>
