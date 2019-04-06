@@ -195,11 +195,11 @@ export default {
     this.netId = window.netId
 
     // let rigId = this.rigId
-    let uiComponents = await this.loadVrig(11)
+    let uiComponents = await this.loadVrig(this.rigId)
 
     console.log('rigComponents', uiComponents)
 
-    this.canvas = document.createElement('canvas', { 'id': 'rig_draw2' })
+    this.canvas = document.createElement('canvas', { 'id': 'rig_draw' + this.rigId })
     this.canvas.width = 1180
     this.canvas.height = 1180
     this.rigdrawCanvas = this.canvas.getContext('2d')

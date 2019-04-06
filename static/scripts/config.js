@@ -1,6 +1,7 @@
 module.exports = {
 
-	/* Sokol testnet 
+	/* Sokol testnet */
+	/*
 	"addresses":{
 	  "VGPU": "0x89ccc15d3409bb34defdb40bfcdf3b222f2fe23c",
 	  "VRIG": "0xf0a0c3563ea9237ceb582197711e68dbb7a5c60f",

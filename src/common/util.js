@@ -89,7 +89,7 @@ module.exports = {
     } else if (position === 3) {
       return 'Socket Count'
     } else if (position === 4) {
-      return 'Virtual Hash Rate'
+      return 'Synthetic Hash Rate'
     } else if (position === 5) {
       return 'Accuracy'
     } else if (position === 6) {

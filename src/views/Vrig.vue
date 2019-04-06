@@ -40,6 +40,10 @@
           <h4>Statistics</h4>
           <table class="table token-table">
             <tr>
+              <td>Total Hash Rate</td>
+              <td><b>{{ vrig.vhash }}</b></td>
+            </tr>
+            <tr>
               <td>Experience</td>
               <td><b>{{ vrig.experience }}</b></td>
             </tr>
@@ -54,10 +58,6 @@
             <tr>
               <td>Socket Slots</td>
               <td><b>{{ vrig.sockets }}</b></td>
-            </tr>
-            <tr>
-              <td>Total Hash Rate</td>
-              <td><b>{{ vrig.vhash }}</b></td>
             </tr>
             <tr>
               <td>Accuracy</td>

@@ -6,7 +6,7 @@
         <div class="col-lg-8 text order-2 order-lg-1">
           <h1 class="home-title">Welcome to the Mineables Network</h1>
           <p class="home-text ">
-            Create your own ERC20, <a href="https://eips.ethereum.org/EIPS/eip-918" target="_blank">ERC918</a>-compliant Mineable Token with variable parameters such as name, token supply, and various mining options, without ever having to write a line of code. Buy, trade and configure Virtual Rigs and GPUs to increase mining performance with any token on the Mineables network.
+            Create your own ERC20, <a href="https://eips.ethereum.org/EIPS/eip-918" target="_blank">ERC918</a>-compliant Mineable Token with variable parameters such as name, token supply, and various mining options, without ever having to write a line of code. Buy, trade and configure Synthetic Rigs and GPUs to increase mining performance with any token on the Mineables network.
           </p>
         </div>
         <div class="col-lg-4 order-1 order-lg-2 uk-scrollspy-inview icon">
@@ -52,7 +52,7 @@
             <div class="card-img-top"><router-link class="nav-link" :to="{ name:'market' }"><img width="125" src="static/icons/proof-of-work.png" alt="Card image cap"/></router-link></div>
             <div class="card-body">
               <h5 class="card-title">Market</h5>
-              <p class="card-text"><router-link :to="{ name:'market' }">Buy</router-link>, sell, trade and <router-link :to="{ name:'configure' }">configure</router-link> Virtual Rigs and GPUs in the marketplace. These virtual components exist on the Ethereum blockchain and each have their own attributes that effect mining statistics such as difficulty and reward efficiency among others. </p>
+              <p class="card-text"><router-link :to="{ name:'market' }">Buy</router-link>, sell, trade and <router-link :to="{ name:'configure' }">configure</router-link> Synthetic Rigs and GPUs in the marketplace. These virtual components exist on the Ethereum blockchain and each have their own attributes that effect mining statistics such as difficulty and reward efficiency among others. </p>
             </div>
           </div>
         </div>
@@ -72,13 +72,13 @@
     <br><br>
     <div class="container">
        <header class="text-center no-margin-bottom">
-          <h2 class="header-text">Introducing Virtualized Hash Power</h2>
+          <h2 class="header-text">Introducing Synthetic Hash Power</h2>
         </header>
          <div class="row">
-            <p class="card-text">The Mineables Network team has been working hard developing a true hashpower virtualization layer that exists on the Ethereum blockchain. Realized with <a href="https://eips.ethereum.org/EIPS/eip-721" target="_blank">ERC721</a> compliant Virtual Rigs and Virtual GPUs, miners can purchase and deploy a full or hybrid virtual mining operation saving substantial time and money over traditional mining operations.</p>
+            <p class="card-text">The Mineables Network team has been working hard developing a true hashpower virtualization layer that exists on the Ethereum blockchain. Realized with <a href="https://eips.ethereum.org/EIPS/eip-721" target="_blank">ERC721</a> compliant Synthetic Rigs and Virtual GPUs, miners can purchase and deploy a full or hybrid virtual mining operation saving substantial time and money over traditional mining operations.</p>
             <h6>How it works</h6>
             <p class="card-text">If you, as a miner, want to increase your hash power, currently you have to invest capital in specialized hardware, electricity and additional maintenance that comes alone with keeping it all together. The Mineables Network offers an alternative to acquiring physical components to increase hashing power, with the introduction of Virtual Rigs (vRigs) that can be slotted with multiple Virtual GPUs (vGPUs). These virtual components exist on the Ethereum blockchain and each have their own attributes that effect mining statistics like difficulty and reward efficiency among others.</p>
-            <b-img src="/static/icons/overview.png" fluid-grow alt="Overview" />
+            <img src="/static/icons/overview.png" alt="Overview" />
             <p class="card-text">
             Instead of investing several hundreds or thousands of dollars on physical GPUs, a miner can now purchase virtual Rigs and GPUs at a fraction of the price, with 0xMithril or 0xBitcoin. The Virtual components are then configured and attached by a miner to a Mineable Network Token thereby decreasing the overall difficulty via the virtualized hash device.
             Miners can mix and match virtual GPU configurations on their Virtual Rigs to maximize mining performance and tailor make rigs for specific categories of tokens. Additionally, virtual and physical topologies are supported, so miners can leverage existing GPU hardware alongside their virtual counterparts. In other words, vRigs and vGPUs can be combined with physical GPUs to produce hybrid mining topologies, addressing mining target scenarios in the most flexible way possible.</p>
@@ -86,20 +86,27 @@
         </div>
         <div class="row">
           <div class="col-sm-3">
-            <img src="static/icons/vgpu.png" class="img-responsive" alt="" width="200">
+            <img src="static/icons/vgpu.png" class="img-responsive" alt="" width="170">
           </div>
           <div class="col-sm-8" style="margin-top:35px;">
-            <h4>vGPU's</h4>
+            <h4>vGPUs</h4>
             <p class="card-text"> A vGPU or Virtual GPU, is a <a href="https://eips.ethereum.org/EIPS/eip-721" target="_blank">ERC721</a> compliant virtual artifact that can be acquired on the Ethereum network via peer to peer trade or purchase through an integrated marketplace. The vGPU has a list of modifiers that update the base rig's statistics, making mining more profitable and fun. A vGPU must be attached to a vRig in order to work.</p>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-9" style="margin-top:35px;">
-            <h4>vRIG's</h4>
+            <h4>vRIGs</h4>
             <p class="card-text"> A vRig or Virtual Rig is an <a href="https://eips.ethereum.org/EIPS/eip-721" target="_blank">ERC721</a> compliant artifact that is primarily responsible for housing child virtual artifacts such as vGPUs. vRigs come with a finite number of slots, and facilitate mixing and matching child components to produce millions of possible virtual hashing combinations. </p>
           </div>
           <div class="col-sm-3">
             <img src="static/icons/vrig.png" class="img-responsive" alt="" width="200">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+          <h4>Rig Configuration</h4>
+            Mix and match your synthetic components, in the same way you would thier real-life counterparts to maximize hashpower on the Minables network.
+            <img class="center" src="/static/icons/rig-config.png" alt="Overview" />
           </div>
         </div>
     </div>
@@ -113,7 +120,7 @@
       <h4>What is 0xMithril "anti-gas"?</h4>
       <p>"Anti-gas" is a 0xMithril rebate made to miners to account for for the cost of gas used during the token minting transaction.</p>
 
-      <h4>What is Virtualized Hashing (vHashing)?</h4>
+      <h4>What is Virtualized/Sythetic Hashing?</h4>
       Virtualized hashing is a way to boost your mining operation with the use of ERC721 block chain components called Virtual Rigs and Virtual GPUs. Once these components are installed onto a wallet account and target token, they have the capability to adjust mining difficulty, rewards and other key mining statistics.</p>
 
       <h4>What is a Virtual Rig and Virtual GPU?</h4>
@@ -237,5 +244,12 @@ a img:hover {
     padding: 0px;
     letter-spacing: 0;
     line-height: 0;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 </style>

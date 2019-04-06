@@ -4,16 +4,56 @@
       <x-check-metamask></x-check-metamask>
       <h3 class="header-text">My Rigs</h3>
       <ul class="no-bullets">
-        <li v-for="element in vrigIds">
-          
-          <div style="width: 20em; height: 20em;">
-            <x-vrig-full-component :rigId='11'></x-vrig-full-component>
-            <h5>{{ element.name }}
-              <small>
-              <router-link class="btn btn-link" tag="button" :to="{ name: 'vrig', params: { id: element.id }}"> configure </router-link> 
-              </small>
-            </h5>
+        <li v-for="element in vrigs">
+          <div class="row">
+            <div class="col-lg-1" ></div>
+            <div class="col-lg-5" >
+              
+              <h4>{{ element.name }}
+                <small>
+                <router-link class="btn btn-link" tag="button" :to="{ name: 'vrig', params: { id: element.id }}"> configure </router-link> 
+                </small>
+              </h4>
+              <div class="float-left" style="width: 80%;">
+                <x-vrig-full-component :rigId='element.id'></x-vrig-full-component>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <h4>Statistics</h4>
+              <table class="table token-table">
+                <tr>
+                  <td>Total Hash Rate</td>
+                  <td><b>{{ element.vhash }}</b></td>
+                </tr>
+                <tr>
+                  <td>Experience</td>
+                  <td><b>{{ element.experience }}</b></td>
+                </tr>
+                <tr>
+                  <td>Life Decrement</td>
+                  <td><b>{{ element.lifeDecrement }}</b></td>
+                </tr>
+                <tr>
+                  <td>Execution Cost (in 0xMithril)</td>
+                  <td><b>{{ element.executionCost }}</b></td>
+                </tr>
+                <tr>
+                  <td>Socket Slots</td>
+                  <td><b>{{ element.sockets }}</b></td>
+                </tr>
+                <tr>
+                  <td>Accuracy</td>
+                  <td><b>{{ element.accuracy }}%</b></td>
+                </tr>
+                <tr>
+                  <td>Level</td>
+                  <td><b>{{ element.level }}</b></td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-lg-1" ></div>
           </div>
+
           <br><br>
         </li>
       </ul>
@@ -66,19 +106,29 @@ export default {
       wallet: undefined,
       txId: 'Processing...',
       vrigId: 1,
-      vrigIds: [],
+      vrigs: [],
       vgpus: [],
       txUrl: 'https://rinkeby.etherscan.io/tx/'
     }
   },
   methods: {
-    async populateERC721 (target, contract) {
+    async populateRigs (target, contract) {
       let balance = await contract.balanceOf(window.web3.eth.coinbase)
       for (var i = 0; i < balance; i++) {
         let artifactId = await contract.tokenOfOwnerByIndex(window.web3.eth.coinbase, i)
         let artifact = {}
+        let stats = await this.vrigContract.mergedStats(artifactId)
         artifact.id = artifactId
-        artifact.name = await contract.name(artifactId)
+        artifact.name = stats[0]
+        let basicStats = stats[1]
+        artifact.experience = basicStats[0].toNumber()
+        artifact.lifeDecrement = basicStats[1].toNumber()
+        artifact.executionCost = basicStats[2].toNumber()
+        artifact.sockets = basicStats[3].toNumber()
+        artifact.vhash = util.toReadableHashrate(basicStats[4].toNumber())
+        artifact.accuracy = basicStats[5].toNumber()
+        artifact.level = basicStats[6].toNumber()
+        artifact.childArtifacts = stats[2]
 
         // load metadata
         artifact.tokenURI = await contract.tokenURI(artifact.id)
@@ -118,7 +168,7 @@ export default {
     }
   },
   async mounted () {
-    await this.populateERC721(this.vrigIds, this.vrigContract)
+    await this.populateRigs(this.vrigs, this.vrigContract)
     await this.populateGPUs(this.vgpus, this.vgpuContract)
   }
 }
