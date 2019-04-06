@@ -1,0 +1,6 @@
+{
+  "name": "1 GH/s Virtual GPU",
+  "description": "1 GH/s Virtual GPU", 
+  "image": "https://mineables.io/static/images/gpu/market/baseGPU6.png",
+  "component": 9
+}

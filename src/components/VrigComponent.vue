@@ -8,8 +8,6 @@
 
 <script>
 
-// const parts = require('../../static/scripts/parts.js')
-
 import parts from '../../static/scripts/parts.js'
 
 export default {

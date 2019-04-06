@@ -148,6 +148,8 @@ import xVrigComponent from '@/components/VrigComponent'
 
 const BLOCK_EXPLORER_URL = require('../../static/scripts/config.js').explorer_url
 
+import parts from '../../static/scripts/parts.js'
+
 export default {
   name: 'Vrig',
   components: {
@@ -231,13 +233,15 @@ export default {
       artifact.childArtifacts = stats[2]
       artifact.tokenURI = await this.vrigContract.tokenURI(id)
       try {
-        // artifact.metadata = await (await fetch(artifact.tokenURI)).json()
+        artifact.metadata = await (await fetch(artifact.tokenURI)).json()
+        /*
         artifact.metadata = {
           'name': 'Hellfire Virtual Mining Rig',
           'description': 'Legendary Item - 6 slot Virtual Mining Rig',
           'image': 'https://mineables.io/static/metadata/vrigs/legendary-diablo/image.png',
           'component': [35, 18, 28]
         }
+        */
       } catch (e) {
         console.log(e)
       }
@@ -252,18 +256,21 @@ export default {
         vgpu.artifactId = artifactId
         vgpu.name = a[0]
         // load metadata
-        // vgpu.tokenURI = await this.vgpuContract.tokenURI(vgpu.artifactId)
+        vgpu.tokenURI = await this.vgpuContract.tokenURI(vgpu.artifactId)
         try {
-          // vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
+          vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
+          /*
           vgpu.metadata = {
             'name': 'Hellfire 1 GH/s Virtual GPU',
             'description': 'Legendary Item - 1 GH/s Virtual GPU',
             'image': '/static/images/gpu/market/baseGPU.png',
             'component': 14
           }
+          */
         } catch (e) {
           console.log(e)
         }
+        vgpu.metadata.image = this.findPartImage(vgpu.metadata.component)
         vgpu.parent = a[1].toNumber()
         vgpu.life = parseInt(a[2])
         let mods = a[3]
@@ -294,18 +301,21 @@ export default {
         vgpu.artifactId = artifactId
         vgpu.name = a[0]
         // load metadata
-        // vgpu.tokenURI = await this.vgpuContract.tokenURI(vgpu.artifactId)
+        vgpu.tokenURI = await this.vgpuContract.tokenURI(vgpu.artifactId)
         try {
-          // vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
+          vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
+          /*
           vgpu.metadata = {
             'name': 'Hellfire 1 GH/s Virtual GPU',
             'description': 'Legendary Item - 1 GH/s Virtual GPU',
             'image': '/static/images/gpu/market/baseGPU.png',
             'component': 14
           }
+          */
         } catch (e) {
           console.log(e)
         }
+        vgpu.metadata.image = this.findPartImage(vgpu.metadata.component)
         vgpu.parent = a[1].toNumber()
         vgpu.life = parseInt(a[2])
         let mods = a[3]
@@ -317,6 +327,17 @@ export default {
         if (vgpu.parent === 0) {
           console.log('Adding to Available: ' + vgpu.artifactId)
           this.availableComponents.push(vgpu)
+        }
+      }
+    },
+    findPartImage (id) {
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i].id === id) {
+          if (parts[i].market) {
+            return parts[i].market
+          } else {
+            return parts[i].img0
+          }
         }
       }
     },

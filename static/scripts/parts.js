@@ -111,105 +111,120 @@ module.exports = [
       "id":4,
       "type":4,
       "img0":"/static/images/gpu/baseGPU.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU.png"
    },
    {  
       "name":"White KFA2 GPU 2",
       "id":5,
       "type":4,
       "img0":"/static/images/gpu/baseGPU2.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU2.png"
    },
    {  
       "name":"Vega Black",
       "id":6,
       "type":4,
       "img0":"/static/images/gpu/baseGPU3.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU3.png"
    },
    {  
       "name":"GPU 2",
       "id":7,
       "type":4,
       "img0":"/static/images/gpu/baseGPU4.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU4.png"
    },
    {  
       "name":"Founder GTX",
       "id":8,
       "type":4,
       "img0":"/static/images/gpu/baseGPU5.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU5.png"
    },
    {  
       "name":"GPU 2",
       "id":9,
       "type":4,
       "img0":"/static/images/gpu/baseGPU6.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU6.png"
    },
    {  
       "name":"GPU 1",
       "id":11,
       "type":4,
       "img0":"/static/images/gpu/baseGPU7.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU7.png"
    },
    {  
       "name":"GPU 2",
       "id":12,
       "type":4,
       "img0":"/static/images/gpu/baseGPU8.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU8.png"
    },
    {  
       "name":"GPU 2",
       "id":13,
       "type":4,
       "img0":"/static/images/gpu/baseGPU9.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU9.png"
    },
    {  
       "name":"GPU 2",
       "id":14,
       "type":4,
       "img0":"/static/images/gpu/baseGPU10.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU10.png"
    },
    {  
       "name":"GPU 2",
       "id":15,
       "type":4,
       "img0":"/static/images/gpu/baseGPU11.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU11.png"
    },
    {  
       "name":"GPU 2",
       "id":16,
       "type":4,
       "img0":"/static/images/gpu/baseGPU12.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU12.png"
    },
    {  
       "name":"Toxic Orange",
       "id":17,
       "type":4,
       "img0":"/static/images/gpu/baseGPU13.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU13.png"
    },   
    {  
       "name":"GPU 2",
       "id":31,
       "type":4,
       "img0":"/static/images/gpu/baseGPU14.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU14.png"
    },
    {  
       "name":"GPU 2",
       "id":34,
       "type":4,
       "img0":"/static/images/gpu/baseGPU15.png",
-      "img1":"/static/images/gpu/gputop.png"
+      "img1":"/static/images/gpu/gputop.png",
+      "market":"/static/images/gpu/market/baseGPU15.png"
    },
    
 
