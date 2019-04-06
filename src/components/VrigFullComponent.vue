@@ -155,7 +155,7 @@ export default {
       }
       this.vrig = artifact
       // load the ui component
-      let uiComponents = artifact.metadata.component
+      let uiComponents = artifact.metadata.component || []
       // load the attached components
       for (var i = 0; i < artifact.childArtifacts.length; i++) {
         let artifactId = artifact.childArtifacts[i]

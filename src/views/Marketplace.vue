@@ -16,7 +16,7 @@
             <div v-for="result in vrigResults" class="col-sm-4">
 
               <b-alert class="overlay" v-if="result.childArtifacts.length > 0" variant="secondary" show>
-                <strong>Warning:</strong> Owner must remove all vGPUs from vRig in order to list artifact.
+                <strong>Warning:</strong> Owner must remove all components from Rig in order to list artifact.
               </b-alert>
               
               <div class="card market-card">

@@ -135,7 +135,11 @@ export default {
         let tok = await fetch(artifact.tokenURI)
         if (tok) {
           artifact.metadata = await tok.json()
-          artifact.metadata.image = util.findPartImage(parts, artifact.metadata.component[0])
+          if (artifact.metadata.component) {
+            artifact.metadata.image = util.findPartImage(parts, artifact.metadata.component[0])
+          } else {
+            artifact.metadata.image = ''
+          }
         }
         target.push(artifact)
       }
