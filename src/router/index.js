@@ -47,6 +47,11 @@ export default new Router({
       path: '/vgpu/:id',
       name: 'vgpu',
       component: () => import('@/views/Vgpu')
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: () => import('@/views/Test')
     }
   ]
 })
