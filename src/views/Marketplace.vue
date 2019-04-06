@@ -216,7 +216,7 @@ export default {
         for (var j = 0; j < mods.length; j++) {
           artifact.modifiers.push(util.parseModifier(mods[j]))
         }
-        artifact.mithrilPrice = parseInt(art[1])
+        artifact.mithrilPrice = art[1].toNumber()
         artifact.price = util.readable(artifact.mithrilPrice)
         // load metadata
         artifact.tokenURI = await this.vgpuContract.tokenURI(artifact.id)
@@ -241,7 +241,7 @@ export default {
         console.log(art)
         let stats = await this.vrigContract.baseStats(art[0])
         let artifact = {}
-        artifact.mithrilPrice = parseInt(art[1])
+        artifact.mithrilPrice = art[1].toNumber()
         artifact.price = util.readable(artifact.mithrilPrice)
         artifact.id = parseInt(art[0])
         let owner = await this.vrigContract.ownerOf(artifact.id)
