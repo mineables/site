@@ -2,7 +2,6 @@
 <div class="container wrapped">
 
   <br><br>
-  <x-check-metamask></x-check-metamask>
   
   <h4 class="balance"> <b-badge variant="light">Balance:  {{ mithrilBalance }} <span class="tengwar">5Ì#</span></b-badge> </h4>
 
@@ -204,7 +203,7 @@ export default {
         artifact.id = parseInt(art[0])
         artifact.parent = a[1].toNumber()
         let owner = await this.vgpuContract.ownerOf(artifact.id)
-        if (owner === window.web3.eth.coinbase) {
+        if (this.coinbase && owner === window.web3.eth.coinbase) {
           artifact.ownedByCoinbase = true
         } else {
           artifact.ownedByCoinbase = false
@@ -245,7 +244,7 @@ export default {
         artifact.price = util.readable(artifact.mithrilPrice)
         artifact.id = parseInt(art[0])
         let owner = await this.vrigContract.ownerOf(artifact.id)
-        if (owner === window.web3.eth.coinbase) {
+        if (this.coinbase && owner === window.web3.eth.coinbase) {
           artifact.ownedByCoinbase = true
         } else {
           artifact.ownedByCoinbase = false
@@ -274,6 +273,11 @@ export default {
     }
   },
   async mounted () {
+    try {
+      window.web3.eth.coinbase
+    } catch (e) {
+      this.coinbase = false
+    }
     this.loadMithrilBalance()
     this.loadVGPUMarket()
     this.loadVRIGMarket()

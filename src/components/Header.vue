@@ -48,6 +48,7 @@ export default {
     }
   },
   mounted () {
+    if (!window.web3) return
     window.web3.version.getNetwork((err, netId) => {
       if (err) {
         console.log(err)
