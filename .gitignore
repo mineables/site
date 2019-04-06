@@ -1,7 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # mineables blockchain config
-/static/scripts/config.js
+static/scripts/config.js*
 
 # dependencies
 /node_modules
