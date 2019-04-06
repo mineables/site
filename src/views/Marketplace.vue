@@ -274,7 +274,7 @@ export default {
   },
   async mounted () {
     try {
-      window.web3.eth.coinbase
+      this.coinbase = await window.web3.eth.coinbase
     } catch (e) {
       this.coinbase = false
     }
