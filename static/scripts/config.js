@@ -1,6 +1,5 @@
 module.exports = {
-	
-	"addresses": {
+	"addresses":{
 	  "VGPU": "0xeb6b143b4c8580f95a8a8f85b3c192c45af8656a",
 	  "VRIG": "0x4f90fa5fbcdbc092c55e153a39ceea8ffa552e2d",
 	  "MITHRIL": "0x9877f79103e608e64139b0a0da5856fadfab5cf4",
