@@ -34,6 +34,7 @@ import { QUARRY_ABI } from '../static/scripts/quarry_abi.js'
 import { FACTORY_ABI } from '../static/scripts/factory_abi.js'
 import { VGPU_MARKET_ABI } from '../static/scripts/vgpu_market_abi.js'
 import { VRIG_MARKET_ABI } from '../static/scripts/vrig_market_abi.js'
+// import { ARTIFACT_AUCTION_ABI } from '../static/scripts/artifact_auction_abi.js'
 // This is a global mixin, it is applied to every vue instance
 Vue.mixin({
   data: function () {

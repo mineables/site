@@ -35,7 +35,7 @@ module.exports = {
     return seconds.toFixed(1) + ' ' + 'seconds'
   },
   readable: function (num) {
-    return num / Math.pow(10, 18)
+    return Math.round(num / Math.pow(10, 18))
   },
   findPartImage (parts, id) {
     for (var i = 0; i < parts.length; i++) {
