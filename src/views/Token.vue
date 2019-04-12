@@ -178,7 +178,8 @@ export default {
           let currentEthBlock = parseInt(result.toString(10), 10)
           var ethBlocksSinceLastDifficultyPeriod = currentEthBlock - lastDifficultyStartBlock
           var secondsSinceReadjustment = ethBlocksSinceLastDifficultyPeriod * SECONDS_PER_ETH_BLOCK
-          var secondsPerReward = secondsSinceReadjustment / rewardsSinceReadjustment
+          let formattedRewardsSince = rewardsSinceReadjustment === 0 ? 1 : rewardsSinceReadjustment
+          var secondsPerReward = secondsSinceReadjustment / formattedRewardsSince
           let currentAverageRewardTime = util.secondsToReadableTime(secondsPerReward) // (secondsPerReward / 60).toFixed(2)
           let hashrate = diff * 2 ** 22 / adjustmentInterval
           hashrate *= (adjustmentInterval / secondsPerReward)
