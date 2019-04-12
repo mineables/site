@@ -60,6 +60,8 @@
       <br>
 
       <h3 class="header-text">My GPUs</h3>
+      
+      <!--
       <br>
       <div class="row available">
           <div class="floatleft socket-artifact" v-for="element in vgpus">
@@ -73,6 +75,33 @@
             <img v-if="element.metadata" :id="'artifact'+element.artifactId" :src="element.metadata.image" width="100" height="100"> 
           </div>
       </div>
+      -->
+
+      <br>
+      <section id="vgpu-market">
+        <div class="row">
+            <div v-for="result in vgpus" class="col-sm-4">
+              <b-alert class="overlay" v-if="result.parent > 0" variant="secondary" show>
+                <strong>Warning:</strong> Owner must remove all vGPUs from vRig in order to list artifact.
+              </b-alert>
+
+              <div class="card market-card">
+                
+                <h3 class="card-title price-wrap"> 
+                  <h4 class="float-left">{{ result.name }} </h4>
+                </h3>
+                
+                <div class="card-body">
+                  <img class="card-img-top float-left" :src="result.metadata.image" alt="Card image cap">
+                  <p class="card-text">Life: {{ result.life }}</p>
+                  <p class="card-text modifier" v-for="modifier in result.modifiers" >{{ modifier }}</p>
+                  <br>
+                  <span class="uid">uid: {{ result.id }} </span>
+                </div>
+              </div>
+            </div>
+        </div>
+      </section>
 
       <!--
       <ul class="no-bullets">
@@ -118,7 +147,7 @@ export default {
         let artifactId = await contract.tokenOfOwnerByIndex(window.web3.eth.coinbase, i)
         let artifact = {}
         let stats = await this.vrigContract.mergedStats(artifactId)
-        artifact.id = artifactId
+        artifact.id = parseInt(artifactId)
         artifact.name = stats[0]
         let basicStats = stats[1]
         artifact.experience = basicStats[0].toNumber()
@@ -149,8 +178,8 @@ export default {
       for (var i = 0; i < balance; i++) {
         let artifactId = await contract.tokenOfOwnerByIndex(window.web3.eth.coinbase, i)
         let artifact = {}
-        artifact.id = artifactId
-        artifact.artifactId = artifactId
+        artifact.id = parseInt(artifactId)
+        artifact.artifactId = parseInt(artifactId)
         let a = await contract.artifactAt(artifactId)
         artifact.name = a[0]
         artifact.life = parseInt(a[2])
@@ -186,4 +215,73 @@ export default {
 .no-bullets {
   list-style-type: none;
 }
+
+.market-card {
+  margin-bottom: 2em;
+}
+
+.card-img-top {
+  max-width: 160px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.float-left {
+  float: left;
+}
+
+.uid {
+  color: lightgray;
+  float: right;
+}
+
+.uid:hover {
+  color: black;
+}
+
+.price {
+  color: #827d7d;
+  font-weight: bold;
+  font-size: 120%;
+}
+
+.price-wrap {
+  text-align: right;
+  padding: 15px;
+  background-color: #ececec;
+}
+
+
+.modifier {
+  font-style: italic;
+  color: #827d7d;
+}
+
+.wrapped {
+  padding-top: 2em;
+}
+
+.header-text {
+  clear: both;
+}
+
+.balance {
+  float:right;
+}
+
+.statistics {
+  list-style: none;
+}
+
+.overlay {
+  margin: auto;
+  position: absolute;
+  top: 35%;
+  left: 30px;
+  right: 30px;
+  z-index: 9999;
+}
+
 </style>
