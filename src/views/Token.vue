@@ -60,8 +60,12 @@
           </h2>
           <table class="table token-table">
             <tr>
-              <td><b>Mining Difficulty</b></td>
+              <td><b>Token Difficulty</b></td>
               <td>{{ statistics.diff }}</td>
+            </tr>
+            <tr>
+              <td><b>Account Difficulty</b></td>
+              <td>{{ statistics.userDiff }}</td>
             </tr>
             <tr>
               <td><b>Estimated Hashrate</b></td>
@@ -159,7 +163,8 @@ export default {
     async loadStatistics () {
       this.reloadVisible = false
       console.log('loading statistics from blockchain...')
-      let diff = await this.mineable.getMiningDifficulty()
+      let diff = await this.mineable.getMiningDifficulty({from: '0x8Cc5A1a0802DB41DB826C2FcB72423744338DcB0'})
+      let userDiff = await this.mineable.getMiningDifficulty()
       let decimal = await this.mineable.decimals()
       let adjustmentInterval = await this.mineable.blockTimeInMinutes()
       let epochCount = (await this.mineable.epochCount()).toNumber()
@@ -187,6 +192,7 @@ export default {
           let nextEraEstimatedTime = util.secondsToReadableTime(rewardsLeft * secondsPerReward)
           parent.statistics = {
             diff: diff.toNumber(),
+            userDiff: userDiff.toNumber(),
             hashRate: util.toReadableHashrate(hashrate),
             rewardsUntilReadjustment: rewardsLeft,
             nextEraEstimatedTime: nextEraEstimatedTime,
