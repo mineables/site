@@ -228,7 +228,7 @@ export default {
     async loadVrig (id) {
       let stats = await this.vrigContract.mergedStats(id)
       let artifact = {}
-      artifact.id = id.toNumber()
+      artifact.id = parseInt(id)
       artifact.name = stats[0]
       let basicStats = stats[1]
       artifact.experience = basicStats[0].toNumber()
@@ -296,14 +296,6 @@ export default {
         vgpu.tokenURI = await this.vgpuContract.tokenURI(vgpu.artifactId)
         try {
           vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
-          /*
-          vgpu.metadata = {
-            'name': 'Hellfire 1 GH/s Virtual GPU',
-            'description': 'Legendary Item - 1 GH/s Virtual GPU',
-            'image': '/static/images/gpu/market/baseGPU.png',
-            'component': 14
-          }
-          */
         } catch (e) {
           console.log(e)
         }
