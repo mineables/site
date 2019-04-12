@@ -5,8 +5,8 @@ module.exports = {
 	  "MITHRIL": "0x9877f79103e608e64139b0a0da5856fadfab5cf4",
 	  "QUARRY": "0x6eae00b06facc2bddf02d9b27d3d8d66653d6be1",
 	  "FACTORY": "0x6bcd1643c213de38161c7f75fa6849cb1644d310",
-	  "VGPU_MARKET": "0xd624fa3efb0d1a6e8ae0c7f80f88c726d763c743",
-	  "VRIG_MARKET": "0x87a255cf5d210975917c40285dfe7e1d73743720",
+	  "VGPU_MARKET": "0x882975a4f5d1ebbbcff2e8f1fab24255df8de7eb",
+	  "VRIG_MARKET": "0x191ffe2aed1d30da4bd5588e5a8a8d85f662f750",
 	  "ARTIFACT_AUCTION_ABI": ""
 	},
 
