@@ -33,10 +33,10 @@
         </div>
         <div class="card-deck">
           <div class="card">
-            <div class="card-img-top"><a href="https://github.com/0xMithril/COSMiC-v3-0xMTH/releases/tag/v1.1" target="_blank"><img width="125" src="static/icons/payment-method.png" alt="Card image cap"/></a></div>
+            <div class="card-img-top"><a href="https://github.com/0xMithril/COSMiC-v3-0xMTH/releases/tag/1.2" target="_blank"><img width="125" src="static/icons/payment-method.png" alt="Card image cap"/></a></div>
             <div class="card-body">
               <h5 class="card-title">Download Miner</h5>
-              <p class="card-text"><a href="https://github.com/0xMithril/COSMiC-v3-0xMTH" target="_blank">Download</a> the Mineables Mining client to mine 0xMithril and other tokens in the network. Based on the open source COSMiC community-developed miner, the mining client includes features to list and configure mineable token targets, applicable mining pools, virtual artifact( vRig and vGPU ) configuration, and general wallet management </p>
+              <p class="card-text"><a href="https://github.com/0xMithril/COSMiC-v3-0xMTH/releases/tag/1.2" target="_blank">Download</a> the Mineables Mining client to mine 0xMithril and other tokens in the network. Based on the open source COSMiC community-developed miner, the mining client includes features to list and configure mineable token targets, applicable mining pools, virtual artifact( vRig and vGPU ) configuration, and general wallet management </p>
             </div>
           </div>
           <div class="card">
