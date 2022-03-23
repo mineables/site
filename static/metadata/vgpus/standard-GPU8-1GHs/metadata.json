@@ -1,6 +1,6 @@
 {
   "name": "1 GH/s Virtual GPU",
   "description": "1 GH/s Virtual GPU", 
-  "image": "https://mineables.io/static/metadata/vgpus/standard-black-1GHs/image.png",
+  "image": "https://mineables.org/static/metadata/vgpus/standard-black-1GHs/image.png",
   "component": 12
 }

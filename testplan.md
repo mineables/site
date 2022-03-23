@@ -52,7 +52,7 @@ https://sokol.poa.network ( Under networks.. 'Custom RPC' )
 Test Case 1: Create a New Mineable Token - simple
 ---
 
-	Go to 'Create' tab on Mineables.io and create a token without the advanced options.
+	Go to 'Create' tab on mineables.org and create a token without the advanced options.
 		Verify the flow
 		Verify the popup links to the correct txn
 		Verify ensure the resulting popup directs you to the new token page
@@ -173,7 +173,7 @@ Test Case 9: Mining 0xMithril Pool vardiff part 2
 		pool mine cuda
 			Verify the hashrate in the top left corner of the miner terminal is '65536'
 			Wait until a few solutions go through
-			Validate your balance with the pool by pointing to a browser: http://pool.mineables.io/account/0x...
+			Validate your balance with the pool by pointing to a browser: http://pool.mineables.org/account/0x...
 
 Test Case 10: Mining Advanced Token Individual
 ---
@@ -204,7 +204,7 @@ Test Case 12: Mining Simple Token Pool
 			verify the difficulty matches your Token's difficulty on the website
 	Wait for a few solutions to come through and verify with next command
 		account balance
-    verify your balance with the pool by pointing to a browser: http://pool.mineables.io/account/0x...
+    verify your balance with the pool by pointing to a browser: http://pool.mineables.org/account/0x...
 Test Case X: General Comments on Useability, Interface and Flow
 ---
 	This is a bit more abstract, but important still. 
