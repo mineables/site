@@ -19,8 +19,10 @@
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'configure' }">Configure</router-link></b-nav-item>
               <b-nav-item class="nav-link miner" target="_blank" href="https://github.com/0xMithril/COSMiC-v3-0xMTH/releases/tag/1.2">
                   Miner
+              </b-nav-item> 
+              <b-nav-item class="nav-link miner" target="_blank" href="https://github.com/mineables">
+                  Github
               </b-nav-item>
-
               <!--
               <b-nav-item href="#"><router-link class="nav-link" :to="{ name:'test' }">
                 TEST

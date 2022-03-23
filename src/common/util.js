@@ -1,4 +1,4 @@
-module.exports = {
+var util = {
 /* convert number to a readable hashrate string ("244.32 Gh/s", "3.05 Th/s") */
   toReadableHashrate (hashrate) {
     let units = ['H/s', 'Kh/s', 'Mh/s', 'Gh/s', 'Th/s', 'Ph/s']
@@ -103,5 +103,12 @@ module.exports = {
     var multiplier = s.substring(0, 1)
     var exp = s.substring(1, 3)
     return Number(multiplier) * Math.pow(10, Number(exp))
+  },
+  cleanURI: function (uri) {
+    if (uri.includes('https://mineables.io')) {
+      uri = uri.replace('https://mineables.io', 'https://mineables.org')
+    }
+    console.log('New URI: ' + uri)
   }
 }
+export default util

@@ -104,7 +104,9 @@
 const BLOCK_EXPLORER_URL = require('../../static/scripts/config.js').explorer_url
 const ADDRESS = require('../../static/scripts/config.js').addresses
 
-import util from '../common/util.js'
+// import util from '../common/util.js'
+import util from '@/common/util'
+
 import xCheckMetamask from '@/components/CheckMetamask'
 import xVrigComponent from '@/components/VrigComponent'
 import parts from '../../static/scripts/parts.js'
@@ -218,7 +220,7 @@ export default {
         artifact.mithrilPrice = art[1].toNumber()
         artifact.price = util.readable(artifact.mithrilPrice)
         // load metadata
-        artifact.tokenURI = await this.vgpuContract.tokenURI(artifact.id)
+        artifact.tokenURI = util.cleanURI(await this.vgpuContract.tokenURI(artifact.id))
         // hack
         if (artifact.tokenURI === 'https://ipfs.io/ipfs/QmPi1hMtExAxk4pFrUncmbYcskrax2K4nDH7bKG5m8MWYC') {
           artifact.metadata = { 'image': '/static/images/gpu/market/baseGPU.png' }
@@ -260,7 +262,7 @@ export default {
         artifact.level = basicStats[6].toNumber()
         artifact.childArtifacts = stats[2]
         // load metadata
-        artifact.tokenURI = await this.vrigContract.tokenURI(art[0])
+        artifact.tokenURI = util.cleanURI(await this.vrigContract.tokenURI(art[0]))
         artifact.metadata = await (await fetch(artifact.tokenURI)).json()
         console.log(artifact.metadata)
         artifact.metadata.image = util.findPartImage(parts, artifact.metadata.component[0])

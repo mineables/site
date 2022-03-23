@@ -147,7 +147,7 @@ export default {
       artifact.accuracy = basicStats[5].toNumber()
       artifact.level = basicStats[6].toNumber()
       artifact.childArtifacts = stats[2]
-      artifact.tokenURI = await this.vrigContract.tokenURI(id)
+      artifact.tokenURI = util.cleanURI(await this.vrigContract.tokenURI(id))
       try {
         artifact.metadata = await (await fetch(artifact.tokenURI)).json()
       } catch (e) {
@@ -164,7 +164,7 @@ export default {
         vgpu.artifactId = artifactId
         vgpu.name = a[0]
         // load metadata
-        vgpu.tokenURI = await this.vgpuContract.tokenURI(vgpu.artifactId)
+        vgpu.tokenURI = util.cleanURI(await this.vgpuContract.tokenURI(vgpu.artifactId))
         try {
           vgpu.metadata = await (await fetch(vgpu.tokenURI)).json()
         } catch (e) {
