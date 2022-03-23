@@ -1,0 +1,6 @@
+{
+  "name": "Hellfire Virtual Mining Rig",
+  "description": "Legendary Item - 6 slot Virtual Mining Rig", 
+  "image": "https://mineables.org/static/metadata/vrigs/legendary-diablo/image.png",
+  "component": [35, 18, 28] 
+}
